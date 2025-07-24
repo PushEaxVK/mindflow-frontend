@@ -12,11 +12,9 @@ import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import { persistor, store } from './redux/store.js';
 import { BrowserRouter } from 'react-router-dom';
-// import CssBaseline from '@mui/material/CssBaseline';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    {/* <CssBaseline /> */}
     <BrowserRouter>
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>

@@ -1,5 +1,4 @@
 import { useDispatch, useSelector } from 'react-redux';
-import ContactForm from '../../components/ContactForm/ContactForm';
 import SearchBox from '../../components/SearchBox/SearchBox';
 import { selectError, selectLoading } from '../../redux/contacts/selectors';
 import ContactList from '../../components/ContactList/ContactList';
@@ -17,7 +16,6 @@ const ContactsPage = () => {
 
   return (
     <div>
-      <ContactForm />
       <SearchBox />
       {isLoading && !error && <b>Loading contacts...</b>}
       {error && <b>{error}</b>}
