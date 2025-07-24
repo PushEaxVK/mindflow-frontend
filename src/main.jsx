@@ -12,22 +12,18 @@ import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import { persistor, store } from './redux/store.js';
 import { BrowserRouter } from 'react-router-dom';
-import { ThemeProvider } from '@mui/material/styles';
-import CssBaseline from '@mui/material/CssBaseline';
-import theme from './theme';
+// import CssBaseline from '@mui/material/CssBaseline';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <BrowserRouter>
-        <Provider store={store}>
-          <PersistGate loading={null} persistor={persistor}>
-            <App />
-            <Toaster />
-          </PersistGate>
-        </Provider>
-      </BrowserRouter>
-    </ThemeProvider>
+    {/* <CssBaseline /> */}
+    <BrowserRouter>
+      <Provider store={store}>
+        <PersistGate loading={null} persistor={persistor}>
+          <App />
+          <Toaster />
+        </PersistGate>
+      </Provider>
+    </BrowserRouter>
   </StrictMode>
 );
