@@ -1,7 +1,6 @@
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { useDispatch } from 'react-redux';
 import { login } from '../../redux/auth/operations';
-import { Box, Button, TextField, Typography } from '@mui/material';
 
 const LoginForm = () => {
   const dispatch = useDispatch();
@@ -14,56 +13,65 @@ const LoginForm = () => {
   };
 
   return (
-    <Box
-      sx={{
-        p: 4,
-        boxShadow: 3,
-        borderRadius: 2,
-        backgroundColor: 'background.paper',
-      }}
-    >
-      <Typography variant="h5" component="h1" gutterBottom textAlign="center">
-        Log In to Your Account
-      </Typography>
+    <div>
+      <p>Log In to Your Account</p>
 
       <Formik initialValues={initialValues} onSubmit={handleSubmit}>
         {({ handleChange, handleBlur, values }) => (
           <Form>
-            <TextField
-              fullWidth
-              margin="normal"
-              label="Email"
-              name="email"
-              type="email"
-              value={values.email}
-              onChange={handleChange}
-              onBlur={handleBlur}
-            />
+            <div style={{ margin: '8px 0' }}>
+              <label htmlFor="email">Email</label>
+              <Field
+                id="email"
+                name="email"
+                type="email"
+                onBlur={handleBlur}
+                onChange={handleChange}
+                value={values.email}
+                style={{
+                  width: '100%',
+                  padding: '8px',
+                  boxSizing: 'border-box',
+                }}
+              />
+            </div>
 
-            <TextField
-              fullWidth
-              margin="normal"
-              label="Password"
-              name="password"
-              type="password"
-              value={values.password}
-              onChange={handleChange}
-              onBlur={handleBlur}
-            />
+            <div style={{ margin: '8px 0' }}>
+              <label htmlFor="password">Password</label>
+              <Field
+                id="password"
+                name="password"
+                type="password"
+                onBlur={handleBlur}
+                onChange={handleChange}
+                value={values.password}
+                style={{
+                  width: '100%',
+                  padding: '8px',
+                  boxSizing: 'border-box',
+                }}
+              />
+            </div>
 
-            <Button
+            <button
               type="submit"
-              variant="contained"
-              color="primary"
-              fullWidth
-              sx={{ mt: 2 }}
+              style={{
+                marginTop: '16px',
+                width: '100%',
+                padding: '10px',
+                backgroundColor: '#1976d2',
+                color: 'white',
+                border: 'none',
+                borderRadius: '4px',
+                cursor: 'pointer',
+              }}
             >
               Log In
-            </Button>
+            </button>
           </Form>
         )}
       </Formik>
-    </Box>
+    </div>
   );
 };
 

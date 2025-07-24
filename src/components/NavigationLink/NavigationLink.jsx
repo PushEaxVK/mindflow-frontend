@@ -1,20 +1,17 @@
-import { Link } from '@mui/material';
 import { NavLink } from 'react-router-dom';
 
 const NavigationLink = ({ to = '/', children }) => {
   return (
-    <Link
-      component={NavLink}
+    <NavLink
       to={to}
-      underline="hover"
-      color="inherit"
-      sx={{
-        '&.active': { textDecoration: 'underline', color: '#d4e157' },
+      style={({ isActive }) => ({
+        textDecoration: isActive ? 'underline' : 'none',
+        color: isActive ? '#d4e157' : 'inherit',
         fontSize: '1.25rem',
-      }}
+      })}
     >
       {children}
-    </Link>
+    </NavLink>
   );
 };
 

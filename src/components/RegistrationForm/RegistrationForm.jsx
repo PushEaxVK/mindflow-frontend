@@ -1,7 +1,6 @@
-import { Formik, Form } from 'formik';
+import { Formik, Form, Field } from 'formik';
 import { useDispatch } from 'react-redux';
 import { register } from '../../redux/auth/operations';
-import { Box, Button, TextField, Typography } from '@mui/material';
 
 const RegistrationForm = () => {
   const dispatch = useDispatch();
@@ -18,64 +17,85 @@ const RegistrationForm = () => {
   };
 
   return (
-    <Box
-      sx={{
-        p: 4,
-        boxShadow: 3,
-        borderRadius: 2,
-        backgroundColor: 'background.paper',
-      }}
-    >
-      <Typography variant="h5" component="h1" gutterBottom textAlign="center">
-        Register Your Account
-      </Typography>
+    <div>
+      <p>Register Your Account</p>
 
       <Formik initialValues={initialValues} onSubmit={handleSubmit}>
         {({ handleChange, handleBlur, values }) => (
           <Form>
-            <TextField
-              fullWidth
-              margin="normal"
-              label="Username"
-              name="name"
-              type="text"
-              value={values.name}
-              onChange={handleChange}
-              onBlur={handleBlur}
-            />
-            <TextField
-              fullWidth
-              margin="normal"
-              label="Email"
-              name="email"
-              type="email"
-              value={values.email}
-              onChange={handleChange}
-              onBlur={handleBlur}
-            />
-            <TextField
-              fullWidth
-              margin="normal"
-              label="Password"
-              name="password"
-              type="password"
-              value={values.password}
-              onChange={handleChange}
-              onBlur={handleBlur}
-            />
-            <Button
+            <div style={{ margin: '8px 0' }}>
+              <label htmlFor="name">Username</label>
+              <Field
+                id="name"
+                name="name"
+                type="text"
+                value={values.name}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                placeholder="Username"
+                style={{
+                  width: '100%',
+                  padding: '8px',
+                  boxSizing: 'border-box',
+                }}
+              />
+            </div>
+
+            <div style={{ margin: '8px 0' }}>
+              <label htmlFor="email">Email</label>
+              <Field
+                id="email"
+                name="email"
+                type="email"
+                value={values.email}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                placeholder="Email"
+                style={{
+                  width: '100%',
+                  padding: '8px',
+                  boxSizing: 'border-box',
+                }}
+              />
+            </div>
+
+            <div style={{ margin: '8px 0' }}>
+              <label htmlFor="password">Password</label>
+              <Field
+                id="password"
+                name="password"
+                type="password"
+                value={values.password}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                placeholder="Password"
+                style={{
+                  width: '100%',
+                  padding: '8px',
+                  boxSizing: 'border-box',
+                }}
+              />
+            </div>
+
+            <button
               type="submit"
-              variant="contained"
-              color="primary"
-              fullWidth
-              sx={{ mt: 2 }}
+              style={{
+                marginTop: '16px',
+                width: '100%',
+                padding: '10px',
+                backgroundColor: '#1976d2',
+                color: 'white',
+                border: 'none',
+                borderRadius: '4px',
+                cursor: 'pointer',
+              }}
             >
               Register
-            </Button>
+            </button>
           </Form>
         )}
       </Formik>
-    </Box>
+    </div>
   );
 };
 
