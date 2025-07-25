@@ -1,7 +1,15 @@
-import { StrictMode } from 'react';
-import { createRoot } from 'react-dom/client';
+import '@fontsource/manrope/400.css';
+import '@fontsource/manrope/700.css';
+import '@fontsource/manrope/800.css';
+import '@fontsource/merienda/700.css';
+import '@fontsource/merienda/800.css';
+import '@fontsource/dm-sans/700.css';
+import '@fontsource/noto-sans/400.css';
 import 'modern-normalize';
 import './index.css';
+
+import { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
 import App from './components/App/App.jsx';
 import { Toaster } from 'react-hot-toast';
 import { Provider } from 'react-redux';
