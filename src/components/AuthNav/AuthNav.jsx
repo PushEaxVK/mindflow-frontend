@@ -1,12 +1,12 @@
-import NavigationLink from '../NavigationLink/NavigationLink';
-import { Box } from '@mui/material';
+import { NavLink } from 'react-router-dom';
 
 const AuthNav = () => {
   return (
-    <Box sx={{ display: 'flex', gap: 2 }}>
-      <NavigationLink to="/register">Register</NavigationLink>
-      <NavigationLink to="/login">Login</NavigationLink>
-    </Box>
+    <div>
+      <NavLink to="/register">Register</NavLink>
+      <NavLink to="/login">Login</NavLink>
+    </div>
   );
 };
+
 export default AuthNav;

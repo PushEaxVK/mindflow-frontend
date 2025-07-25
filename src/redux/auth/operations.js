@@ -1,16 +1,16 @@
-import contactsApi from '../../services/api';
-import { createThunk } from '../contacts/operations';
+import serviceApi from '../../services/api';
+import { createThunk } from '../createThunk';
 
 export const register = createThunk('auth/register', async (body) =>
-  contactsApi.auth.signup(body)
+  serviceApi.auth.signup(body)
 );
 
 export const login = createThunk('auth/login', async (body) =>
-  contactsApi.auth.login(body)
+  serviceApi.auth.login(body)
 );
 
 export const logout = createThunk('auth/logout', async () =>
-  contactsApi.auth.logout()
+  serviceApi.auth.logout()
 );
 
 export const refreshUser = createThunk('auth/refresh', async (_, thunkAPI) => {
@@ -20,5 +20,5 @@ export const refreshUser = createThunk('auth/refresh', async (_, thunkAPI) => {
     throw new Error('Token is not exist!');
   }
 
-  return contactsApi.auth.refresh({ token: savedToken });
+  return serviceApi.auth.refresh({ token: savedToken });
 });

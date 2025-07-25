@@ -1,15 +1,16 @@
-import { Container } from '@mui/material';
 import AppBar from '../AppBar/AppBar';
 import { Outlet } from 'react-router-dom';
+import Footer from '../Footer/Footer';
 
 const Layout = () => {
   return (
-    <div>
+    <>
       <AppBar />
-      <Container maxWidth="md" sx={{ py: 6 }}>
+      <main>
         <Outlet />
-      </Container>
-    </div>
+      </main>
+      <Footer />
+    </>
   );
 };
 export default Layout;

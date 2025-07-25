@@ -8,13 +8,6 @@ import { PrivateRoute } from '../PrivateRoute';
 import Layout from '../Layout/Layout';
 
 const HomePage = lazy(() => import('../../pages/HomePage/HomePage'));
-const ContactsPage = lazy(() =>
-  import('../../pages/ContactsPage/ContactsPage')
-);
-const LoginPage = lazy(() => import('../../pages/LoginPage/LoginPage'));
-const RegistrationPage = lazy(() =>
-  import('../../pages/RegistrationPage/RegistrationPage')
-);
 
 function App() {
   const dispatch = useDispatch();
@@ -29,30 +22,6 @@ function App() {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<HomePage />} />
-          <Route
-            path="contacts"
-            element={
-              <PrivateRoute redirectTo="/login" component={<ContactsPage />} />
-            }
-          />
-          <Route
-            path="register"
-            element={
-              <RestrictedRoute
-                redirectTo="/contacts"
-                component={<RegistrationPage />}
-              />
-            }
-          />
-          <Route
-            path="login"
-            element={
-              <RestrictedRoute
-                redirectTo="/contacts"
-                component={<LoginPage />}
-              />
-            }
-          />
         </Route>
       </Routes>
     </Suspense>

@@ -3,24 +3,21 @@ import Navigation from '../Navigation/Navigation';
 import { selectIsLoggedIn } from '../../redux/auth/selectors';
 import AuthNav from '../AuthNav/AuthNav';
 import UserMenu from '../UserMenu/UserMenu';
-import { Box, Container, AppBar as MuiAppBar, Toolbar } from '@mui/material';
+import Container from '../Container/Container';
+import css from './AppBar.module.css';
 
 const AppBar = () => {
   const isLoggedIn = useSelector(selectIsLoggedIn);
 
   return (
-    <MuiAppBar position="static" color="primary" elevation={3}>
-      <Container maxWidth="lg">
-        <Toolbar disableGutters sx={{ justifyContent: 'space-between' }}>
-          <Box sx={{ display: 'flex', alignItems: 'center' }}>
-            <Navigation />
-          </Box>
-          <Box sx={{ display: 'flex', alignItems: 'center' }}>
-            {isLoggedIn ? <UserMenu /> : <AuthNav />}
-          </Box>
-        </Toolbar>
+    <header className={css.appbar}>
+      <Container>
+        <div>
+          <Navigation />
+        </div>
+        <div>{isLoggedIn ? <UserMenu /> : <AuthNav />}</div>
       </Container>
-    </MuiAppBar>
+    </header>
   );
 };
 

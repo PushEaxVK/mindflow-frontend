@@ -1,5 +1,5 @@
 {
-  "name": "goit-react-hw-08",
+  "name": "mindflow-frontend",
   "private": true,
   "version": "1.0.0",
   "type": "module",
@@ -8,16 +8,10 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "build-github": "vite build --base=/goit-react-hw-08/",
+    "build-github": "vite build --base=/mindflow-frontend/",
     "start": "vite --host"
   },
   "dependencies": {
-    "@emotion/react": "^11.14.0",
-    "@emotion/styled": "^11.14.0",
-    "@fontsource/roboto": "^5.2.5",
-    "@mui/icons-material": "^7.1.0",
-    "@mui/material": "^7.1.0",
-    "@mui/styled-engine-sc": "^7.1.0",
     "@reduxjs/toolkit": "^2.7.0",
     "axios": "^1.9.0",
     "clsx": "^2.1.1",
@@ -31,7 +25,6 @@
     "react-redux": "^9.2.0",
     "react-router-dom": "^7.6.0",
     "redux-persist": "^6.0.0",
-    "styled-components": "^6.1.18",
     "yup": "^1.6.1"
   },
   "devDependencies": {

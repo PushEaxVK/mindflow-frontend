@@ -1,3 +1,18 @@
+:root {
+  --green: #649179;
+  --black: #070721;
+  --light-green: #d1e0d8;
+  --red: #ad6a6c;
+  --purple: #7678ed;
+  --white: #f7fffb;
+  --green-darker: #374f42;
+  --gray: #595d62;
+  --light-gray: #9f9f9f;
+  --font-family: 'Manrope', sans-serif;
+  --second-family: 'DM Sans', sans-serif;
+  --third-family: 'Noto Sans', sans-serif;
+}
+
 *,
 *::before,
 *::after {
