@@ -1,8 +1,12 @@
+import Container from '../../components/Container/Container';
+
 const HomePage = () => {
   return (
-    <div>
-      <p>Welcome!</p>
-    </div>
+    <section>
+      <Container>
+        <h1>Welcome!</h1>
+      </Container>
+    </section>
   );
 };
 
