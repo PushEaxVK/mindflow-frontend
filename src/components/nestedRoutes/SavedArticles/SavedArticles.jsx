@@ -2,7 +2,10 @@ import ArticlesList from '../../ArticlesList/ArticlesList.jsx';
 const SavedArticles = () => {
   return (
     <>
-      <ArticlesList />
+      <ArticlesList
+        icon={'icon-favorite-article'}
+        btnStyle={'FavoriteArticle'}
+      />
     </>
   );
 };

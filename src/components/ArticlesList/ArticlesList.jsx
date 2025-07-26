@@ -1,5 +1,10 @@
 import css from './ArticlesList.module.css';
-const ArticlesList = () => {
+import { Link } from 'react-router-dom';
+
+const ArticlesList = ({
+  icon = 'icon-edit-article',
+  btnStyle = 'EditArticle',
+}) => {
   return (
     <>
       <ul className={css.articlesList}>
@@ -19,16 +24,16 @@ const ArticlesList = () => {
             </p>
           </div>
           <div className={css.navButton}>
-            <a href="" className={css.btnLearnMore} aria-label="Learn more">
+            <Link to="/" className={css.btnLearnMore} aria-label="Learn more">
               Learn more
-            </a>
-            <button aria-label="edit Article" className={css.btnEditArticle}>
+            </Link>
+            <button aria-label="edit Article" className={css[`btn${btnStyle}`]}>
               <svg
-                className={css.svgIconEditArticle}
+                className={css[`svgIcon${btnStyle}`]}
                 width="14.25"
                 height="14.25"
               >
-                <use href="../../../public/icons-profileArticles.svg#icon-edit-article"></use>
+                <use href={`/public/icons-profileArticles.svg#${icon}`}></use>
               </svg>
             </button>
           </div>
