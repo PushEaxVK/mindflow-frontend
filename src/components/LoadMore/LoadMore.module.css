@@ -1,0 +1,26 @@
+.btnLoadMore {
+  border-radius: 64px;
+  border: none;
+  padding: 16px;
+  width: 361px;
+  height: 57px;
+  background: var(--green);
+  font-family: var(--font-family);
+  font-weight: 700;
+  font-size: 18px;
+  color: var(--white);
+}
+
+@media only screen and (min-width: 768px) {
+  .btnLoadMore {
+    width: 289px;
+  }
+
+  .LoadMore {
+    display: flex;
+    justify-content: center;
+  }
+}
+
+@media only screen and (min-width: 1440px) {
+}

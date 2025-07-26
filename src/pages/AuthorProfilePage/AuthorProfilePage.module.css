@@ -1,0 +1,64 @@
+.section_AuthorProfilePage {
+}
+
+.profileTitle {
+  font-family: var(--font-family);
+  font-weight: 700;
+  font-size: 40px;
+  color: var(--black);
+  margin-bottom: 24px;
+}
+
+.profileList {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.imgProfile {
+  border-radius: 256px;
+  width: 137px;
+  height: 137px;
+}
+
+.userName {
+  font-family: var(--font-family);
+  font-weight: 700;
+  font-size: 32px;
+  text-align: center;
+  color: var(--black);
+  margin-bottom: 4px;
+}
+
+.countArticles {
+  font-family: var(--font-family);
+  font-weight: 700;
+  font-size: 18px;
+  color: var(--black);
+}
+
+.profileTabList {
+  display: flex;
+  gap: 38px;
+  margin-bottom: 24px;
+}
+
+.tabItem {
+  text-decoration: none;
+  font-family: var(--font-family);
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--green-darker);
+}
+
+.active {
+  border-bottom: 1px solid #374f42;
+  padding: 0 0 4px 0;
+}
+
+@media only screen and (min-width: 768px) {
+}
+
+@media only screen and (min-width: 1440px) {
+}
