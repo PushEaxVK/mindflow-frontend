@@ -1,5 +1,5 @@
-import css from './ArticleList.module.css';
-const ArticleList = () => {
+import css from './ArticlesList.module.css';
+const ArticlesList = () => {
   return (
     <>
       <ul className={css.articlesList}>
@@ -22,7 +22,7 @@ const ArticleList = () => {
             <a href="" className={css.btnLearnMore} aria-label="Learn more">
               Learn more
             </a>
-            <button aria-label="edit Article" class={css.btnEditArticle}>
+            <button aria-label="edit Article" className={css.btnEditArticle}>
               <svg
                 className={css.svgIconEditArticle}
                 width="14.25"
@@ -38,4 +38,4 @@ const ArticleList = () => {
   );
 };
 
-export default ArticleList;
+export default ArticlesList;

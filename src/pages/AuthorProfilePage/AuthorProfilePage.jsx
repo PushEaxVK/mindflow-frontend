@@ -1,4 +1,4 @@
-import ArticleList from '../../components/ArticlesList/ArticleList.jsx';
+import ArticlesList from '../../components/ArticlesList/ArticleList.jsx';
 import css from './AuthorProfilePage.module.css';
 import { NavLink, Outlet } from 'react-router-dom';
 import Container from '../../components/Container/Container';
@@ -38,7 +38,7 @@ const AuthorProfilePage = () => {
           <NavLink to="saved-articles">Saved Articles</NavLink>
         </nav>
         <Outlet />
-        <ArticleList />
+        <ArticlesList />
       </Container>
     </section>
   );

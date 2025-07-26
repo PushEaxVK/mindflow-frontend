@@ -1,8 +1,8 @@
-import ArticleList from '../../components/ArticlesList/ArticleList';
+import ArticlesList from '../../ArticlesList/ArticlesList.jsx';
 const SavedArticles = () => {
   return (
     <>
-      <ArticleList />
+      <ArticlesList />
     </>
   );
 };
