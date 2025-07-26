@@ -4,6 +4,7 @@ import { NavLink, Outlet } from 'react-router-dom';
 import Container from '../../components/Container/Container';
 import { useLocation, useMatch } from 'react-router-dom';
 import clsx from 'clsx';
+import LoadMore from '../../components/LoadMore/LoadMore.jsx';
 
 const AuthorProfilePage = () => {
   const location = useLocation();
@@ -41,6 +42,7 @@ const AuthorProfilePage = () => {
         </nav>
         <Outlet />
         {isBaseProfile && <ArticlesList />}
+        <LoadMore />
       </Container>
     </section>
   );
