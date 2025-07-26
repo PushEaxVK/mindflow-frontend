@@ -8,15 +8,6 @@ import { PrivateRoute } from '../PrivateRoute';
 import Layout from '../Layout/Layout';
 
 const HomePage = lazy(() => import('../../pages/HomePage/HomePage'));
-const AuthorProfilePage = lazy(() =>
-  import('../../pages/AuthorProfilePage/AuthorProfilePage')
-);
-const MyArticles = lazy(() =>
-  import('../../components/nestedRoutes/MyArticles')
-);
-const SavedArticles = lazy(() =>
-  import('../../components/nestedRoutes/SavedArticles')
-);
 
 function App() {
   const dispatch = useDispatch();
@@ -31,10 +22,6 @@ function App() {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<HomePage />} />
-        </Route>
-        <Route path="/authors/:id" element={<AuthorProfilePage />}>
-          <Route path="my-articles" element={<MyArticles />} />
-          <Route path="saved-articles" element={<SavedArticles />} />
         </Route>
       </Routes>
     </Suspense>

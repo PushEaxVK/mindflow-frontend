@@ -1,4 +1,4 @@
-import ArticleList from '../../components/ArticlesList/ArticleList.jsx';
+import ArticleList from '../../components/ArticlesList/ArticleList';
 const MyArticles = () => {
   return (
     <>

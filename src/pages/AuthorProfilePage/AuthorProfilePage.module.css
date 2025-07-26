@@ -1,0 +1,87 @@
+.section_AuthorProfilePage {
+}
+
+profileTitle {
+  font-family: var(--font-family);
+  font-weight: 700;
+  font-size: 40px;
+  color: var(--black);
+  margin-bottom: 24px;
+}
+
+.profileList {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.imgProfile {
+  border-radius: 256px;
+  width: 137px;
+  height: 137px;
+}
+
+.userName {
+  font-family: var(--font-family);
+  font-weight: 700;
+  font-size: 32px;
+  text-align: center;
+  color: var(--black);
+  margin-bottom: 4px;
+}
+
+.countArticles {
+  font-family: var(--font-family);
+  font-weight: 700;
+  font-size: 18px;
+  color: var(--black);
+}
+
+.profileTabList {
+  display: flex;
+  gap: 38px;
+  margin-bottom: 24px;
+}
+
+.tabItem {
+  text-decoration: none;
+  font-family: var(--font-family);
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--green-darker);
+}
+
+.tabItem.active {
+  border-bottom: 1px solid #374f42;
+  padding: 0 0 4px 0;
+  width: 87px;
+  height: 26px;
+}
+
+.btnLoadMore {
+  border-radius: 64px;
+  border: none;
+  padding: 16px;
+  width: 361px;
+  height: 57px;
+  background: var(--green);
+  font-family: var(--font-family);
+  font-weight: 700;
+  font-size: 18px;
+  color: var(--white);
+}
+
+@media only screen and (min-width: 768px) {
+  .btnLoadMore {
+    width: 289px;
+  }
+
+  .LoadMore {
+    display: flex;
+    justify-content: center;
+  }
+}
+
+@media only screen and (min-width: 1440px) {
+}
