@@ -3,11 +3,17 @@ import css from './AuthorProfilePage.module.css';
 import { NavLink, Outlet } from 'react-router-dom';
 import Container from '../../components/Container/Container';
 import { useLocation, useMatch } from 'react-router-dom';
+import clsx from 'clsx';
 
 const AuthorProfilePage = () => {
   const location = useLocation();
   const match = useMatch('/authors/:id');
   const isBaseProfile = match && location.pathname === match.pathname;
+
+  const buildLinkClass = ({ isActive }) => {
+    return clsx(css.tabItem, isActive && css.active);
+  };
+
   return (
     <section className={css.section_AuthorProfilePage}>
       <Container>
@@ -26,10 +32,10 @@ const AuthorProfilePage = () => {
           </li>
         </ul>
         <nav className={css.profileTabList}>
-          <NavLink to="my-articles" className={css.tabItem}>
+          <NavLink to="my-articles" className={buildLinkClass}>
             My Articles
           </NavLink>
-          <NavLink to="saved-articles" className={css.tabItem}>
+          <NavLink to="saved-articles" className={buildLinkClass}>
             Saved Articles
           </NavLink>
         </nav>

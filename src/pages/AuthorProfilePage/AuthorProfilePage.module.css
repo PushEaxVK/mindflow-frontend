@@ -52,11 +52,9 @@
   color: var(--green-darker);
 }
 
-.tabItem.active {
+.active {
   border-bottom: 1px solid #374f42;
   padding: 0 0 4px 0;
-  width: 87px;
-  height: 26px;
 }
 
 .btnLoadMore {
