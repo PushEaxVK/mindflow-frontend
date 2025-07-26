@@ -25,21 +25,13 @@ const AuthorProfilePage = () => {
             <p className={css.countArticles}>96 articles</p>
           </li>
         </ul>
-        <ul className={css.profileTabList}>
-          <li>
-            <a href="#" className={css.tabItem}>
-              My Articles
-            </a>
-          </li>
-          <li>
-            <a href="#" className={css.tabItem}>
-              Saved Articles
-            </a>
-          </li>
-        </ul>
-        <nav>
-          <NavLink to="my-articles">My Articles</NavLink>
-          <NavLink to="saved-articles">Saved Articles</NavLink>
+        <nav className={css.profileTabList}>
+          <NavLink to="my-articles" className={css.tabItem}>
+            My Articles
+          </NavLink>
+          <NavLink to="saved-articles" className={css.tabItem}>
+            Saved Articles
+          </NavLink>
         </nav>
         <Outlet />
         {isBaseProfile && <ArticlesList />}
