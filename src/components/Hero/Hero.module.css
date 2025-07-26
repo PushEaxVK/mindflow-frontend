@@ -1,0 +1,295 @@
+.hero {
+  position: relative;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  width: 1440px;
+  width: 100%;
+  margin: 0 auto;
+  height: 610px;
+  padding-top: 48px;
+  margin-bottom: 72px;
+}
+
+.content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.title {
+  font-weight: 800;
+  font-size: 92px;
+  line-height: 100%;
+  letter-spacing: -0.02em;
+  color: #374f42;
+  margin-bottom: 56px;
+  width: 599px;
+}
+
+.italic {
+  font-style: italic;
+}
+
+.buttons {
+  display: flex;
+  gap: 24px;
+}
+
+.buttons .primary {
+  border-radius: 64px;
+  padding: 16px;
+  width: 184px;
+  height: 57px;
+  padding: 0.8rem 1.5rem;
+  background-color: #649179;
+  color: #f7fffb;
+  border: none;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 18px;
+}
+
+.btn {
+  text-decoration: none;
+  color: #f7fffb;
+}
+.buttons .secondary {
+  padding: 0.8rem 1.5rem;
+  border: 2px solid #649179;
+  background: none;
+  color: #649179;
+  border-radius: 64px;
+  padding: 16px;
+  width: 184px;
+  height: 57px;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 18px;
+}
+
+.btn2 {
+  text-decoration: none;
+  color: #649179;
+}
+.buttons .primary:hover,
+.buttons .primary:focus {
+  background-color: #374f42;
+}
+
+.buttons .secondary:hover {
+  border-color: #374f42;
+  color: #374f42;
+}
+.image {
+  position: absolute;
+  top: 48px;
+  right: 0;
+  width: 805px;
+  height: 562px;
+  background-image: url('/img/Union-d-1x.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: 1;
+}
+@media screen and (min-resolution: 2dppx),
+  screen and (-webkit-min-device-pixel-ratio: 2),
+  screen and (min-resolution: 192dpi) {
+  .advertisement-card {
+    background-image: url('/img/Union-d-2x.png');
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1439px) {
+  .hero {
+    position: relative;
+    width: 100%;
+    height: 427px;
+    padding-top: 22px;
+    display: flex;
+    flex-direction: column;
+  }
+  .content {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  .title {
+    font-weight: 700;
+    font-size: 40px;
+    margin-bottom: 0;
+    width: 372px;
+  }
+
+  .buttons {
+    position: absolute;
+    bottom: 22px;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+  }
+
+  .buttons .primary,
+  .buttons .secondary {
+    border-radius: 64px;
+    width: 249px;
+    height: 57px;
+    font-weight: 700;
+    font-size: 18px;
+  }
+
+  .image {
+    top: 22px;
+    width: 430px;
+    height: 383px;
+    background-image: url('/img/Union-t-1x.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+
+  @media screen and (min-resolution: 2dppx),
+    screen and (-webkit-min-device-pixel-ratio: 2),
+    screen and (min-resolution: 192dpi) {
+    .advertisement-card {
+      background-image: url('/img/Union-t-2x.png');
+    }
+  }
+}
+
+@media (min-width: 393px) and (max-width: 767px) {
+  .hero {
+    flex-direction: column;
+    justify-content: center;
+    height: auto;
+    width: 393px;
+    padding-top: 16px;
+  }
+
+  .image {
+    order: 1;
+    position: relative;
+    top: 0;
+    right: 0;
+    width: 361px;
+    height: 321px;
+    background-image: url('/img/Union-m-1x.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+
+  @media screen and (min-resolution: 2dppx),
+    screen and (-webkit-min-device-pixel-ratio: 2),
+    screen and (min-resolution: 192dpi) {
+    .advertisement-card {
+      background-image: url('/img/Union-m-2x.png');
+    }
+  }
+  .content {
+    order: 2;
+    align-items: center;
+    text-align: center;
+    z-index: 2;
+    width: 100%;
+    max-width: 360px;
+  }
+
+  .title {
+    margin-bottom: 30px;
+    text-align: left;
+    font-weight: 700;
+    font-size: 40px;
+    max-width: 372px;
+  }
+
+  .buttons {
+    order: 3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    width: 100%;
+  }
+
+  .buttons .primary,
+  .buttons .secondary {
+    border-radius: 64px;
+    padding: 16px 121px;
+    width: 100%;
+    max-width: 361px;
+    height: 57px;
+  }
+}
+
+@media (max-width: 392px) {
+  .hero {
+    flex-direction: column;
+    justify-content: center;
+    height: auto;
+    width: 100%;
+    padding-top: 16px;
+  }
+
+  .image {
+    order: 1;
+    position: relative;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 321px;
+    background-image: url('/img/Union-m-1x.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+
+  @media screen and (min-resolution: 2dppx),
+    screen and (-webkit-min-device-pixel-ratio: 2),
+    screen and (min-resolution: 192dpi) {
+    .advertisement-card {
+      background-image: url('/img/Union-m-2x.png');
+    }
+  }
+
+  .content {
+    order: 2;
+    align-items: center;
+    text-align: center;
+    z-index: 2;
+    width: 100%;
+  }
+
+  .title {
+    margin-bottom: 30px;
+    text-align: left;
+    font-weight: 700;
+    font-size: 40px;
+    width: 100%;
+  }
+
+  .buttons {
+    order: 3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    width: 100%;
+  }
+
+  .buttons .primary,
+  .buttons .secondary {
+    border-radius: 64px;
+    padding: 16px 70px;
+    width: 100%;
+    height: 57px;
+  }
+}
