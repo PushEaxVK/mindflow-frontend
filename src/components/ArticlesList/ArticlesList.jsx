@@ -28,7 +28,7 @@ const ArticlesList = () => {
                 width="14.25"
                 height="14.25"
               >
-                <use href="/asset/icons-profileArticles.svg#icon-edit-article"></use>
+                <use href="../../../public/icons-profileArticles.svg#icon-edit-article"></use>
               </svg>
             </button>
           </div>

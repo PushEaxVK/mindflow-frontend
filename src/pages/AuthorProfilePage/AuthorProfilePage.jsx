@@ -2,8 +2,12 @@ import ArticlesList from '../../components/ArticlesList/ArticleList.jsx';
 import css from './AuthorProfilePage.module.css';
 import { NavLink, Outlet } from 'react-router-dom';
 import Container from '../../components/Container/Container';
+import { useLocation, useMatch } from 'react-router-dom';
 
 const AuthorProfilePage = () => {
+  const location = useLocation();
+  const match = useMatch('/authors/:id');
+  const isBaseProfile = match && location.pathname === match.pathname;
   return (
     <section className={css.section_AuthorProfilePage}>
       <Container>
@@ -38,7 +42,7 @@ const AuthorProfilePage = () => {
           <NavLink to="saved-articles">Saved Articles</NavLink>
         </nav>
         <Outlet />
-        <ArticlesList />
+        {isBaseProfile && <ArticlesList />}
       </Container>
     </section>
   );
