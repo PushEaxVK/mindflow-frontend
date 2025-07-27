@@ -6,31 +6,45 @@ import { Route, Routes } from 'react-router-dom';
 import { RestrictedRoute } from '../RestrictedRoute';
 import { PrivateRoute } from '../PrivateRoute';
 import Layout from '../Layout/Layout';
-import Loader from '../../components/Loader/Loader.jsx';
+import Loader from '../Loader/Loader';
 
 const HomePage = lazy(() => import('../../pages/HomePage/HomePage'));
-const ArticlePage = lazy(() =>
-  import('../../pages/ArticlePage/ArticlePage.jsx')
-);
 const ArticlesPage = lazy(() =>
-  import('../../pages/ArticlesPage/ArticlesPage.jsx')
+  import('../../pages/ArticlesPage/ArticlesPage')
 );
 const AuthorProfilePage = lazy(() =>
-  import('../../pages/AuthorProfilePage/AuthorProfilePage.jsx')
+  import('../../pages/AuthorProfilePage/AuthorProfilePage')
 );
 const AuthorsPage = lazy(() =>
-  import('../../pages/AuthorsPage/AuthorsPage.jsx')
+  import('../../pages/AuthorsPage/AuthorsPage')
+);
+const LoginPage = lazy(() => import('../../pages/LoginPage/LoginPage'));
+const MyProfilePage = lazy(() =>
+  import('../../pages/MyProfilePage/MyProfilePage')
+);
+const ArticlePage = lazy(() =>
+  import('../../pages/ArticlePage/ArticlePage')
 );
 const CreateArticlePage = lazy(() =>
-  import('../../pages/CreateArticlePage/CreateArticlePage.jsx')
+  import('../../pages/CreateArticlePage/CreateArticlePage')
 );
-const LoginPage = lazy(() => import('../../pages/LoginPage/LoginPage.jsx'));
-const RegisterPage = lazy(() =>
-  import('../../pages/RegisterPage/RegisterPage.jsx')
+const UploadPhotoPage = lazy(() =>
+  import('../../pages/UploadPhotoPage/UploadPhotoPage')
 );
 const UploadPhoto = lazy(() =>
   import('../../pages/UploadPhoto/UploadPhoto.jsx')
 );
+const RegisterPage = lazy(() =>
+  import('../../pages/RegisterPage/RegisterPage')
+);
+const MyArticles = lazy(() =>
+  import('../nestedRoutes/MyArticles/MyArticles')
+);
+const SavedArticles = lazy(() =>
+  import('../nestedRoutes/SavedArticles/SavedArticles')
+);
+const NotFound = lazy(() => import('../../pages/NotFound/NotFound'));
+
 
 const App = () => {
   const dispatch = useDispatch();
@@ -40,11 +54,7 @@ const App = () => {
     dispatch(refreshUser());
   }, [dispatch]);
 
-  if (isRefreshing) {
-    return <Loader />;
-  }
-
-  return (
+  return isRefreshing ? null : (
     <Suspense fallback={<Loader />}>
       <Routes>
         <Route path="/" element={<Layout />}>
@@ -54,6 +64,21 @@ const App = () => {
           <Route path="authors" element={<AuthorsPage />} />
           <Route path="authors/:id" element={<AuthorProfilePage />} />
 
+          <Route
+            path="profile"
+            element={
+              <PrivateRoute redirectTo="/login" component={<MyProfilePage />} />
+            }
+          >
+            <Route path="my-articles" element={<MyArticles />} />
+            <Route path="saved-articles" element={<SavedArticles />} />
+          </Route>
+          <Route
+            path="register"
+            element={
+              <RestrictedRoute redirectTo="/" component={<RegisterPage />} />
+            }
+          />
           <Route
             path="create"
             element={
@@ -82,8 +107,7 @@ const App = () => {
               <RestrictedRoute redirectTo="/" component={<RegisterPage />} />
             }
           />
-
-          <Route path="*" element={<HomePage />} />
+          <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
     </Suspense>
@@ -91,3 +115,4 @@ const App = () => {
 };
 
 export default App;
+
