@@ -1,4 +1,5 @@
 import styles from './Hero.module.css';
+import { Link } from 'react-router-dom';
 
 function Hero() {
   return (
@@ -14,9 +15,9 @@ function Hero() {
             </a>
           </button>
           <button className={styles.secondary}>
-            <a href="#register" className={styles.btn2}>
+            <Link to="/register" className={styles.btn2}>
               Register
-            </a>
+            </Link>
           </button>
         </div>
       </div>

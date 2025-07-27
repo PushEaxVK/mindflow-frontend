@@ -43,50 +43,54 @@ function AboutUs() {
           />
         </picture>
       </div>
-      <div className={styles.imgRow}>
-        <picture>
-          <source
-            srcSet="
+      <ul className={styles.imgRow}>
+        <li>
+          <picture>
+            <source
+              srcSet="
             ../../../public/img/Image-2-d-1x.jpg 1x,
             ../../../public/img/Image-2-d-2x.jpg 2x
           "
-            media="(min-width: 1440px)"
-          />
-          <source
-            srcSet="
+              media="(min-width: 1440px)"
+            />
+            <source
+              srcSet="
             ../../../public/img/Container-t-1x.jpg 1x,
             ../../../public/img/Container-t-2x.jpg 2x
           "
-            media="(min-width: 768px)"
-          />
-          <source
-            srcSet="
+              media="(min-width: 768px)"
+            />
+            <source
+              srcSet="
             ../../../public/img/Image-2-m-1x.jpg 1x,
             ../../../public/img/Image-2-m-2x.jpg 2x
           "
-            media="(max-width: 767px)"
-          />
-          <img
-            className={styles.img}
-            src="../../../public/img/Image-2-d-1x.jpg"
-            alt="Group hugging at sunset"
-          />
-        </picture>
-        <picture>
-          <source
-            srcSet="
+              media="(max-width: 767px)"
+            />
+            <img
+              className={styles.img}
+              src="../../../public/img/Image-2-d-1x.jpg"
+              alt="Group hugging at sunset"
+            />
+          </picture>
+        </li>
+        <li>
+          <picture>
+            <source
+              srcSet="
             ../../../public/img/Image-3-d-1x.jpg 1x,
             ../../../public/img/Image-3-d-1x.jpg 2x
           "
-            media="(min-width: 1440px)"
-          />
-          <img
-            className={styles.imgtwo}
-            src="../../../public/img/Image-3-d-1x.jpg"
-            alt="Person meditating at sunrise"
-          />
-        </picture>
-      </div>
+              media="(min-width: 1440px)"
+            />
+            <img
+              className={styles.imgtwo}
+              src="../../../public/img/Image-3-d-1x.jpg"
+              alt="Person meditating at sunrise"
+            />
+          </picture>
+        </li>
+      </ul>
     </section>
   );
 }
