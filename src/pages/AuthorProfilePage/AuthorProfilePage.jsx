@@ -1,4 +1,4 @@
-import ArticlesList from '../../components/ArticlesList/ArticleList.jsx';
+import ArticlesList from '../../components/ArticlesList/ArticlesList';
 import css from './AuthorProfilePage.module.css';
 import { NavLink, Outlet } from 'react-router-dom';
 import Container from '../../components/Container/Container';
