@@ -19,7 +19,11 @@ const ArticlesItem = ({ icon, btnStyle }) => {
         </p>
       </div>
       <div className={css.navButton}>
-        <Link to="/" className={css.btnLearnMore} aria-label="Learn more">
+        <Link
+          to="articles/:id"
+          className={css.btnLearnMore}
+          aria-label="Learn more"
+        >
           Learn more
         </Link>
         <button aria-label="edit Article" className={css[`btn${btnStyle}`]}>
