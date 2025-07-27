@@ -5,7 +5,7 @@ function AboutUs() {
     <section className={styles.aboutUs}>
       <div className={styles.topRow}>
         <div className={styles.content}>
-          <h1 className={styles.title}>About us</h1>
+          <h2 className={styles.title}>About us</h2>
           <p className={styles.text}>
             Harmoniq is a mindful publishing platform dedicated to mental health
             and well-being. We bring together writers, thinkers, and readers who

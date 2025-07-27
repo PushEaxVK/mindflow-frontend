@@ -35,11 +35,13 @@ function TopCreators() {
             </svg>
           </Link>
         </div>
-        <div className={styles.creatorsGrid}>
+        <ul className={styles.creatorsGrid}>
           {creators.map((creator) => (
-            <CreatorCard key={creator.id || creator.name} creator={creator} />
+            <li key={creator.id || creator.name}>
+              <CreatorCard creator={creator} />
+            </li>
           ))}
-        </div>
+        </ul>
       </div>
     </section>
   );
