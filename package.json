@@ -12,6 +12,10 @@
     "start": "vite --host"
   },
   "dependencies": {
+    "@fontsource/dm-sans": "^5.2.6",
+    "@fontsource/manrope": "^5.2.6",
+    "@fontsource/merienda": "^5.2.6",
+    "@fontsource/noto-sans": "^5.2.7",
     "@reduxjs/toolkit": "^2.7.0",
     "axios": "^1.9.0",
     "clsx": "^2.1.1",
