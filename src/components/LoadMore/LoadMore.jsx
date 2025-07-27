@@ -3,7 +3,7 @@ import css from './LoadMore.module.css';
 const LoadMore = () => {
   return (
     <div className={css.LoadMore}>
-      <button class={css.btnLoadMore}>Load More</button>
+      <button className={css.btnLoadMore}>Load More</button>
     </div>
   );
 };
