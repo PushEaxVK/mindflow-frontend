@@ -1,0 +1,44 @@
+.nav {
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  align-items: baseline;
+  align-items: center;
+  gap: 32px;
+}
+
+.link {
+  position: relative;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 12px;
+  color: var(--green-darker);
+  transition: color 0.3s ease;
+
+  &.active::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    height: 1px;
+    width: 100%;
+    background-color: var(--green-darker);
+  }
+  &:hover {
+    color: var(--green);
+  }
+}
+
+@media screen and (min-width: 768px) {
+}
+
+@media screen and (min-width: 1440px) {
+  .nav {
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+    align-items: baseline;
+    align-items: center;
+    gap: 32px;
+  }
+}

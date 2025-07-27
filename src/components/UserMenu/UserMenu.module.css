@@ -1,0 +1,75 @@
+.user__menu {
+  display: flex;
+  gap: 32px;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.user__name {
+  font-weight: 700;
+  font-size: 12px;
+  color: var(--green-darker);
+}
+.user__wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.btn__logout {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: none;
+  border: none;
+  display: flex;
+  width: 24px;
+  height: 24px;
+}
+
+.btn__icon {
+  width: 17px;
+  height: 16px;
+  stroke: var(--green-darker);
+  stroke-width: 1.33px;
+  fill: none;
+}
+
+.user__name::after {
+  content: '';
+  display: inline-block;
+  width: 1px;
+  height: 39px;
+  background-color: var(--green-darker);
+  margin-left: 16px;
+  margin-right: 16px;
+  vertical-align: middle;
+}
+
+.btn__create {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 16px;
+  border: none;
+  color: var(--white);
+  border-radius: 64px;
+  padding: 12px 16px;
+  background-color: var(--green);
+  transition: all 0.3s ease;
+
+  &:hover {
+    color: var(--white);
+    background-color: var(--green-darker);
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .user__menu {
+    display: flex;
+    gap: 32px;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
