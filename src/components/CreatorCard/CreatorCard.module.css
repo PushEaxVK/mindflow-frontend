@@ -1,0 +1,31 @@
+.creatorCard {
+  width: 184px;
+  height: 233px;
+  padding: 12px;
+}
+
+.name {
+  font-weight: 700;
+  font-size: 24px;
+  text-align: center;
+  color: black;
+}
+
+.avatar {
+  border-radius: 256px;
+  width: 160px;
+  height: 160px;
+  margin-bottom: 16px;
+}
+
+@media (min-width: 393px) and (max-width: 767px) {
+  .creatorCard {
+    width: 172px;
+    height: 221px;
+  }
+
+  .avatar {
+    width: 148px;
+    height: 148px;
+  }
+}

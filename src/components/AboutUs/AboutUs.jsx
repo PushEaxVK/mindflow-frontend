@@ -5,7 +5,7 @@ function AboutUs() {
     <section className={styles.aboutUs}>
       <div className={styles.topRow}>
         <div className={styles.content}>
-          <h1 className={styles.title}>About us</h1>
+          <h2 className={styles.title}>About us</h2>
           <p className={styles.text}>
             Harmoniq is a mindful publishing platform dedicated to mental health
             and well-being. We bring together writers, thinkers, and readers who
@@ -43,50 +43,54 @@ function AboutUs() {
           />
         </picture>
       </div>
-      <div className={styles.imgRow}>
-        <picture>
-          <source
-            srcSet="
+      <ul className={styles.imgRow}>
+        <li>
+          <picture>
+            <source
+              srcSet="
             /img/Image-2-d-1x.jpg 1x,
             /img/Image-2-d-2x.jpg 2x
           "
-            media="(min-width: 1440px)"
-          />
-          <source
-            srcSet="
+              media="(min-width: 1440px)"
+            />
+            <source
+              srcSet="
             /img/Container-t-1x.jpg 1x,
             /img/Container-t-2x.jpg 2x
           "
-            media="(min-width: 768px)"
-          />
-          <source
-            srcSet="
+              media="(min-width: 768px)"
+            />
+            <source
+              srcSet="
             /img/Image-2-m-1x.jpg 1x,
             /img/Image-2-m-2x.jpg 2x
           "
-            media="(max-width: 767px)"
-          />
-          <img
-            className={styles.img}
-            src="/img/Image-2-d-1x.jpg"
-            alt="Group hugging at sunset"
-          />
-        </picture>
-        <picture>
-          <source
-            srcSet="
+              media="(max-width: 767px)"
+            />
+            <img
+              className={styles.img}
+              src="/img/Image-2-d-1x.jpg"
+              alt="Group hugging at sunset"
+            />
+          </picture>
+        </li>
+        <li>
+          <picture>
+            <source
+              srcSet="
             /img/Image-3-d-1x.jpg 1x,
             /img/Image-3-d-1x.jpg 2x
           "
-            media="(min-width: 1440px)"
-          />
-          <img
-            className={styles.imgtwo}
-            src="/img/Image-3-d-1x.jpg"
-            alt="Person meditating at sunrise"
-          />
-        </picture>
-      </div>
+              media="(min-width: 1440px)"
+            />
+            <img
+              className={styles.imgtwo}
+              src="/img/Image-3-d-1x.jpg"
+              alt="Person meditating at sunrise"
+            />
+          </picture>
+        </li>
+      </ul>
     </section>
   );
 }
