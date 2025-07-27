@@ -1,5 +1,10 @@
+import ArticlesList from '../../ArticlesList/ArticlesList.jsx';
 const MyArticles = () => {
-  return <div>MyArticles</div>;
+  return (
+    <>
+      <ArticlesList icon={'icon-edit-article'} btnStyle={'EditArticle'} />
+    </>
+  );
 };
 
 export default MyArticles;

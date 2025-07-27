@@ -1,10 +1,10 @@
-import Container from '../../components/Container/Container.jsx';
+import Container from '../../components/Container/Container';
 
 const ArticlePage = () => {
   return (
     <section>
       <Container>
-        <h1>ArticlePage</h1>
+        <h1>ArticlePage!</h1>
       </Container>
     </section>
   );

@@ -1,5 +1,14 @@
+import ArticlesList from '../../ArticlesList/ArticlesList.jsx';
+
 const SavedArticles = () => {
-  return <div>SavedArticles</div>;
+  return (
+    <>
+      <ArticlesList
+        icon={'icon-favorite-article'}
+        btnStyle={'FavoriteArticle'}
+      />
+    </>
+  );
 };
 
 export default SavedArticles;
