@@ -26,12 +26,8 @@ const ArticlesItem = ({ icon, btnStyle }) => {
         >
           Learn more
         </Link>
-        <button aria-label="edit Article" className={css[`btn${btnStyle}`]}>
-          <svg
-            className={css[`svgIcon${btnStyle}`]}
-            width="14.25"
-            height="14.25"
-          >
+        <button className={css[`btn${btnStyle}`]}>
+          <svg className={css[`svgIcon${btnStyle}`]}>
             <use href={`/public/icons-profileArticles.svg#${icon}`}></use>
           </svg>
         </button>

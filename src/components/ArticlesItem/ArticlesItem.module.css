@@ -75,25 +75,51 @@
   height: 40px;
   background: var(--green);
 }
+.btnFavoriteArticleNotSaved {
+  border: 1px solid var(--green-darker);
+  border-radius: 64px;
+  padding: 8px;
+  width: 40px;
+  height: 40px;
+  background: var(--light-green);
+}
 
 .svgIconFavoriteArticle {
   fill: none;
   stroke: var(--white);
+  width: 14px;
+  height: 17px;
+}
+
+.svgIconFavoriteArticleNotSaved {
+  fill: none;
+  stroke: var(--green-darker);
+  width: 14px;
+  height: 17px;
 }
 
 .svgIconEditArticle {
   fill: none;
   stroke: var(--green-darker);
+  width: 14px;
+  height: 17px;
 }
 
 @media only screen and (min-width: 768px) {
   .articlesItem {
     width: calc((100% - 24px) / 2);
   }
+
+  .btnLearnMore {
+    width: 268px;
+  }
 }
 
 @media only screen and (min-width: 1440px) {
   .articlesItem {
     width: calc((100% - 48px) / 3);
+  }
+  .btnLearnMore {
+    width: 320px;
   }
 }
