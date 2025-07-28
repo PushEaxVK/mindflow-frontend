@@ -21,16 +21,22 @@
 }
 
 .title {
+  font-family: var(--font-family);
   font-weight: 800;
   font-size: 92px;
   line-height: 100%;
   letter-spacing: -0.02em;
-  color: #374f42;
+  color: var(--green-darker);
   margin-bottom: 56px;
   width: 599px;
 }
 
 .italic {
+  font-family: var(--fourth-family);
+  font-weight: 800;
+  font-size: 92px;
+  line-height: 100%;
+  letter-spacing: -0.02em;
   font-style: italic;
 }
 
@@ -45,44 +51,46 @@
   width: 184px;
   height: 57px;
   padding: 0.8rem 1.5rem;
-  background-color: #649179;
-  color: #f7fffb;
+  background-color: var(--green);
+  color: var(--white);
   border: none;
   cursor: pointer;
+  font-family: var(--font-family);
   font-weight: 700;
   font-size: 18px;
 }
 
 .btn {
   text-decoration: none;
-  color: #f7fffb;
+  color: var(--white);
 }
 .buttons .secondary {
   padding: 0.8rem 1.5rem;
-  border: 2px solid #649179;
+  border: 2px solid var(--green);
   background: none;
-  color: #649179;
+  color: var(--green);
   border-radius: 64px;
   padding: 16px;
   width: 184px;
   height: 57px;
   cursor: pointer;
+  font-family: var(--font-family);
   font-weight: 700;
   font-size: 18px;
 }
 
 .btn2 {
   text-decoration: none;
-  color: #649179;
+  color: var(--green);
 }
 .buttons .primary:hover,
 .buttons .primary:focus {
-  background-color: #374f42;
+  background-color: var(--green-darker);
 }
 
 .buttons .secondary:hover {
-  border-color: #374f42;
-  color: #374f42;
+  border-color: var(--green-darker);
+  color: var(--green-darker);
 }
 .image {
   position: absolute;
