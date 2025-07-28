@@ -4,6 +4,9 @@ import { fetchAllArticles } from './operation';
 const initialState = {
   articles: {
     items: [],
+    page: 1,
+    pages: 1,
+    total: null,
     loadingArticles: false,
     errorArticles: null,
   },
@@ -16,7 +19,11 @@ const articlesSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchAllArticles.fulfilled, (state, action) => {
-        state.articles.items = action.payload;
+        const { articles, page, pages, total } = action.payload;
+        state.articles.items = articles;
+        state.articles.page = page;
+        state.articles.pages = pages;
+        state.articles.total = total;
         state.articles.loadingArticles = false;
       })
 
