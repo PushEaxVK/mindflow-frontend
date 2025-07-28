@@ -1,0 +1,224 @@
+.formWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 20px;
+  border-radius: 32px;
+  padding: 48px 32px;
+  width: 342px;
+  height: 632px;
+  background: #d1e0d8;
+  margin: 0 auto;
+  box-shadow: 0 0 16px rgba(0, 0, 0, 0.05);
+}
+
+h2 {
+  font-family: 'Manrope', sans-serif;
+  font-weight: 700;
+  font-size: 32px;
+  text-align: center;
+  color: #070721;
+  padding-top: 48px;
+}
+
+p {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.55;
+  text-align: center;
+  color: #070721;
+
+  font-family: var(--second-family);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+  gap: 27px;
+  width: 100%;
+  margin-top: 20px;
+  margin-bottom: 27px;
+  padding-left: 32px;
+  padding-right: 32px;
+}
+
+.fieldWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 4px;
+  width: 100%;
+  height: 61px;
+  background: transparent;
+}
+
+.fieldWrapper label {
+  font-family: 'Manrope', sans-serif;
+  font-weight: 400;
+  font-size: 12px;
+  color: #070721;
+  margin: 0;
+}
+
+.fieldWrapper input {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: row;
+  gap: 8px;
+  border: 1px solid #9f9f9f;
+  border-radius: 8px;
+  padding: 8px;
+  width: 100%;
+  height: 41px;
+  background: #f7fffb;
+  margin: 0;
+  font-family: var(--font-family);
+  box-sizing: border-box;
+}
+
+label {
+  /* display: flex; */
+  /* flex-direction: column; */
+  font-family: 'Manrope', sans-serif;
+  font-weight: 400;
+  font-size: 12px;
+  color: #070721;
+}
+
+input {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: row;
+  gap: 8px;
+  border: 1px solid #9f9f9f;
+  border-radius: 8px;
+  padding: 8px;
+  width: 100%;
+  height: 41px;
+  background: #f7fffb;
+  margin-top: 4px;
+  /* font-size: 1rem; */
+  font-family: var(--font-family);
+}
+
+input::placeholder {
+  font-family: 'Manrope', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.55;
+  color: #595d62;
+}
+
+.passwordWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.inputWithIcon {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.iconWrapper {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: 'Manrope', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.55;
+  color: #595d62;
+  display: flex;
+  align-items: center;
+  height: 100%;
+  z-index: 2;
+}
+
+button[type='submit'] {
+  margin-top: 1rem;
+  background-color: var(--green-darker);
+  color: var(--white);
+  font-weight: bold;
+  border: none;
+  padding: 12px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-family: var(--font-family);
+}
+
+button[type='submit']:hover {
+  background-color: var(--green);
+}
+
+.error {
+  color: var(--red);
+  font-size: 0.85rem;
+  margin-top: 0.3rem;
+}
+
+.login {
+  text-align: center;
+  margin-top: 1rem;
+  font-size: 0.95rem;
+}
+
+.login a {
+  color: var(--green-darker);
+  text-decoration: none;
+  font-weight: bold;
+}
+
+/* Password strength bar */
+
+/* 🌐 Responsive styles */
+@media screen and (max-width: 768px) {
+  .formWrapper {
+    padding: 1.5rem;
+    max-width: 90%;
+  }
+
+  input {
+    font-size: 0.95rem;
+    padding: 10px 12px;
+  }
+
+  button[type='submit'] {
+    padding: 10px;
+    font-size: 0.95rem;
+  }
+
+  h2 {
+    font-size: 1.75rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .formWrapper {
+    padding: 1rem;
+    border-radius: 16px;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+  }
+
+  p {
+    font-size: 0.9rem;
+  }
+
+  .toggle {
+    font-size: 1rem;
+  }
+}
