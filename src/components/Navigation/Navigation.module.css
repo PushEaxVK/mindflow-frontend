@@ -18,9 +18,9 @@
   &.active::after {
     content: '';
     position: absolute;
-    bottom: -2px;
+    bottom: -5px;
     left: 0;
-    height: 1px;
+    height: 1.33px;
     width: 100%;
     background-color: var(--green-darker);
   }

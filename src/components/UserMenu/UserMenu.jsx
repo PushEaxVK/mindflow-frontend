@@ -10,9 +10,6 @@ const UserMenu = () => {
 
   return (
     <div className={s.user__menu}>
-      <button onClick={() => {}} className={s.btn__create}>
-        Create an article
-      </button>
       <div className={s.user__wrapper}>
         <UserAvatar
           className={s.user__avatar}
