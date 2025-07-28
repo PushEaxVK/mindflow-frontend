@@ -17,28 +17,28 @@ function AboutUs() {
         <picture>
           <source
             srcSet="
-            ../../../public/img/Image-d-1x.jpg 1x,
-            ../../../public/img/Image-d-2x.jpg 2x
+            /img/Image-d-1x.jpg 1x,
+            /img/Image-d-2x.jpg 2x
           "
             media="(min-width: 1440px)"
           />
           <source
             srcSet="
-            ../../../public/img/Image-1-t-1x.jpg 1x,
-            ../../../public/img/Image-1-t-1x.jpg 2x
+            /img/Image-1-t-1x.jpg 1x,
+            /img/Image-1-t-1x.jpg 2x
           "
             media="(min-width: 768px)"
           />
           <source
             srcSet="
-            ../../../public/img/Image-m-1x.jpg 1x,
-            ../../../public/img/Image-m-2x.jpg  2x
+            /img/Image-m-1x.jpg 1x,
+            /img/Image-m-2x.jpg  2x
           "
             media="(max-width: 767px)"
           />
           <img
             className={styles.imgTopRight}
-            src="../../../public/img/Image-d-1x.jpg"
+            src="/img/Image-d-1x.jpg"
             alt="Lotus flower"
           />
         </picture>
@@ -48,28 +48,28 @@ function AboutUs() {
           <picture>
             <source
               srcSet="
-            ../../../public/img/Image-2-d-1x.jpg 1x,
-            ../../../public/img/Image-2-d-2x.jpg 2x
+            /img/Image-2-d-1x.jpg 1x,
+            /img/Image-2-d-2x.jpg 2x
           "
               media="(min-width: 1440px)"
             />
             <source
               srcSet="
-            ../../../public/img/Container-t-1x.jpg 1x,
-            ../../../public/img/Container-t-2x.jpg 2x
+            /img/Container-t-1x.jpg 1x,
+            /img/Container-t-2x.jpg 2x
           "
               media="(min-width: 768px)"
             />
             <source
               srcSet="
-            ../../../public/img/Image-2-m-1x.jpg 1x,
-            ../../../public/img/Image-2-m-2x.jpg 2x
+            /img/Image-2-m-1x.jpg 1x,
+            /img/Image-2-m-2x.jpg 2x
           "
               media="(max-width: 767px)"
             />
             <img
               className={styles.img}
-              src="../../../public/img/Image-2-d-1x.jpg"
+              src="/img/Image-2-d-1x.jpg"
               alt="Group hugging at sunset"
             />
           </picture>
@@ -78,14 +78,14 @@ function AboutUs() {
           <picture>
             <source
               srcSet="
-            ../../../public/img/Image-3-d-1x.jpg 1x,
-            ../../../public/img/Image-3-d-1x.jpg 2x
+            /img/Image-3-d-1x.jpg 1x,
+            /img/Image-3-d-1x.jpg 2x
           "
               media="(min-width: 1440px)"
             />
             <img
               className={styles.imgtwo}
-              src="../../../public/img/Image-3-d-1x.jpg"
+              src="/img/Image-3-d-1x.jpg"
               alt="Person meditating at sunrise"
             />
           </picture>
