@@ -1,6 +1,6 @@
 .container {
   margin: 0 auto;
-  padding: 0 16px;
+  padding: 46px 16px;
 }
 
 @media only screen and (min-width: 393px) {
@@ -12,13 +12,13 @@
 @media only screen and (min-width: 768px) {
   .container {
     width: 768px;
-    padding: 0 32px;
+    padding: 46px 32px;
   }
 }
 
 @media only screen and (min-width: 1440px) {
   .container {
     width: 1440px;
-    padding: 0 108px;
+    padding: 46px 108px;
   }
 }
