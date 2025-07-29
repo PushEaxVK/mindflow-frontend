@@ -1,3 +1,4 @@
+import { createAsyncThunk } from '@reduxjs/toolkit';
 import serviceApi from '../../services/api';
 import { createThunk } from '../createThunk';
 
@@ -9,9 +10,17 @@ export const login = createThunk('auth/login', async (body) =>
   serviceApi.auth.login(body)
 );
 
-export const logout = createThunk('auth/logout', async () =>
-  serviceApi.auth.logout()
-);
+// export const logout = createThunk('auth/logout', async () =>
+//   serviceApi.auth.logout()
+// );
+
+export const logout = createAsyncThunk('auth/logout', async (_, thunkAPI) => {
+  try {
+    await serviceApi.auth.logout();
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error.message);
+  }
+});
 
 export const refreshUser = createThunk('auth/refresh', async (_, thunkAPI) => {
   const savedToken = thunkAPI.getState().auth.token;

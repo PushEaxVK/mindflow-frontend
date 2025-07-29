@@ -1,9 +1,12 @@
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { useMediaQuery } from 'react-responsive';
 import { selectIsLoggedIn } from '../../redux/auth/selectors';
-import { toggleModal } from '../../redux/modal/slice';
+import { closeModal, toggleModal } from '../../redux/modal/slice';
+import {
+  selectModalIsOpen,
+  selectModalType,
+} from '../../redux/modal/selectors';
 
 import Navigation from '../Navigation/Navigation';
 import AuthNav from '../AuthNav/AuthNav';
@@ -19,20 +22,28 @@ const AppBar = () => {
   const isMobile = useMediaQuery({ maxWidth: 767 });
   const isDesktop = useMediaQuery({ minWidth: 1440 });
   const isLoggedIn = useSelector(selectIsLoggedIn);
+
+  const isOpen = useSelector(selectModalIsOpen);
+  const modalType = useSelector(selectModalType);
+  const isBurgerMenuOpen = isOpen && modalType === 'mobileMenu';
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [burgerOpen, setBurgerOpen] = useState(false);
 
   const handleBurgerToggle = () => {
-    setBurgerOpen(!burgerOpen);
-    dispatch(toggleModal());
+    dispatch(toggleModal('mobileMenu'));
+  };
+
+  const handleLogoClick = () => {
+    dispatch(closeModal());
+    navigate('/');
   };
 
   return (
     <header className={s.appbar}>
       <Container>
         <div className={s.wrapper}>
-          <div className={s.logo} onClick={() => navigate('/')}>
+          <div className={s.logo} onClick={handleLogoClick}>
             <svg className={s.logo__icon}>
               <use href="/img/icons.svg#icon-logo-min"></use>
             </svg>
@@ -52,25 +63,12 @@ const AppBar = () => {
             </nav>
           )}
 
-          {isTablet && (
-            <div className={s.actions}>
-              {isLoggedIn ? <ButtonCreate /> : <AuthNav />}
-              <button
-                className={clsx(s.burger, { [s.open]: burgerOpen })}
-                onClick={handleBurgerToggle}
-                aria-label="Toggle menu"
-              >
-                <span className={s.line}></span>
-                <span className={s.line}></span>
-                <span className={s.line}></span>
-              </button>
-            </div>
-          )}
+          {(isTablet || isMobile) && (
+            <div className={isTablet ? s.actions : s.mobile__only}>
+              {isTablet && (isLoggedIn ? <ButtonCreate /> : <AuthNav />)}
 
-          {isMobile && (
-            <div className={s.mobile__only}>
               <button
-                className={`${s.burger} ${burgerOpen ? s.open : ''}`}
+                className={clsx(s.burger, { [s.open]: isBurgerMenuOpen })}
                 onClick={handleBurgerToggle}
                 aria-label="Toggle menu"
               >
