@@ -8,6 +8,9 @@ import { PrivateRoute } from '../PrivateRoute';
 import Layout from '../Layout/Layout';
 
 const HomePage = lazy(() => import('../../pages/HomePage/HomePage'));
+const RegisterPage = lazy(() =>
+  import('../../pages/RegisterPage/RegisterPage')
+);
 
 function App() {
   const dispatch = useDispatch();
@@ -22,11 +25,16 @@ function App() {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<HomePage />} />
+          <Route
+            path="/register"
+            element={
+              <RestrictedRoute redirectTo="/" component={<RegisterPage />} />
+            }
+          />
         </Route>
       </Routes>
     </Suspense>
   );
-};
+}
 
 export default App;
-
