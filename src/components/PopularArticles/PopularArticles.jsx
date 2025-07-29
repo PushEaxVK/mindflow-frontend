@@ -1,5 +1,3 @@
-import { useSelector } from 'react-redux';
-import { selectIsLoggedIn } from '../../redux/auth/selectors';
 import { Link } from 'react-router-dom';
 import styles from './PopularArticles.module.css';
 import ArticlesList from '../ArticlesList/ArticlesList';
@@ -8,7 +6,6 @@ import React, { useEffect, useState } from 'react';
 function PopularArticles() {
   const [articles, setArticles] = useState([]);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-  const isLoggedIn = useSelector(selectIsLoggedIn);
 
   useEffect(() => {
     function handleResize() {
@@ -57,15 +54,11 @@ function PopularArticles() {
           </Link>
         </div>
         <ul className={styles.articlesGrid}>
-          <li>
-            <ArticlesList
-              queryArticles={articles}
-              icon="icon-favorite-article"
-              btnStyle={
-                isLoggedIn ? 'FavoriteArticle' : 'FavoriteArticleNotSaved'
-              }
-            />
-          </li>
+          <ArticlesList
+            queryArticles={articles}
+            icon="icon-favorite-article"
+            btnStyle={'FavoriteArticleNotSaved'}
+          />
         </ul>
       </div>
     </section>
