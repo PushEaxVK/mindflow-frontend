@@ -1,8 +1,8 @@
 import ArticlesList from '../../components/ArticlesList/ArticlesList';
 import css from './AuthorProfilePage.module.css';
-import { NavLink, Outlet } from 'react-router-dom';
+import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 import Container from '../../components/Container/Container';
-import { useLocation, useMatch } from 'react-router-dom';
+import { useLocation, useMatch, useParams } from 'react-router-dom';
 import clsx from 'clsx';
 import LoadMore from '../../components/LoadMore/LoadMore';
 import { useEffect } from 'react';
@@ -31,22 +31,29 @@ const AuthorProfilePage = () => {
   };
 
   const dispatch = useDispatch();
-  const allArticles = useSelector(selectAllArticles);
+  const articles = useSelector(selectAllArticles);
   const loading = useSelector(selectLoadingArticles);
   const error = useSelector(selectErrorArticles);
+  const total = useSelector(selectTotal);
   const isLoggedIn = useSelector(selectIsLoggedIn);
 
-  console.log('Масив статтей:', allArticles);
+  //console.log('Масив статтей:', allArticles);
+
+  const { id: authorId } = useParams();
 
   useEffect(() => {
-    dispatch(fetchAllArticles());
-  }, [dispatch]);
+    if (authorId) {
+      dispatch(fetchAllArticles(`/articles?author=${authorId}`));
+    }
+  }, [authorId, dispatch]);
 
-  // useEffect(() => {
-  //   if (authorId) {
-  //     dispatch(fetchArticlesById(authorId));
-  //   }
-  // }, [authorId, dispatch]);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (isLoggedIn && isBaseProfile) {
+      navigate('my-articles', { replace: true });
+    }
+  }, [isBaseProfile, navigate]);
 
   return (
     <section className={css.section_AuthorProfilePage}>
@@ -62,7 +69,7 @@ const AuthorProfilePage = () => {
           </li>
           <li>
             <p className={css.userName}>Naomi</p>
-            <p className={css.countArticles}>96 articles</p>
+            <p className={css.countArticles}>{`${total} articles`}</p>
           </li>
         </ul>
         {isLoggedIn && (
@@ -76,7 +83,13 @@ const AuthorProfilePage = () => {
           </nav>
         )}
         <Outlet />
-        {isBaseProfile && <ArticlesList queryArticles={allArticles} />}
+        {isBaseProfile && (
+          <ArticlesList
+            icon={'icon-favorite-article'}
+            btnStyle={'FavoriteArticleNotSaved'}
+            queryArticles={articles}
+          />
+        )}
         <LoadMore />
       </Container>
     </section>
