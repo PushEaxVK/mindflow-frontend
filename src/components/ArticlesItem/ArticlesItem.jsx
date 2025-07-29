@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 const ArticlesItem = ({ item, icon, btnStyle }) => {
   return (
     <li className={css.articlesItem}>
-      <img className={css.imgArticle} src={item.img} alt={item.title} />
+      <img className={css.imgArticle} src={item.image} alt={item.title} />
       <div className={css.infoArticle}>
         <p className={css.authorArticle}>{item.ownerId}</p>
         <p className={css.title}>{item.title}</p>

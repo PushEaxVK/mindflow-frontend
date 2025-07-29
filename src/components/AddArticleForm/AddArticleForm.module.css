@@ -1,0 +1,284 @@
+.form {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: column-reverse;
+  gap: 24px;
+  padding-top: 16px;
+}
+
+.leftColumn {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.rightColumn {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  width: 100%;
+  padding-top: 16px;
+}
+
+.topSection {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 361px;
+  height: 338px;
+}
+
+.label {
+  display: flex;
+  flex-direction: column;
+  font-weight: 600;
+  color: #333;
+}
+
+.titleLabel {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: column;
+  gap: 8px;
+  width: 361px;
+  height: 81px;
+}
+
+.articleLabel {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: column;
+  gap: 8px;
+  width: 361px;
+  height: 393px;
+}
+
+.labelText {
+  font: 400 18px 'Manrope', sans-serif;
+  color: #070721;
+}
+
+.input {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: row;
+  gap: 8px;
+  border: 1px solid #9f9f9f;
+  border-radius: 8px;
+  padding: 12px;
+  width: 361px;
+  height: 48px;
+  max-height: 48px;
+  background: #f7fffb;
+}
+
+.input::placeholder {
+  color: #595d62;
+  font: 400 18px 'Manrope', sans-serif;
+}
+
+.textarea {
+  border: 1px solid #9f9f9f;
+  border-radius: 8px;
+  padding: 12px;
+  width: 361px;
+  height: 393px;
+  background: #f7fffb;
+}
+
+.textarea::placeholder {
+  color: #595d62;
+  font: 400 18px 'Manrope', sans-serif;
+}
+
+.submitBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  gap: 12px;
+  padding: 12px 16px;
+  border-radius: 64px;
+  width: 361px;
+  height: 46px;
+  background: #649179;
+  font: 700 16px 'Manrope', sans-serif;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  color: #f7fffb;
+}
+
+.submitBtn:hover {
+  background-color: #4e755f;
+}
+
+.imageUploadBox {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: column;
+  gap: 8px;
+  width: 361px;
+  height: 233px;
+
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.imageLabel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 8px;
+  border-radius: 16px;
+  width: 361px;
+  height: 233px;
+  background: #9f9f9f;
+}
+
+.imagePreview {
+  border-radius: 16px;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.tooltipOverlay {
+  position: absolute;
+  bottom: 8px;
+  background-color: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  font-size: 14px;
+  padding: 4px 8px;
+  border-radius: 6px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.imageLabel:hover .tooltipOverlay {
+  opacity: 1;
+}
+
+.error {
+  color: red;
+  font-size: 14px;
+  margin-top: 4px;
+}
+
+.datePicker {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font: 400 16px 'Manrope', sans-serif;
+  box-sizing: border-box;
+}
+
+@media only screen and (min-width: 393px) {
+  .form {
+    gap: 24px;
+  }
+
+  .topSection {
+    flex-direction: column;
+  }
+
+  .imageUploadBox,
+  .imageLabel,
+  .titleLabel,
+  .input {
+    width: 100%;
+  }
+
+  .submitBtn {
+    width: 100%;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .form {
+    width: 704px;
+  }
+  .topSection {
+    flex-direction: row;
+    width: 704px;
+    height: 219px;
+    gap: 24px;
+  }
+
+  .imageUploadBox {
+    width: 340px;
+    height: 268px;
+  }
+
+  .imageLabel {
+    width: 340px;
+    height: 219px;
+  }
+
+  .titleLabel {
+    width: 340px;
+  }
+
+  .leftColumn {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .textarea {
+    width: 704px;
+    height: 393px;
+  }
+
+  .submitBtn {
+    width: 704px;
+  }
+}
+
+@media only screen and (min-width: 1226px) {
+  .form {
+    flex-direction: column-reverse;
+  }
+
+  .leftColumn {
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .topSection {
+    flex-direction: row-reverse;
+    width: 1226px;
+    height: 81px;
+  }
+
+  .titleLabel,
+  .articleLabel,
+  .input,
+  .textarea,
+  .submitBtn {
+    width: 809px;
+  }
+
+  .imageUploadBox {
+    padding: 32px 0px 0px 0px;
+    width: 391px;
+    height: 312px;
+  }
+
+  .imageLabel {
+    width: 391px;
+    height: 280px;
+  }
+}
