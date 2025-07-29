@@ -5,7 +5,7 @@ import ArticlesItem from '../ArticlesItem/ArticlesItem';
 const ArticlesList = ({
   icon = 'icon-edit-article',
   btnStyle = 'EditArticle',
-  queryArticles,
+  queryArticles = [],
 }) => {
   console.log(queryArticles);
   return (

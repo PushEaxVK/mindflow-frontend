@@ -8,11 +8,15 @@ const ArticlesItem = ({ item, icon, btnStyle }) => {
       <div className={css.infoArticle}>
         <p className={css.authorArticle}>{item.ownerId}</p>
         <p className={css.title}>{item.title}</p>
-        <p className={css.desc}>{item.desc}</p>
+        <p className={css.desc}>
+          {item.desc?.length > 180
+            ? item.desc.slice(0, 180) + '...'
+            : item.desc || 'No description'}
+        </p>
       </div>
       <div className={css.navButton}>
         <Link
-          to="articles/:id"
+          to={`/articles/${item._id}`}
           className={css.btnLearnMore}
           aria-label="Learn more"
         >

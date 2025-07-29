@@ -66,13 +66,17 @@ const customStyles = {
   }),
 };
 
-const ArticlesDropdown = () => {
+const ArticlesDropdown = ({ onChangeFilter }) => {
+  const handleChange = (selectedOption) => {
+    onChangeFilter(selectedOption.value);
+  };
   return (
     <Select
       options={options}
       styles={customStyles}
-      defaultValue={options[1]} // "Popular"
+      defaultValue={options[0]} // "All"
       isSearchable={false}
+      onChange={handleChange}
       components={{ IndicatorSeparator: () => null, DropdownIndicator }}
     />
   );
