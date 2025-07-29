@@ -12,6 +12,7 @@ import {
   REGISTER,
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
+import { articlesReducer } from './articles/slice';
 
 const persistConfig = {
   key: 'root-auth',
@@ -26,6 +27,7 @@ export const store = configureStore({
   reducer: {
     auth: persistedReducer,
     modal: modalReducer,
+    articlesList: articlesReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
