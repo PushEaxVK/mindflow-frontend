@@ -38,7 +38,7 @@ function TopCreators() {
         <ul className={styles.creatorsGrid}>
           {creators.map((creator) => (
             <li key={creator.id || creator.name}>
-              <CreatorCard creator={creator} />
+              <CreatorCard creator={creator} page="home" />
             </li>
           ))}
         </ul>
