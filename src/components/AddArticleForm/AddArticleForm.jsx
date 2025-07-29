@@ -7,9 +7,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-// import { selectIsLoggedIn, selectUser } from '../../redux/auth/selectors';
-// Замість цього:
-import { selectUser } from '../../redux/auth/selectors';
+import { selectIsLoggedIn, selectUser } from '../../redux/auth/selectors';
 import styles from './AddArticleForm.module.css';
 
 export const AddArticleForm = () => {
@@ -17,6 +15,7 @@ export const AddArticleForm = () => {
   const [image, setImage] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
   const user = useSelector(selectUser);
+  const isLoggedIn = useSelector(selectIsLoggedIn);
   const navigate = useNavigate();
 
   const formik = useFormik({
@@ -30,11 +29,11 @@ export const AddArticleForm = () => {
     }),
 
     onSubmit: async (values) => {
-      // 🔒 Авторизацію тимчасово вимкнено
-      // if (!isLoggedIn) {
-      //   toast.error('Please log in to create an article');
-      //   return;
-      // }
+      
+       if (!isLoggedIn) {
+         toast.error('Please log in to create an article');
+         return;
+       }
 
       if (image && image.size > 1024 * 1024) {
         toast.error('Image size exceeds 1MB. Please upload a smaller image.');
