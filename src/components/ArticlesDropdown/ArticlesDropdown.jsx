@@ -9,11 +9,11 @@ const DropdownIndicator = (props) => {
       <span style={{ fontSize: '12px', marginLeft: '4px' }}>
         {menuIsOpen ? (
           <svg className={css.svgIcon}>
-            <use href={`/public/chevron.svg#icon-chevron-up`}></use>
+            <use href={`/chevron.svg#icon-chevron-up`}></use>
           </svg>
         ) : (
           <svg className={css.svgIcon}>
-            <use href={`/public/chevron.svg#icon-chevron-down`}></use>
+            <use href={`/chevron.svg#icon-chevron-down`}></use>
           </svg>
         )}
       </span>
