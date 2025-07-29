@@ -14,7 +14,7 @@
 }
 
 .content {
-  background-color: #d1e0d8;
+  background-color: var(--light-green);
   border-radius: 32px;
   padding: 32px;
   width: 496px;
@@ -23,17 +23,19 @@
 }
 
 .title {
+  font-family: var(--font-family);
   font-weight: 700;
   font-size: 40px;
-  color: black;
+  color: var(--black);
   margin-bottom: 32px;
 }
 
 .text {
+  font-family: var(--font-family);
   font-weight: 400;
   font-size: 16px;
   line-height: 155%;
-  color: black;
+  color: var(--black);
 }
 
 .imgTopRight {
