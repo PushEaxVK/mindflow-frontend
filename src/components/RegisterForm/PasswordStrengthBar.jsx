@@ -17,7 +17,7 @@ const PasswordStrengthBar = ({ password, confirmPassword }) => {
 
   const getColor = (score) => {
     if (score <= 2) return 'red';
-    if (score === 3 || score === 4) return 'orange';
+    if (score <= 4) return 'orange';
     return 'green';
   };
 

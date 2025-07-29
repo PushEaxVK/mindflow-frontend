@@ -3,33 +3,40 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { Link, useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
-import PasswordStrengthBar from './PasswordStrengthBar';
 import serviceApi from '../../services/api';
-import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import styles from './RegisterForm.module.css';
 
 const validationSchema = Yup.object({
-  name: Yup.string().required('Name is required'),
-  email: Yup.string().email('Invalid email').required('Email is required'),
+  name: Yup.string()
+    .min(2, 'Name must be at least 2 characters')
+    .max(32, 'Name must be no more than 32 characters')
+    .required('Name is required'),
+  email: Yup.string()
+    .email('Invalid email')
+    .max(64, 'Email must be no more than 64 characters')
+    .required('Email is required'),
   password: Yup.string()
-    .required('Password is required')
-    .min(8, 'Password must be at least 8 characters'),
+    .min(8, 'Password must be at least 8 characters')
+    .max(64, 'Password must be no more than 64 characters')
+    .matches(
+      /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])/,
+      'Password must include letter, number, and special character'
+    )
+    .required('Password is required'),
   confirmPassword: Yup.string()
     .oneOf([Yup.ref('password'), null], 'Passwords must match')
     .required('Please confirm your password'),
 });
-
-// ...existing code...
 
 const RegisterForm = () => {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
 
-  const togglePassword = () => setShowPassword(!showPassword);
-  const toggleConfirm = () => setShowConfirm(!showConfirm);
+  const togglePassword = () => setShowPassword((prev) => !prev);
+  const toggleConfirm = () => setShowConfirm((prev) => !prev);
 
-  const handleSubmit = async (values, { setSubmitting }) => {
+  const handleSubmit = async (values, actions) => {
     try {
       const response = await serviceApi.auth.signup({
         name: values.name,
@@ -38,19 +45,22 @@ const RegisterForm = () => {
       });
 
       toast.success(`Welcome, ${response.data.user.name}!`);
+      actions.resetForm();
       navigate('/upload-photo');
     } catch (err) {
       toast.error(err.response?.data?.message || 'Registration failed');
     } finally {
-      setSubmitting(false);
+      actions.setSubmitting(false);
     }
   };
 
   return (
     <div className={styles.formWrapper}>
       <h2>Register</h2>
-      <p>Join our community of mindfulness and wellbeing!</p>
-
+      <p className={styles.description}>
+        <span className={styles.line}>Join our community of mindfulness</span>
+        <span className={styles.line}>and wellbeing!</span>
+      </p>
       <Formik
         initialValues={{
           name: '',
@@ -61,74 +71,121 @@ const RegisterForm = () => {
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
       >
-        {({ isSubmitting, values, errors, touched, submitCount }) => (
-          <Form className={styles.form}>
+        {({ isSubmitting }) => (
+          <Form className={styles.form} autoComplete="off">
             <div className={styles.fieldWrapper}>
-              <label htmlFor="name">Enter your name</label>
-              <Field id="name" type="text" name="name" />
-              {(touched.name || submitCount > 0) && errors.name && (
-                <div className={styles.error}>{errors.name}</div>
-              )}
+              <label htmlFor="name-field">Name</label>
+              <Field
+                id="name-field"
+                name="name"
+                type="text"
+                placeholder="Max"
+                className={`${styles.inputWithIcon}`}
+              />
+              <ErrorMessage
+                name="name"
+                component="span"
+                className={styles.error}
+              />
             </div>
-
             <div className={styles.fieldWrapper}>
-              <label htmlFor="email">Enter your email address</label>
-              <Field id="email" type="email" name="email" />
-              {(touched.email || submitCount > 0) && errors.email && (
-                <div className={styles.error}>{errors.email}</div>
-              )}
+              <label htmlFor="email-field">Email address</label>
+              <Field
+                id="email-field"
+                name="email"
+                type="email"
+                placeholder="you@example.com"
+                className={`${styles.inputWithIcon}`}
+              />
+              <ErrorMessage
+                name="email"
+                component="span"
+                className={styles.error}
+              />
             </div>
-
             <div className={styles.fieldWrapper}>
-              <label htmlFor="password">Create a strong password</label>
+              <label htmlFor="password-field">Create a strong password</label>
               <div className={styles.passwordWrapper}>
                 <Field
-                  id="password"
-                  type={showPassword ? 'text' : 'password'}
+                  id="password-field"
                   name="password"
-                  className={styles.inputWithIcon}
-                  style={{ paddingRight: '40px' }}
+                  type={showPassword ? 'text' : 'password'}
+                  placeholder="Password"
+                  className={`${styles.inputWithIcon}`}
                 />
-                <span
+                <button
+                  type="button"
                   className={styles.iconWrapper}
                   onClick={togglePassword}
-                  tabIndex={0}
-                  role="button"
-                  aria-label="Toggle password visibility"
+                  aria-label={showPassword ? 'Hide password' : 'Show password'}
                 >
-                  {showPassword ? <FaEyeSlash /> : <FaEye />}
-                </span>
+                  <svg
+                    className={styles.icon}
+                    width="24"
+                    height="24"
+                    aria-hidden="true"
+                  >
+                    <use
+                      xlinkHref={
+                        showPassword
+                          ? '/eyes-sprite.svg#icon-eye-stroke-32'
+                          : '/eyes-sprite.svg#icon-eye-crossed-stroke-32'
+                      }
+                    />
+                  </svg>
+                </button>
               </div>
-              {(touched.password || submitCount > 0) && errors.password && (
-                <div className={styles.error}>{errors.password}</div>
-              )}
+              <ErrorMessage
+                name="password"
+                component="span"
+                className={styles.error}
+              />
             </div>
-
             <div className={styles.fieldWrapper}>
-              <label htmlFor="confirmPassword">Repeat your password</label>
+              <label htmlFor="confirmPassword-field">
+                Repeat your password
+              </label>
               <div className={styles.passwordWrapper}>
                 <Field
-                  id="confirmPassword"
-                  type={showConfirm ? 'text' : 'password'}
+                  id="confirmPassword-field"
                   name="confirmPassword"
-                  className={styles.inputWithIcon}
-                  style={{ paddingRight: '40px' }}
+                  type={showConfirm ? 'text' : 'password'}
+                  placeholder="Repeat password"
+                  className={`${styles.inputWithIcon}`}
                 />
-                <span
+                <button
+                  type="button"
                   className={styles.iconWrapper}
                   onClick={toggleConfirm}
-                  tabIndex={0}
-                  role="button"
-                  aria-label="Toggle confirm password visibility"
+                  aria-label={showConfirm ? 'Hide password' : 'Show password'}
                 >
-                  {showConfirm ? <FaEyeSlash /> : <FaEye />}
-                </span>
+                  <svg
+                    className={styles.icon}
+                    width="24"
+                    height="24"
+                    aria-hidden="true"
+                  >
+                    <use
+                      xlinkHref={
+                        showConfirm
+                          ? '/eyes-sprite.svg#icon-eye-stroke-32'
+                          : '/eyes-sprite.svg#icon-eye-crossed-stroke-32'
+                      }
+                    />
+                  </svg>
+                </button>
               </div>
-              {(touched.confirmPassword || submitCount > 0) && errors.confirmPassword && (
-                <div className={styles.error}>{errors.confirmPassword}</div>
-              )}
+              <ErrorMessage
+                name="confirmPassword"
+                component="span"
+                className={styles.error}
+              />
             </div>
-            <button type="submit" disabled={isSubmitting}>
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className={styles.btn}
+            >
               Create account
             </button>
           </Form>
@@ -140,6 +197,6 @@ const RegisterForm = () => {
       </p>
     </div>
   );
-}
+};
 
 export default RegisterForm;
