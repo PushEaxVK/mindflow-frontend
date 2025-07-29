@@ -46,8 +46,8 @@ function PopularArticles() {
       <div className={styles.content}>
         <div className={styles.firstpart}>
           <h2 className={styles.title}>Popular Articles</h2>
-          <Link to="/all-articles" className={styles.link}>
-            <span className={styles.linkText}>Go to all Creators</span>
+          <Link to="/articles" className={styles.link}>
+            <span className={styles.linkText}>Go to all Articles</span>
             <svg className={`${styles.icon} icon-Icon-2`}>
               <use xlinkHref="/symbol-defs.svg#icon-Icon-2" />
             </svg>
