@@ -14,7 +14,7 @@ function PopularArticles() {
 
     window.addEventListener('resize', handleResize);
 
-    fetch('/harmoniq') // замінити на бекенд-ендпоінт
+    fetch('https://mindflow-backend-iwk7.onrender.com/articles/popular') // замінити на бекенд-ендпоінт
       .then((res) => res.json())
       .then((data) => {
         const articlesToShow = window.innerWidth < 1440 ? 4 : 3;
@@ -29,7 +29,7 @@ function PopularArticles() {
   }, []);
 
   useEffect(() => {
-    fetch('/harmoniq')
+    fetch('https://mindflow-backend-iwk7.onrender.com/articles/popular')
       .then((res) => res.json())
       .then((data) => {
         const articlesToShow = windowWidth < 1440 ? 4 : 3;
@@ -56,7 +56,7 @@ function PopularArticles() {
         <ul className={styles.articlesGrid}>
           <li>
             <ArticlesList
-              articles={articles}
+              queryArticles={articles}
               icon={'icon-favorite-article'}
               btnStyle={'FavoriteArticle'}
             />
