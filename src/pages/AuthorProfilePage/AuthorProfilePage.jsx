@@ -7,10 +7,7 @@ import clsx from 'clsx';
 import LoadMore from '../../components/LoadMore/LoadMore';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  fetchAllArticles,
-  fetchArticlesById,
-} from '../../redux/articles/operation';
+import { fetchAllArticles } from '../../redux/articles/operation';
 import {
   selectAllArticles,
   selectLoadingArticles,
