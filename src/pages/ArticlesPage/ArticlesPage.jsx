@@ -3,31 +3,53 @@ import css from './ArticlesPage.module.css';
 import ArticlesDropdown from '../../components/ArticlesDropdown/ArticlesDropdown';
 import ArticlesList from '../../components/ArticlesList/ArticlesList';
 import LoadMore from '../../components/LoadMore/LoadMore';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchAllArticles } from '../../redux/articles/operation';
+import {
+  selectAllArticles,
+  selectLoadingArticles,
+  selectErrorArticles,
+  selectPage,
+  selectPages,
+  selectTotal,
+} from '../../redux/articles/selectors';
 
 const ArticlesPage = () => {
-  const [articles, setArticles] = useState([]);
+  const articles = useSelector(selectAllArticles);
+  //console.log('ARTICLES:', articles);
+  const loading = useSelector(selectLoadingArticles);
+  const error = useSelector(selectErrorArticles);
+  const total = useSelector(selectTotal);
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    fetch('https://mindflow-backend-iwk7.onrender.com/articles/popular')
-      .then((res) => res.json())
-      .then((data) => {
-        const sorted = data.sort((a, b) => b.rate - a.rate);
-        setArticles(sorted);
-      })
-      .catch((err) => console.error('Failed to load articles:', err));
-  }, []);
+    dispatch(fetchAllArticles()); // початкове завантаження
+  }, [dispatch]);
 
+  // useEffect(() => {
+  //   dispatch(fetchAllArticles('/articles/popular'));
+  // }, [dispatch]);
+
+  const handleFilterChange = (selectedOption) => {
+    const value = selectedOption.value;
+    const endpoint =
+      value === 'popular' ? '/articles/popular?limit=12' : '/articles?limit=12';
+    dispatch(fetchAllArticles(endpoint));
+  };
   return (
     <section>
       <Container>
         <h1 className={css.profileTitle}>Articles</h1>
         <div className={css.boxSelect}>
           <div>
-            <p className={css.countArticles}>96 articles</p>
+            <p className={css.countArticles}>
+              {total} {total === 1 ? 'article' : 'articles'}
+            </p>
           </div>
           <div className={css.formSelect}>
-            <ArticlesDropdown />
+            <ArticlesDropdown onChangeFilter={handleFilterChange} />
           </div>
         </div>
         <ArticlesList

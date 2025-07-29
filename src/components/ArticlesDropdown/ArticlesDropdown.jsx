@@ -9,11 +9,11 @@ const DropdownIndicator = (props) => {
       <span style={{ fontSize: '12px', marginLeft: '4px' }}>
         {menuIsOpen ? (
           <svg className={css.svgIcon}>
-            <use href={`/public/chevron.svg#icon-chevron-up`}></use>
+            <use href={`/chevron.svg#icon-chevron-up`}></use>
           </svg>
         ) : (
           <svg className={css.svgIcon}>
-            <use href={`/public/chevron.svg#icon-chevron-down`}></use>
+            <use href={`/chevron.svg#icon-chevron-down`}></use>
           </svg>
         )}
       </span>
@@ -66,13 +66,17 @@ const customStyles = {
   }),
 };
 
-const ArticlesDropdown = () => {
+const ArticlesDropdown = ({ onChangeFilter }) => {
+  const handleChange = (selectedOption) => {
+    onChangeFilter(selectedOption.value);
+  };
   return (
     <Select
       options={options}
       styles={customStyles}
-      defaultValue={options[1]} // "Popular"
+      defaultValue={options[0]} // "All"
       isSearchable={false}
+      onChange={handleChange}
       components={{ IndicatorSeparator: () => null, DropdownIndicator }}
     />
   );

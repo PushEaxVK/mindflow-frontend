@@ -3,11 +3,34 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 
 export const fetchAllArticles = createAsyncThunk(
   'articles/fetchAll',
-  async (__, thunkAPI) => {
+  async (endpoint = '/articles?limit=12', thunkAPI) => {
     try {
-      const response = await axios.get('/articles?limit=12');
-      // Очікується: { articles: [], total: 200, page: 1, pages: 17 }
-      //console.log('Fetched articles:', response.data);
+      const response = await axios.get(endpoint);
+
+      // Якщо бекенд повертає масив — обгортаємо вручну:
+      const data = Array.isArray(response.data)
+        ? {
+            articles: response.data,
+            total: response.data.length,
+            page: 1,
+            pages: 1,
+          }
+        : response.data;
+
+      return data;
+    } catch (error) {
+      console.log(error);
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+
+export const fetchArticlesById = createAsyncThunk(
+  'articles/fetchById',
+  async (authorId, thunkAPI) => {
+    try {
+      const response = await axios.get(`/articles/${authorId}`);
+      // Очікується: { author: 1674389, title: 'dgdfgdfgdf', desc: 'fgdfgfdgdfgf', ... }
       return response.data;
     } catch (error) {
       console.log(error);
