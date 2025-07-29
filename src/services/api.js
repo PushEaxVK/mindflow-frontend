@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-axios.defaults.baseURL = 'http://localhost:3000';
+// axios.defaults.baseURL = 'http://localhost:3000';
+axios.defaults.baseURL = 'https://mindflow-backend-iwk7.onrender.com';
 
 export const setAuthHeader = (token) => {
   axios.defaults.headers.common.Authorization = `Bearer ${token}`;
@@ -36,7 +37,7 @@ export const logout = async () => {
 
 export const refresh = async ({ token }) => {
   setAuthHeader(token);
-  return await axios.get('/auth/refresh');
+  return await axios.post('/auth/refresh');
 };
 
 const serviceApi = {
