@@ -1,15 +1,24 @@
-.appbar__wrapper {
+.appbar {
+  position: relative;
+  z-index: 1000;
+  padding: 14px 0;
+  background-color: var(--light-green);
+}
+
+.wrapper {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-/* .logo {
+.logo {
   display: flex;
+  padding: 14px 0;
   align-items: center;
   width: 165px;
   height: 46px;
-} */
+  cursor: pointer;
+}
 
 .logo__icon {
   width: 149px;
@@ -17,60 +26,77 @@
   fill: var(--green);
 }
 
+/* ====== Desktop ====== */
 .nav {
-  display: none;
-}
-
-.appbar {
-  padding: 14px 0;
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  background-color: var(--light-green);
+  gap: 24px;
 }
 
-.btn__create {
-  display: none;
-}
-
-.btn__burger {
+.actions {
   display: flex;
-  justify-content: center;
   align-items: center;
-  background: none;
-  border: none;
-  display: flex;
-  width: 32px;
-  height: 32px;
+  gap: 16px;
 }
 
-.btn__icon {
+.burger {
   width: 24px;
   height: 24px;
-  stroke: var(--green-darker);
-  stroke-width: 1.33px;
+  position: relative;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 6px;
 }
 
+.line {
+  display: block;
+  width: 100%;
+  height: 1px;
+  background-color: var(--green-darker);
+  border-radius: 1px;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+/* ====== Animation beim Öffnen ====== */
+.burger.open .line:nth-child(1) {
+  transform: translateY(5px) rotate(45deg);
+}
+
+.burger.open .line:nth-child(2) {
+  opacity: 0;
+}
+
+.burger.open .line:nth-child(3) {
+  transform: translateY(-8px) rotate(-45deg);
+}
+
+/* ====== Responsive ====== */
 @media screen and (min-width: 768px) {
-  .navigation__wrapper {
-    display: flex;
-    align-items: center;
-    gap: 16px;
+  .nav {
+    display: none;
+  }
+  .mobile__only {
+    display: none;
   }
 }
 
 @media screen and (min-width: 1440px) {
-  .navigation__wrapper {
-    display: flex;
-    align-items: center;
-    gap: 32px;
-  }
-
   .nav {
     display: flex;
   }
 
-  .btn__burger {
+  .user__desktop {
+    display: flex;
+    gap: 32px;
+  }
+
+  .actions,
+  .mobile__only {
     display: none;
   }
 }

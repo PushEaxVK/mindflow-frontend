@@ -1,7 +1,15 @@
 .creatorCard {
+  border-radius: 32px;
   width: 184px;
   height: 233px;
   padding: 12px;
+}
+
+.creatorCard--lg {
+  border-radius: 32px;
+  padding: 12px;
+  width: 286px;
+  height: 335px;
 }
 
 .name {
@@ -18,13 +26,22 @@
   margin-bottom: 16px;
 }
 
+.avatar--lg {
+  border-radius: 256px;
+  width: 262px;
+  height: 262px;
+  margin-bottom: 16px;
+}
+
 @media (min-width: 393px) and (max-width: 767px) {
-  .creatorCard {
+  .creatorCard,
+  .creatorCard--lg {
     width: 172px;
     height: 221px;
   }
 
-  .avatar {
+  .avatar,
+  .avatar--lg {
     width: 148px;
     height: 148px;
   }

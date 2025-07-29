@@ -15,16 +15,12 @@ const ArticlesPage = lazy(() =>
 const AuthorProfilePage = lazy(() =>
   import('../../pages/AuthorProfilePage/AuthorProfilePage')
 );
-const AuthorsPage = lazy(() =>
-  import('../../pages/AuthorsPage/AuthorsPage')
-);
+const AuthorsPage = lazy(() => import('../../pages/AuthorsPage/AuthorsPage'));
 const LoginPage = lazy(() => import('../../pages/LoginPage/LoginPage'));
 const MyProfilePage = lazy(() =>
   import('../../pages/MyProfilePage/MyProfilePage')
 );
-const ArticlePage = lazy(() =>
-  import('../../pages/ArticlePage/ArticlePage')
-);
+const ArticlePage = lazy(() => import('../../pages/ArticlePage/ArticlePage'));
 const CreateArticlePage = lazy(() =>
   import('../../pages/CreateArticlePage/CreateArticlePage')
 );
@@ -37,14 +33,11 @@ const UploadPhoto = lazy(() =>
 const RegisterPage = lazy(() =>
   import('../../pages/RegisterPage/RegisterPage')
 );
-const MyArticles = lazy(() =>
-  import('../nestedRoutes/MyArticles/MyArticles')
-);
+const MyArticles = lazy(() => import('../nestedRoutes/MyArticles/MyArticles'));
 const SavedArticles = lazy(() =>
   import('../nestedRoutes/SavedArticles/SavedArticles')
 );
 const NotFound = lazy(() => import('../../pages/NotFound/NotFound'));
-
 
 const App = () => {
   const dispatch = useDispatch();
@@ -64,15 +57,6 @@ const App = () => {
           <Route path="authors" element={<AuthorsPage />} />
           <Route path="authors/:id" element={<AuthorProfilePage />} />
 
-          <Route
-            path="profile"
-            element={
-              <PrivateRoute redirectTo="/login" component={<MyProfilePage />} />
-            }
-          >
-            <Route path="my-articles" element={<MyArticles />} />
-            <Route path="saved-articles" element={<SavedArticles />} />
-          </Route>
           <Route
             path="register"
             element={
@@ -118,4 +102,3 @@ const App = () => {
 };
 
 export default App;
-

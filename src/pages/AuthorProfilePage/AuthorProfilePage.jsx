@@ -5,6 +5,17 @@ import Container from '../../components/Container/Container';
 import { useLocation, useMatch } from 'react-router-dom';
 import clsx from 'clsx';
 import LoadMore from '../../components/LoadMore/LoadMore.jsx';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchAllArticles } from '../../redux/articles/operation';
+import {
+  selectAllArticles,
+  selectLoadingArticles,
+  selectErrorArticles,
+  selectPage,
+  selectPages,
+  selectTotal,
+} from '../../redux/articles/selectors';
 
 const AuthorProfilePage = () => {
   const location = useLocation();
@@ -14,6 +25,17 @@ const AuthorProfilePage = () => {
   const buildLinkClass = ({ isActive }) => {
     return clsx(css.tabItem, isActive && css.active);
   };
+
+  const dispatch = useDispatch();
+  const allArticles = useSelector(selectAllArticles);
+  const loading = useSelector(selectLoadingArticles);
+  const error = useSelector(selectErrorArticles);
+
+  console.log('Масив статтей:', allArticles);
+
+  useEffect(() => {
+    dispatch(fetchAllArticles());
+  }, [dispatch]);
 
   return (
     <section className={css.section_AuthorProfilePage}>
@@ -41,7 +63,7 @@ const AuthorProfilePage = () => {
           </NavLink>
         </nav>
         <Outlet />
-        {isBaseProfile && <ArticlesList />}
+        {isBaseProfile && <ArticlesList queryArticles={allArticles} />}
         <LoadMore />
       </Container>
     </section>
