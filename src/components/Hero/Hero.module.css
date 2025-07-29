@@ -33,10 +33,6 @@
 
 .italic {
   font-family: var(--fourth-family);
-  font-weight: 800;
-  font-size: 92px;
-  line-height: 100%;
-  letter-spacing: -0.02em;
   font-style: italic;
 }
 
