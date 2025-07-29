@@ -26,7 +26,6 @@
   fill: var(--green);
 }
 
-/* ====== Desktop ====== */
 .nav {
   display: flex;
   align-items: center;
@@ -62,7 +61,7 @@
   transition: transform 0.3s ease, opacity 0.3s ease;
 }
 
-/* ====== Animation beim Öffnen ====== */
+/* === Burger Animation  === */
 .burger.open .line:nth-child(1) {
   transform: translateY(5px) rotate(45deg);
 }
@@ -75,11 +74,16 @@
   transform: translateY(-8px) rotate(-45deg);
 }
 
-/* ====== Responsive ====== */
+.mobile__only {
+  display: flex;
+}
+
+/* === Responsive === */
 @media screen and (min-width: 768px) {
   .nav {
     display: none;
   }
+
   .mobile__only {
     display: none;
   }
@@ -88,11 +92,6 @@
 @media screen and (min-width: 1440px) {
   .nav {
     display: flex;
-  }
-
-  .user__desktop {
-    display: flex;
-    gap: 32px;
   }
 
   .actions,

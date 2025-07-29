@@ -1,14 +1,15 @@
-import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { useMediaQuery } from 'react-responsive';
 import clsx from 'clsx';
 
-import { selectModalIsOpen } from '../../redux/modal/selectors';
+import {
+  selectModalIsOpen,
+  selectModalType,
+} from '../../redux/modal/selectors';
 import { closeModal } from '../../redux/modal/slice';
 import { selectIsLoggedIn } from '../../redux/auth/selectors';
 
-import Container from '../Container/Container';
 import Navigation from '../Navigation/Navigation';
 import UserMenu from '../UserMenu/UserMenu';
 import ButtonCreate from '../ButtonCreate/ButtonCreate';
@@ -21,21 +22,8 @@ const ModalMenu = () => {
 
   const dispatch = useDispatch();
   const isOpen = useSelector(selectModalIsOpen);
+  const modalType = useSelector(selectModalType);
   const isLoggedIn = useSelector(selectIsLoggedIn);
-  const [isVisible, setIsVisible] = useState(false);
-
-  const setActiveClass = ({ isActive }) => {
-    return clsx(s.link, isActive && s.active);
-  };
-
-  useEffect(() => {
-    if (isOpen) {
-      setIsVisible(true);
-    } else {
-      const timer = setTimeout(() => setIsVisible(false), 300);
-      return () => clearTimeout(timer);
-    }
-  }, [isOpen]);
 
   const handleClose = () => dispatch(closeModal());
 
@@ -43,14 +31,26 @@ const ModalMenu = () => {
     if (e.target === e.currentTarget) handleClose();
   };
 
-  if (!isVisible) return null;
+  if (modalType !== 'mobileMenu') return null;
+
+  const setActiveClass = ({ isActive }) => {
+    return clsx(s.link, isActive && s.active);
+  };
 
   return (
     <div
-      className={clsx(s.overlay, { [s.show]: isOpen })}
+      className={clsx(s.overlay, {
+        [s.show]: isOpen,
+        [s.hide]: !isOpen,
+      })}
       onClick={handleOverlayClick}
     >
-      <div className={clsx(s.modal, { [s.visible]: isOpen })}>
+      <div
+        className={clsx(s.modal, {
+          [s.slide__In]: isOpen,
+          [s.slide__Out]: !isOpen,
+        })}
+      >
         <div className={s.modal__content}>
           <nav className={s.nav} onClick={handleClose}>
             <Navigation />
@@ -98,28 +98,38 @@ const ModalMenu = () => {
 export default ModalMenu;
 
 // import { useEffect, useState } from 'react';
-// import { NavLink, useNavigate } from 'react-router-dom';
+// import { useDispatch, useSelector } from 'react-redux';
+// import { NavLink } from 'react-router-dom';
 // import { useMediaQuery } from 'react-responsive';
 // import clsx from 'clsx';
 
+// import {
+//   selectModalIsOpen,
+//   selectModalType,
+// } from '../../redux/modal/selectors';
+// import { closeModal } from '../../redux/modal/slice';
 // import { selectIsLoggedIn } from '../../redux/auth/selectors';
-// import { useSelector } from 'react-redux';
 
 // import Container from '../Container/Container';
 // import Navigation from '../Navigation/Navigation';
-// import AuthNav from '../AuthNav/AuthNav';
 // import UserMenu from '../UserMenu/UserMenu';
 // import ButtonCreate from '../ButtonCreate/ButtonCreate';
 
 // import s from './ModalMenu.module.css';
 
-// const ModalMenu = ({ isOpen, onClose }) => {
+// const ModalMenu = () => {
 //   const isTablet = useMediaQuery({ minWidth: 768, maxWidth: 1439 });
 //   const isMobile = useMediaQuery({ maxWidth: 767 });
 
-//   const navigate = useNavigate();
+//   const dispatch = useDispatch();
+//   const isOpen = useSelector(selectModalIsOpen);
+//   const modalType = useSelector(selectModalType);
 //   const isLoggedIn = useSelector(selectIsLoggedIn);
 //   const [isVisible, setIsVisible] = useState(false);
+
+//   const setActiveClass = ({ isActive }) => {
+//     return clsx(s.link, isActive && s.active);
+//   };
 
 //   useEffect(() => {
 //     if (isOpen) {
@@ -130,11 +140,13 @@ export default ModalMenu;
 //     }
 //   }, [isOpen]);
 
+//   const handleClose = () => dispatch(closeModal());
+
 //   const handleOverlayClick = (e) => {
-//     if (e.target === e.currentTarget) onClose();
+//     if (e.target === e.currentTarget) handleClose();
 //   };
 
-//   if (!isVisible) return null;
+//   if (!isVisible || modalType !== 'mobileMenu') return null;
 
 //   return (
 //     <div
@@ -142,14 +154,14 @@ export default ModalMenu;
 //       onClick={handleOverlayClick}
 //     >
 //       <div className={clsx(s.modal, { [s.visible]: isOpen })}>
-//         <Container>
-//           <nav className={s.nav} onClick={onClose}>
+//         <div className={s.modal__content}>
+//           <nav className={s.nav} onClick={handleClose}>
 //             <Navigation />
 //           </nav>
 
-//           <div className={s.bottom__section} onClick={onClose}>
+//           <div className={s.bottom__section} onClick={handleClose}>
 //             {isLoggedIn ? (
-//               <div className={s.user__wrapper}>
+//               <div className={s.user__mobile}>
 //                 {isMobile && <ButtonCreate />}
 //                 <UserMenu />
 //               </div>
@@ -157,7 +169,17 @@ export default ModalMenu;
 //               <>
 //                 {isMobile && (
 //                   <div className={s.auth__mobile}>
-//                     <AuthNav />
+//                     <nav className={s.auth__wrapper}>
+//                       <NavLink className={setActiveClass} to="/login">
+//                         Log In
+//                       </NavLink>
+//                       <NavLink
+//                         className={clsx(s.link, s.join__link)}
+//                         to="/register"
+//                       >
+//                         Join now
+//                       </NavLink>
+//                     </nav>
 //                   </div>
 //                 )}
 //                 {isTablet && (
@@ -170,7 +192,7 @@ export default ModalMenu;
 //               </>
 //             )}
 //           </div>
-//         </Container>
+//         </div>
 //       </div>
 //     </div>
 //   );
