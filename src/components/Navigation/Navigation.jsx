@@ -22,7 +22,7 @@ const Navigation = () => {
         Creators
       </NavLink>
       {isLoggedIn && (
-        <NavLink className={setActiveClass} to="/profile">
+        <NavLink className={setActiveClass} to="/authors:/id">
           My Profile
         </NavLink>
       )}
