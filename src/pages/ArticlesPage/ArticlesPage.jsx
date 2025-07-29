@@ -3,8 +3,21 @@ import css from './ArticlesPage.module.css';
 import ArticlesDropdown from '../../components/ArticlesDropdown/ArticlesDropdown';
 import ArticlesList from '../../components/ArticlesList/ArticlesList';
 import LoadMore from '../../components/LoadMore/LoadMore';
+import { useEffect, useState } from 'react';
 
 const ArticlesPage = () => {
+  const [articles, setArticles] = useState([]);
+
+  useEffect(() => {
+    fetch('https://mindflow-backend-iwk7.onrender.com/articles/popular')
+      .then((res) => res.json())
+      .then((data) => {
+        const sorted = data.sort((a, b) => b.rate - a.rate);
+        setArticles(sorted);
+      })
+      .catch((err) => console.error('Failed to load articles:', err));
+  }, []);
+
   return (
     <section>
       <Container>
@@ -20,6 +33,7 @@ const ArticlesPage = () => {
         <ArticlesList
           icon={'icon-favorite-article'}
           btnStyle={'FavoriteArticleNotSaved'}
+          queryArticles={articles}
         />
         <LoadMore />
       </Container>

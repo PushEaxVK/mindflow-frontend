@@ -7,17 +7,19 @@ const ArticlesList = ({
   btnStyle = 'EditArticle',
   queryArticles,
 }) => {
+  console.log(queryArticles);
   return (
     <>
       <ul className={css.articlesList}>
-        {queryArticles.map((item) => (
-          <ArticlesItem
-            icon={icon}
-            btnStyle={btnStyle}
-            key={item._id}
-            item={item}
-          />
-        ))}
+        {queryArticles &&
+          queryArticles.map((item) => (
+            <ArticlesItem
+              icon={icon}
+              btnStyle={btnStyle}
+              key={item._id}
+              item={item}
+            />
+          ))}
       </ul>
     </>
   );
