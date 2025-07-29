@@ -1,8 +1,14 @@
+import { ClipLoader } from 'react-spinners';
+
 const Loader = () => {
   return (
-    <>
-      <h1>Loader!</h1>
-    </>
+    <ClipLoader
+      color="#649179"
+      loading
+      size={20}
+      aria-label="Loading Spinner"
+      data-testid="loader"
+    />
   );
 };
 

@@ -1,0 +1,19 @@
+.user__avatar {
+  border-radius: 256px;
+  width: 32px;
+  height: 32px;
+  background-color: var(--green-light);
+}
+
+.avatar__letter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 256px;
+  color: var(--green-darker);
+  background-color: var(--white);
+  font-weight: 700;
+  font-size: 16px;
+}
