@@ -1,4 +1,3 @@
-
 import { Link } from 'react-router-dom';
 import styles from './PopularArticles.module.css';
 
@@ -6,7 +5,6 @@ function PopularArticles() {
   return (
     <div className="PopularArticles">
       <section id="popular-articles">
-
         <div className={styles.content}>
           <div className={styles.firstpart}>
             <h2 className={styles.title}>Popular Articles</h2>
