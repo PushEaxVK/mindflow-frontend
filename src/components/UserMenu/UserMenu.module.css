@@ -1,7 +1,15 @@
+.user__wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+
 .user__menu {
   display: flex;
+  flex-direction: column;
   gap: 32px;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
 }
 
@@ -9,11 +17,6 @@
   font-weight: 700;
   font-size: 12px;
   color: var(--green-darker);
-}
-.user__wrapper {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
 }
 
 .btn__logout {
@@ -38,26 +41,12 @@
   stroke-width: 1.33px;
   fill: none;
 }
-
-.user__name::after {
-  content: '';
-  display: inline-block;
+.user__divider {
   width: 1px;
   height: 39px;
   background-color: var(--green-darker);
   margin-left: 16px;
   margin-right: 16px;
+  display: inline-block;
   vertical-align: middle;
-}
-.btn__create {
-  display: none;
-}
-
-@media screen and (min-width: 768px) {
-  .user__menu {
-    display: flex;
-    gap: 32px;
-    justify-content: space-between;
-    align-items: center;
-  }
 }

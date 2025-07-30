@@ -9,11 +9,6 @@ export const register = createThunk('auth/register', async (body) =>
 export const login = createThunk('auth/login', async (body) =>
   serviceApi.auth.login(body)
 );
-
-// export const logout = createThunk('auth/logout', async () =>
-//   serviceApi.auth.logout()
-// );
-
 export const logout = createAsyncThunk('auth/logout', async (_, thunkAPI) => {
   try {
     await serviceApi.auth.logout();

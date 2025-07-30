@@ -1,8 +1,10 @@
 .appbar {
-  position: relative;
-  z-index: 1000;
+  position: sticky;
   padding: 14px 0;
+  top: 0;
+  z-index: 1000;
   background-color: var(--light-green);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
 }
 
 .wrapper {

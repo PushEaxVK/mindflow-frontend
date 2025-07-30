@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-//axios.defaults.baseURL = 'http://localhost:3000';
+axios.defaults.withCredentials = true;
+// axios.defaults.baseURL = 'http://localhost:3000';
 axios.defaults.baseURL = 'https://mindflow-backend-iwk7.onrender.com';
 
 export const setAuthHeader = (token) => {
@@ -30,7 +31,9 @@ export const login = async ({ email, password }) => {
 };
 
 export const logout = async () => {
-  const response = await axios.post('/auth/logout');
+  const response = await axios.post('/auth/logout', null, {
+    withCredentials: true,
+  });
   removeAuthHeader();
   return response;
 };
