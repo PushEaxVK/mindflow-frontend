@@ -9,34 +9,18 @@ import Layout from '../Layout/Layout';
 import Loader from '../Loader/Loader';
 
 const HomePage = lazy(() => import('../../pages/HomePage/HomePage'));
-const ArticlesPage = lazy(() =>
-  import('../../pages/ArticlesPage/ArticlesPage')
-);
-const AuthorProfilePage = lazy(() =>
-  import('../../pages/AuthorProfilePage/AuthorProfilePage')
-);
+const ArticlesPage = lazy(() => import('../../pages/ArticlesPage/ArticlesPage'));
+const AuthorProfilePage = lazy(() => import('../../pages/AuthorProfilePage/AuthorProfilePage'));
 const AuthorsPage = lazy(() => import('../../pages/AuthorsPage/AuthorsPage'));
 const LoginPage = lazy(() => import('../../pages/LoginPage/LoginPage'));
-const MyProfilePage = lazy(() =>
-  import('../../pages/MyProfilePage/MyProfilePage')
-);
+const MyProfilePage = lazy(() => import('../../pages/MyProfilePage/MyProfilePage'));
 const ArticlePage = lazy(() => import('../../pages/ArticlePage/ArticlePage'));
-const CreateArticlePage = lazy(() =>
-  import('../../pages/CreateArticlePage/CreateArticlePage')
-);
-const UploadPhotoPage = lazy(() =>
-  import('../../pages/UploadPhotoPage/UploadPhotoPage')
-);
-const UploadPhoto = lazy(() =>
-  import('../../pages/UploadPhoto/UploadPhoto.jsx')
-);
-const RegisterPage = lazy(() =>
-  import('../../pages/RegisterPage/RegisterPage')
-);
+const CreateArticlePage = lazy(() => import('../../pages/CreateArticlePage/CreateArticlePage'));
+const UploadPhotoPage = lazy(() => import('../../pages/UploadPhotoPage/UploadPhotoPage'));
+const UploadPhoto = lazy(() => import('../../pages/UploadPhoto/UploadPhoto.jsx'));
+const RegisterPage = lazy(() => import('../../pages/RegisterPage/RegisterPage'));
 const MyArticles = lazy(() => import('../nestedRoutes/MyArticles/MyArticles'));
-const SavedArticles = lazy(() =>
-  import('../nestedRoutes/SavedArticles/SavedArticles')
-);
+const SavedArticles = lazy(() => import('../nestedRoutes/SavedArticles/SavedArticles'));
 const NotFound = lazy(() => import('../../pages/NotFound/NotFound'));
 
 const App = () => {
@@ -63,18 +47,15 @@ const App = () => {
               <RestrictedRoute redirectTo="/" component={<RegisterPage />} />
             }
           />
-         
-<Route 
-  path="create"
-  element={
-    <PrivateRoute redirectTo="/login">
-      <CreateArticlePage />
-    </PrivateRoute>
-  }
-/>
 
-
-<Route path="create" element={<CreateArticlePage />} />
+          <Route
+            path="create"
+            element={
+              <PrivateRoute redirectTo="/login">
+                <CreateArticlePage />
+              </PrivateRoute>
+            }
+          />
           <Route
             path="photo"
             element={
@@ -86,12 +67,6 @@ const App = () => {
             path="login"
             element={
               <RestrictedRoute redirectTo="/" component={<LoginPage />} />
-            }
-          />
-          <Route
-            path="register"
-            element={
-              <RestrictedRoute redirectTo="/" component={<RegisterPage />} />
             }
           />
           <Route path="*" element={<NotFound />} />
