@@ -38,7 +38,7 @@ const LoginForm = () => {
       const result = await dispatch(login(values));
 
       if (login.fulfilled.match(result)) {
-        navigate('/home');
+        navigate('/');
       }
     } catch (err) {
       console.error('Login error:', err);
@@ -81,7 +81,7 @@ const LoginForm = () => {
               <label className={s.label}>Enter a password</label>
               <div className={s.passwordContainer}>
                 <Field
-                  type={showPassword ? "text" : "password"}
+                  type={showPassword ? 'text' : 'password'}
                   name="password"
                   placeholder="*********"
                   className={s.field}
@@ -90,19 +90,43 @@ const LoginForm = () => {
                   type="button"
                   onClick={togglePasswordVisibility}
                   className={s.passwordToggle}
-                  aria-label={showPassword ? "Hide password" : "Show password"}
+                  aria-label={showPassword ? 'Hide password' : 'Show password'}
                 >
                   {showPassword ? (
                     <>
-                      <img src={EyeOpenMobile} alt="" className={`${s.icon} ${s.iconMobile}`} />
-                      <img src={EyeOpenTablet} alt="" className={`${s.icon} ${s.iconTablet}`} />
-                      <img src={EyeOpenDesktop} alt="" className={`${s.icon} ${s.iconDesktop}`} />
+                      <img
+                        src={EyeOpenMobile}
+                        alt=""
+                        className={`${s.icon} ${s.iconMobile}`}
+                      />
+                      <img
+                        src={EyeOpenTablet}
+                        alt=""
+                        className={`${s.icon} ${s.iconTablet}`}
+                      />
+                      <img
+                        src={EyeOpenDesktop}
+                        alt=""
+                        className={`${s.icon} ${s.iconDesktop}`}
+                      />
                     </>
                   ) : (
                     <>
-                      <img src={EyeClosedMobile} alt="" className={`${s.icon} ${s.iconMobile}`} />
-                      <img src={EyeClosedTablet} alt="" className={`${s.icon} ${s.iconTablet}`} />
-                      <img src={EyeClosedDesktop} alt="" className={`${s.icon} ${s.iconDesktop}`} />
+                      <img
+                        src={EyeClosedMobile}
+                        alt=""
+                        className={`${s.icon} ${s.iconMobile}`}
+                      />
+                      <img
+                        src={EyeClosedTablet}
+                        alt=""
+                        className={`${s.icon} ${s.iconTablet}`}
+                      />
+                      <img
+                        src={EyeClosedDesktop}
+                        alt=""
+                        className={`${s.icon} ${s.iconDesktop}`}
+                      />
                     </>
                   )}
                 </button>
