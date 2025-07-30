@@ -3,7 +3,7 @@ import css from './ArticlesPage.module.css';
 import ArticlesDropdown from '../../components/ArticlesDropdown/ArticlesDropdown';
 import ArticlesList from '../../components/ArticlesList/ArticlesList';
 import LoadMore from '../../components/LoadMore/LoadMore';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchAllArticles } from '../../redux/articles/operation';
 import {
@@ -21,23 +21,29 @@ const ArticlesPage = () => {
   const loading = useSelector(selectLoadingArticles);
   const error = useSelector(selectErrorArticles);
   const total = useSelector(selectTotal);
+  const currentPage = useSelector(selectPage);
+  const totalPages = useSelector(selectPages);
+  const [filter, setFilter] = useState('all'); // локальний фільтр
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchAllArticles()); // початкове завантаження
-  }, [dispatch]);
+    dispatch(fetchAllArticles({ page: 1, filter }));
+  }, [dispatch, filter]);
 
-  // useEffect(() => {
-  //   dispatch(fetchAllArticles('/articles/popular'));
-  // }, [dispatch]);
-
-  const handleFilterChange = (selectedOption) => {
-    const value = selectedOption.value;
-    const endpoint =
-      value === 'popular' ? '/articles/popular?limit=12' : '/articles?limit=12';
-    dispatch(fetchAllArticles(endpoint));
+  const handleFilterChange = (value) => {
+    setFilter(value);
   };
+
+  const handleLoadMore = () => {
+    console.log('Load more clicked. Current page:', currentPage);
+    if (currentPage < totalPages) {
+      const nextPage = currentPage + 1;
+      console.log('Fetching next page:', nextPage, 'with filter:', filter);
+      dispatch(fetchAllArticles({ page: nextPage, filter }));
+    }
+  };
+
   return (
     <section>
       <Container>
@@ -57,7 +63,11 @@ const ArticlesPage = () => {
           btnStyle={'FavoriteArticleNotSaved'}
           queryArticles={articles}
         />
-        <LoadMore />
+        <LoadMore
+          page={currentPage}
+          pages={totalPages}
+          onLoadMore={handleLoadMore}
+        />
       </Container>
     </section>
   );
