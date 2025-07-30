@@ -20,11 +20,11 @@ const UserMenu = () => {
       <div className={s.user__wrapper}>
         <UserAvatar
           className={s.user__avatar}
-          src={user.avatarUrl}
-          alt={`${user.name}'s avatar`}
-          name={user.name}
+          src={user?.avatarUrl}
+          alt={`${user?.name}'s avatar`}
+          name={user?.name}
         />
-        <p className={s.user__name}>{user.name}</p>
+        <p className={s.user__name}>{user?.name}</p>
         <button onClick={handleLogoutModal} className={s.btn__logout}>
           <svg className={s.btn__icon}>
             <use href="/img/icons.svg#icon-Vector-1"></use>
