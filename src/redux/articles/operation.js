@@ -24,17 +24,3 @@ export const fetchAllArticles = createAsyncThunk(
     }
   }
 );
-
-export const fetchArticlesById = createAsyncThunk(
-  'articles/fetchById',
-  async (authorId, thunkAPI) => {
-    try {
-      const response = await axios.get(`/articles/${authorId}`);
-      // Очікується: { author: 1674389, title: 'dgdfgdfgdf', desc: 'fgdfgfdgdfgf', ... }
-      return response.data;
-    } catch (error) {
-      console.log(error);
-      return thunkAPI.rejectWithValue(error.message);
-    }
-  }
-);
