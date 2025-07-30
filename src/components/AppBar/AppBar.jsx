@@ -41,7 +41,7 @@ const AppBar = () => {
 
   return (
     <header className={s.appbar}>
-      <Container>
+      <Container noVerticalPadding>
         <div className={s.wrapper}>
           <div className={s.logo} onClick={handleLogoClick}>
             <svg className={s.logo__icon}>
