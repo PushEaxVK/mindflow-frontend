@@ -24,8 +24,8 @@ const slice = createSlice({
         toast.success('Registration is complete!');
       })
       .addCase(login.fulfilled, (state, action) => {
-        state.user = action.payload.user;
-        state.token = action.payload.token;
+        state.user = action.payload.data.user;
+        state.token = action.payload.data.accessToken;
         state.isLoggedIn = true;
         toast.success('Login complete!');
       })
@@ -36,6 +36,7 @@ const slice = createSlice({
       .addCase(refreshUser.fulfilled, (state, action) => {
         state.isLoggedIn = true;
         state.user = action.payload;
+        console.log(action.payload);
         state.isRefreshing = false;
       })
       .addCase(refreshUser.pending, (state, action) => {
