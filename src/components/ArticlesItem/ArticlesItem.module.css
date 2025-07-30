@@ -9,6 +9,7 @@
   justify-content: space-between;
   height: 100%;
   min-height: 492px;
+  max-height: 492px;
 }
 
 .imgArticle {
