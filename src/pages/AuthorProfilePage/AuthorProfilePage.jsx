@@ -40,7 +40,7 @@ const AuthorProfilePage = () => {
 
   useEffect(() => {
     if (authorId) {
-      dispatch(fetchAllArticles(`/articles?author=${authorId}`));
+      dispatch(fetchAllArticles({ page: 1, filter: `author=${authorId}` }));
     }
   }, [authorId, dispatch]);
 
