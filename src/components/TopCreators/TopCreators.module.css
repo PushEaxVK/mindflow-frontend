@@ -1,12 +1,10 @@
 .TopCreators {
   display: flex;
   justify-content: space-between;
-  width: 1440px;
+  width: 100%;
   height: 100%;
-}
-
-.content {
-  width: 1224px;
+  margin-bottom: 72px;
+  margin: 0 auto;
 }
 
 .firstpart {
@@ -20,6 +18,7 @@
   font-weight: 700;
   font-size: 40px;
   color: var(--black);
+  margin-bottom: 16px;
 }
 
 .link {
@@ -55,10 +54,6 @@
     width: 768px;
   }
 
-  .content {
-    width: 704px;
-  }
-
   .title {
     font-size: 32px;
   }
@@ -91,7 +86,9 @@
   }
 
   .content {
-    width: 361px;
+    width: 100%;
+    max-width: 361px;
+    margin: 0 auto;
   }
 
   .firstpart {
