@@ -29,16 +29,18 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 
 export const fetchAllArticles = createAsyncThunk(
   'articles/fetchAll',
-  async ({ page = 1, filter = '' }, thunkAPI) => {
+  async ({ page = 1, limit = 3, filter = '' }, thunkAPI) => {
     try {
-      const baseUrl = filter === 'popular' ? '/articles/popular' : '/articles';
+      let url = '';
 
-      // Якщо filter — це вже query string (наприклад "author=123"), додай його як є
-      const isQueryString = filter.includes('=') || filter.includes('&');
-
-      const url = isQueryString
-        ? `/articles?limit=12&page=${page}&${filter}`
-        : `${baseUrl}?limit=12&page=${page}`;
+      if (filter === 'popular') {
+        url = `/articles/popular?limit=${limit}&page=${page}`;
+      } else {
+        const query = `limit=${limit}&page=${page}${
+          filter ? `&${filter}` : ''
+        }`;
+        url = `/articles?${query}`;
+      }
 
       const response = await axios.get(url);
 

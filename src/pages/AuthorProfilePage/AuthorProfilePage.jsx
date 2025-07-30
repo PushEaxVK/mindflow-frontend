@@ -33,6 +33,8 @@ const AuthorProfilePage = () => {
   const error = useSelector(selectErrorArticles);
   const total = useSelector(selectTotal);
   const isLoggedIn = useSelector(selectIsLoggedIn);
+  const currentPage = useSelector(selectPage);
+  const totalPages = useSelector(selectPages);
 
   //console.log('Масив статтей:', allArticles);
 
@@ -43,6 +45,12 @@ const AuthorProfilePage = () => {
       dispatch(fetchAllArticles({ page: 1, filter: `author=${authorId}` }));
     }
   }, [authorId, dispatch]);
+
+  const handleLoadMore = () => {
+    dispatch(
+      fetchAllArticles({ page: currentPage + 1, filter: `author=${authorId}` })
+    );
+  };
 
   const navigate = useNavigate();
 
@@ -87,7 +95,11 @@ const AuthorProfilePage = () => {
             queryArticles={articles}
           />
         )}
-        <LoadMore />
+        <LoadMore
+          page={currentPage}
+          pages={totalPages}
+          onLoadMore={handleLoadMore}
+        />
       </Container>
     </section>
   );
