@@ -1,7 +1,7 @@
 import styles from './Hero.module.css';
 import { Link } from 'react-router-dom';
 
-function Hero() {
+function Hero({ isLoggedIn }) {
   return (
     <section className={styles.hero}>
       <div className={styles.content}>
@@ -14,11 +14,13 @@ function Hero() {
               Go to Articles
             </a>
           </button>
-          <button className={styles.secondary}>
-            <Link to="/register" className={styles.btn2}>
-              Register
-            </Link>
-          </button>
+          {!isLoggedIn && (
+            <button className={styles.secondary}>
+              <Link to="/register" className={styles.btn2}>
+                Register
+              </Link>
+            </button>
+          )}
         </div>
       </div>
       <div className={styles.image}></div>

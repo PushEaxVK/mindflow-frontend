@@ -54,13 +54,11 @@ function PopularArticles() {
           </Link>
         </div>
         <ul className={styles.articlesGrid}>
-          <li>
-            <ArticlesList
-              queryArticles={articles}
-              icon={'icon-favorite-article'}
-              btnStyle={'FavoriteArticle'}
-            />
-          </li>
+          <ArticlesList
+            queryArticles={articles}
+            icon="icon-favorite-article"
+            btnStyle={'FavoriteArticleNotSaved'}
+          />
         </ul>
       </div>
     </section>
