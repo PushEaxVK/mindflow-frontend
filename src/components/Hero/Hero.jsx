@@ -1,8 +1,12 @@
 import styles from './Hero.module.css';
 import { Link } from 'react-router-dom';
 import Container from '../Container/Container.jsx';
+import { useSelector } from 'react-redux';
+import { selectIsLoggedIn } from '../../redux/auth/selectors.js';
 
-function Hero({ isLoggedIn }) {
+function Hero() {
+  const isLoggedIn = useSelector(selectIsLoggedIn);
+
   return (
     <section className={styles.hero}>
       <Container noVerticalPadding>
@@ -12,17 +16,13 @@ function Hero({ isLoggedIn }) {
             community
           </h1>
           <div className={styles.buttons}>
-            <button className={styles.primary}>
-              <a href="#popular-articles" className={styles.btn}>
-                Go to Articles
-              </a>
-            </button>
+            <a href="#popular-articles" className={styles.primary}>
+              Go to Articles
+            </a>
             {!isLoggedIn && (
-              <button className={styles.secondary}>
-                <Link to="/register" className={styles.btn2}>
-                  Register
-                </Link>
-              </button>
+              <Link to="/register" className={styles.secondary}>
+                Register
+              </Link>
             )}
           </div>
         </div>

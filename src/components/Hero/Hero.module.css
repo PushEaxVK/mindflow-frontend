@@ -50,6 +50,10 @@
 }
 
 .buttons .primary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
   border-radius: 64px;
   padding: 16px;
   width: 184px;
@@ -62,13 +66,15 @@
   font-family: var(--font-family);
   font-weight: 700;
   font-size: 18px;
-}
-
-.btn {
   text-decoration: none;
   color: var(--white);
 }
+
 .buttons .secondary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
   padding: 0.8rem 1.5rem;
   border: 2px solid var(--green);
   background: none;
@@ -81,12 +87,10 @@
   font-family: var(--font-family);
   font-weight: 700;
   font-size: 18px;
-}
-
-.btn2 {
   text-decoration: none;
   color: var(--green);
 }
+
 .buttons .primary:hover,
 .buttons .primary:focus {
   background-color: var(--green-darker);
@@ -96,6 +100,7 @@
   border-color: var(--green-darker);
   color: var(--green-darker);
 }
+
 .image {
   position: absolute;
   top: 0;
