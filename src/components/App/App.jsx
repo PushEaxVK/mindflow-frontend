@@ -9,18 +9,34 @@ import Layout from '../Layout/Layout';
 import Loader from '../Loader/Loader';
 
 const HomePage = lazy(() => import('../../pages/HomePage/HomePage'));
-const ArticlesPage = lazy(() => import('../../pages/ArticlesPage/ArticlesPage'));
-const AuthorProfilePage = lazy(() => import('../../pages/AuthorProfilePage/AuthorProfilePage'));
+const ArticlesPage = lazy(() =>
+  import('../../pages/ArticlesPage/ArticlesPage')
+);
+const AuthorProfilePage = lazy(() =>
+  import('../../pages/AuthorProfilePage/AuthorProfilePage')
+);
 const AuthorsPage = lazy(() => import('../../pages/AuthorsPage/AuthorsPage'));
 const LoginPage = lazy(() => import('../../pages/LoginPage/LoginPage'));
-const MyProfilePage = lazy(() => import('../../pages/MyProfilePage/MyProfilePage'));
+const MyProfilePage = lazy(() =>
+  import('../../pages/MyProfilePage/MyProfilePage')
+);
 const ArticlePage = lazy(() => import('../../pages/ArticlePage/ArticlePage'));
-const CreateArticlePage = lazy(() => import('../../pages/CreateArticlePage/CreateArticlePage'));
-const UploadPhotoPage = lazy(() => import('../../pages/UploadPhotoPage/UploadPhotoPage'));
-const UploadPhoto = lazy(() => import('../../pages/UploadPhoto/UploadPhoto.jsx'));
-const RegisterPage = lazy(() => import('../../pages/RegisterPage/RegisterPage'));
+const CreateArticlePage = lazy(() =>
+  import('../../pages/CreateArticlePage/CreateArticlePage')
+);
+const UploadPhotoPage = lazy(() =>
+  import('../../pages/UploadPhotoPage/UploadPhotoPage')
+);
+const UploadPhoto = lazy(() =>
+  import('../../pages/UploadPhoto/UploadPhoto.jsx')
+);
+const RegisterPage = lazy(() =>
+  import('../../pages/RegisterPage/RegisterPage')
+);
 const MyArticles = lazy(() => import('../nestedRoutes/MyArticles/MyArticles'));
-const SavedArticles = lazy(() => import('../nestedRoutes/SavedArticles/SavedArticles'));
+const SavedArticles = lazy(() =>
+  import('../nestedRoutes/SavedArticles/SavedArticles')
+);
 const NotFound = lazy(() => import('../../pages/NotFound/NotFound'));
 
 const App = () => {
@@ -39,7 +55,24 @@ const App = () => {
           <Route path="articles" element={<ArticlesPage />} />
           <Route path="articles/:id" element={<ArticlePage />} />
           <Route path="authors" element={<AuthorsPage />} />
-          <Route path="authors/:id" element={<AuthorProfilePage />} />
+          <Route path="authors/:id" element={<AuthorProfilePage />}>
+            <Route
+              path="my-articles"
+              element={
+                <PrivateRoute>
+                  <MyArticles />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="saved-articles"
+              element={
+                <PrivateRoute>
+                  <SavedArticles />
+                </PrivateRoute>
+              }
+            />
+          </Route>
 
           <Route
             path="register"
@@ -47,7 +80,6 @@ const App = () => {
               <RestrictedRoute redirectTo="/" component={<RegisterPage />} />
             }
           />
-
           <Route
             path="create"
             element={
@@ -62,7 +94,6 @@ const App = () => {
               <PrivateRoute redirectTo="/login" component={<UploadPhoto />} />
             }
           />
-
           <Route
             path="login"
             element={

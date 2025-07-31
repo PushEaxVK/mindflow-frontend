@@ -52,13 +52,13 @@ const AuthorProfilePage = () => {
     );
   };
 
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
-  useEffect(() => {
-    if (isLoggedIn && isBaseProfile) {
-      navigate('my-articles', { replace: true });
-    }
-  }, [isBaseProfile, navigate]);
+  // useEffect(() => {
+  //   if (isLoggedIn && isBaseProfile) {
+  //     navigate('my-articles', { replace: true });
+  //   }
+  // }, [isBaseProfile, navigate]);
 
   return (
     <section className={css.section_AuthorProfilePage}>
