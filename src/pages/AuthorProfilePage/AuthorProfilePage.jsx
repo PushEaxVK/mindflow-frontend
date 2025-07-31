@@ -52,13 +52,17 @@ const AuthorProfilePage = () => {
     );
   };
 
+  // const userId = useSelector((state) => state.auth.user?._id);
+
+  // const isOwner = isLoggedIn && userId === authorId;
+
   // const navigate = useNavigate();
 
   // useEffect(() => {
   //   if (isLoggedIn && isBaseProfile) {
   //     navigate('my-articles', { replace: true });
   //   }
-  // }, [isBaseProfile, navigate]);
+  // }, [isBaseProfile, isLoggedIn, navigate]);
 
   return (
     <section className={css.section_AuthorProfilePage}>
@@ -78,28 +82,32 @@ const AuthorProfilePage = () => {
           </li>
         </ul>
         {isLoggedIn && (
-          <nav className={css.profileTabList}>
-            <NavLink to="my-articles" className={buildLinkClass}>
-              My Articles
-            </NavLink>
-            <NavLink to="saved-articles" className={buildLinkClass}>
-              Saved Articles
-            </NavLink>
-          </nav>
+          <>
+            <nav className={css.profileTabList}>
+              <NavLink to="my-articles" className={buildLinkClass}>
+                My Articles
+              </NavLink>
+              <NavLink to="saved-articles" className={buildLinkClass}>
+                Saved Articles
+              </NavLink>
+            </nav>
+          </>
         )}
         <Outlet />
         {isBaseProfile && (
-          <ArticlesList
-            icon={'icon-favorite-article'}
-            btnStyle={'FavoriteArticleNotSaved'}
-            queryArticles={articles}
-          />
+          <>
+            <ArticlesList
+              icon={'icon-favorite-article'}
+              btnStyle={'FavoriteArticleNotSaved'}
+              queryArticles={articles}
+            />
+            <LoadMore
+              page={currentPage}
+              pages={totalPages}
+              onLoadMore={handleLoadMore}
+            />
+          </>
         )}
-        <LoadMore
-          page={currentPage}
-          pages={totalPages}
-          onLoadMore={handleLoadMore}
-        />
       </Container>
     </section>
   );
