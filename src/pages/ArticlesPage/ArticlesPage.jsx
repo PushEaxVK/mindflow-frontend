@@ -14,6 +14,7 @@ import {
   selectPages,
   selectTotal,
 } from '../../redux/articles/selectors';
+import Loader from '../../components/Loader/Loader';
 
 const ArticlesPage = () => {
   const articles = useSelector(selectAllArticles);
@@ -58,11 +59,15 @@ const ArticlesPage = () => {
             <ArticlesDropdown onChangeFilter={handleFilterChange} />
           </div>
         </div>
-        <ArticlesList
-          icon={'icon-favorite-article'}
-          btnStyle={'FavoriteArticleNotSaved'}
-          queryArticles={articles}
-        />
+        {loading ? (
+          <Loader />
+        ) : (
+          <ArticlesList
+            icon={'icon-favorite-article'}
+            btnStyle={'FavoriteArticleNotSaved'}
+            queryArticles={articles}
+          />
+        )}
         <LoadMore
           page={currentPage}
           pages={totalPages}

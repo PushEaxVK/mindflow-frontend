@@ -8,7 +8,7 @@ export const fetchAllArticles = createAsyncThunk(
       let url = '';
 
       if (filter === 'popular') {
-        url = `/articles/popular?limit=${limit}&page=${page}`;
+        url = `/articles?limit=${limit}&page=${page}&sort=rate&order=desc`;
       } else {
         const query = `limit=${limit}&page=${page}${
           filter ? `&${filter}` : ''
