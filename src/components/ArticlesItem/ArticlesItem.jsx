@@ -22,7 +22,7 @@ const ArticlesItem = ({ item, icon, btnStyle }) => {
         >
           Learn more
         </Link>
-        <button className={css[`btn${btnStyle}`]}>
+        <button className={css[`btn${btnStyle}`]} type="button">
           <svg className={css[`svgIcon${btnStyle}`]}>
             <use href={`/icons-profileArticles.svg#${icon}`}></use>
           </svg>

@@ -33,6 +33,8 @@ const AuthorProfilePage = () => {
   const error = useSelector(selectErrorArticles);
   const total = useSelector(selectTotal);
   const isLoggedIn = useSelector(selectIsLoggedIn);
+  const currentPage = useSelector(selectPage);
+  const totalPages = useSelector(selectPages);
 
   //console.log('Масив статтей:', allArticles);
 
@@ -40,17 +42,27 @@ const AuthorProfilePage = () => {
 
   useEffect(() => {
     if (authorId) {
-      dispatch(fetchAllArticles(`/articles?author=${authorId}`));
+      dispatch(fetchAllArticles({ page: 1, filter: `author=${authorId}` }));
     }
   }, [authorId, dispatch]);
 
-  const navigate = useNavigate();
+  const handleLoadMore = () => {
+    dispatch(
+      fetchAllArticles({ page: currentPage + 1, filter: `author=${authorId}` })
+    );
+  };
 
-  useEffect(() => {
-    if (isLoggedIn && isBaseProfile) {
-      navigate('my-articles', { replace: true });
-    }
-  }, [isBaseProfile, navigate]);
+  // const userId = useSelector((state) => state.auth.user?._id);
+
+  // const isOwner = isLoggedIn && userId === authorId;
+
+  // const navigate = useNavigate();
+
+  // useEffect(() => {
+  //   if (isLoggedIn && isBaseProfile) {
+  //     navigate('my-articles', { replace: true });
+  //   }
+  // }, [isBaseProfile, isLoggedIn, navigate]);
 
   return (
     <section className={css.section_AuthorProfilePage}>
@@ -70,24 +82,32 @@ const AuthorProfilePage = () => {
           </li>
         </ul>
         {isLoggedIn && (
-          <nav className={css.profileTabList}>
-            <NavLink to="my-articles" className={buildLinkClass}>
-              My Articles
-            </NavLink>
-            <NavLink to="saved-articles" className={buildLinkClass}>
-              Saved Articles
-            </NavLink>
-          </nav>
+          <>
+            <nav className={css.profileTabList}>
+              <NavLink to="my-articles" className={buildLinkClass}>
+                My Articles
+              </NavLink>
+              <NavLink to="saved-articles" className={buildLinkClass}>
+                Saved Articles
+              </NavLink>
+            </nav>
+          </>
         )}
         <Outlet />
         {isBaseProfile && (
-          <ArticlesList
-            icon={'icon-favorite-article'}
-            btnStyle={'FavoriteArticleNotSaved'}
-            queryArticles={articles}
-          />
+          <>
+            <ArticlesList
+              icon={'icon-favorite-article'}
+              btnStyle={'FavoriteArticleNotSaved'}
+              queryArticles={articles}
+            />
+            <LoadMore
+              page={currentPage}
+              pages={totalPages}
+              onLoadMore={handleLoadMore}
+            />
+          </>
         )}
-        <LoadMore />
       </Container>
     </section>
   );
