@@ -12,12 +12,20 @@
   margin-bottom: 72px;
 }
 
+.hero > div {
+  position: relative;
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
 .content {
   position: relative;
   z-index: 2;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  justify-content: space-between;
 }
 
 .title {
@@ -90,8 +98,8 @@
 }
 .image {
   position: absolute;
-  top: 48px;
-  right: 0;
+  top: 0;
+  right: 108px;
   width: 805px;
   height: 562px;
   background-image: url('/img/Union-d-1x.png');
@@ -110,18 +118,29 @@
 
 @media (min-width: 768px) and (max-width: 1439px) {
   .hero {
-    position: relative;
     width: 100%;
     height: 427px;
     padding-top: 22px;
+    padding-bottom: 22px;
     display: flex;
     flex-direction: column;
-  }
-  .content {
     position: relative;
+    margin: 0 auto;
+  }
+
+  .hero > div {
+    position: relative;
+    width: 100%;
+    max-width: 768px;
+    margin: 0 auto;
+  }
+
+  .content {
     display: flex;
     flex-direction: column;
-    height: 100%;
+    justify-content: space-between;
+    height: 383px;
+    /*flex-grow: 1;*/
   }
 
   .title {
@@ -132,7 +151,7 @@
   }
 
   .buttons {
-    position: absolute;
+    position: static;
     bottom: 22px;
     left: 0;
     display: flex;
@@ -151,13 +170,16 @@
   }
 
   .image {
-    top: 22px;
+    position: absolute;
+    top: 0;
+    right: 22px;
     width: 430px;
     height: 383px;
     background-image: url('/img/Union-t-1x.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+    z-index: 1;
   }
 
   @media screen and (min-resolution: 2dppx),
@@ -171,35 +193,23 @@
 
 @media (min-width: 393px) and (max-width: 767px) {
   .hero {
-    flex-direction: column;
+    display: flex;
+    flex-direction: column-reverse;
     justify-content: center;
     height: auto;
-    width: 393px;
+    width: 100%;
     padding-top: 16px;
   }
 
-  .image {
-    order: 1;
-    position: relative;
-    top: 0;
-    right: 0;
-    width: 361px;
-    height: 321px;
-    background-image: url('/img/Union-m-1x.png');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
+  .hero > div {
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
   }
 
-  @media screen and (min-resolution: 2dppx),
-    screen and (-webkit-min-device-pixel-ratio: 2),
-    screen and (min-resolution: 192dpi) {
-    .advertisement-card {
-      background-image: url('/img/Union-m-2x.png');
-    }
-  }
   .content {
-    order: 2;
+    display: flex;
+    flex-direction: column;
     align-items: center;
     text-align: center;
     z-index: 2;
@@ -216,7 +226,6 @@
   }
 
   .buttons {
-    order: 3;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -232,22 +241,45 @@
     max-width: 361px;
     height: 57px;
   }
-}
 
+  .image {
+    position: static;
+    width: 100%;
+    max-width: 361px;
+    height: 321px;
+    background-image: url('/img/Union-m-1x.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    margin: 0 auto;
+  }
+
+  @media screen and (min-resolution: 2dppx),
+    screen and (-webkit-min-device-pixel-ratio: 2),
+    screen and (min-resolution: 192dpi) {
+    .advertisement-card {
+      background-image: url('/img/Union-m-2x.png');
+    }
+  }
+}
 @media (max-width: 392px) {
   .hero {
-    flex-direction: column;
+    display: flex;
+    flex-direction: column-reverse;
     justify-content: center;
     height: auto;
     width: 100%;
     padding-top: 16px;
   }
 
+  .hero > div {
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+  }
+
   .image {
-    order: 1;
-    position: relative;
-    top: 0;
-    right: 0;
+    position: static;
     width: 100%;
     height: 321px;
     background-image: url('/img/Union-m-1x.png');
@@ -265,7 +297,8 @@
   }
 
   .content {
-    order: 2;
+    display: flex;
+    flex-direction: column;
     align-items: center;
     text-align: center;
     z-index: 2;
@@ -281,7 +314,6 @@
   }
 
   .buttons {
-    order: 3;
     display: flex;
     flex-direction: column;
     align-items: center;
