@@ -1,15 +1,15 @@
 .overlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 998;
+  inset: 0;
+  z-index: 999;
   display: flex;
-  justify-content: flex-end;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.3s ease, visibility 0.3s ease;
+  background-color: rgba(0, 0, 0, 0.4);
 }
 
 .show {
@@ -17,50 +17,86 @@
   visibility: visible;
 }
 
-/* ========== Modal-Container mit Animationen ========== */
-@keyframes slideDown {
-  0% {
-    transform: translateY(-5%);
-    opacity: 0;
-  }
-  100% {
-    transform: translateY(0%);
-    opacity: 1;
-  }
-}
-
-@keyframes slideUp {
-  0% {
-    transform: translateY(0%);
-    opacity: 1;
-  }
-  100% {
-    transform: translateY(-100%);
-    opacity: 0;
-  }
+.hide {
+  opacity: 0;
+  visibility: hidden;
 }
 
 .modal {
   position: relative;
   width: 100%;
   height: 100%;
-  background-color: var(--light-green);
+  background-color: var(--white);
   display: flex;
   flex-direction: column;
-  animation: slideUp 0.3s ease forwards;
 }
 
-.visible {
-  animation: slideDown 0.3s ease forwards;
+@keyframes fadeInUp {
+  0% {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
-/* ========== Modal-Inhalt ========== */
+@keyframes fadeOutDown {
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+}
+
+.slide__In {
+  animation: fadeInUp 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.slide__Out {
+  animation: fadeOutDown 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.link {
+  position: relative;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 12px;
+  color: var(--green-darker);
+  transition: color 0.3s ease;
+}
+
+.link.active::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  height: 1.33px;
+  width: 100%;
+  background-color: var(--green-darker);
+}
+
+.link:hover {
+  color: var(--green);
+}
+
 .modal__content {
-  margin-top: 74px;
+  margin-top: 100px;
   display: flex;
   flex-direction: column;
   height: 100%;
   padding: 24px 0;
+}
+
+.auth__wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
 }
 
 .nav {
@@ -71,56 +107,11 @@
   margin-bottom: 32px;
 }
 
-/* ========== Bottom Section ========== */
-.bottom__section {
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  padding: 0 32px;
-}
-
-.user__wrapper {
+.auth__tablet {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 32px;
-  width: 100%;
-}
-
-.user__mobile {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 32px;
-}
-
-.auth__wrapper {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 32px;
-}
-
-.link {
-  position: relative;
-  text-decoration: none;
-  font-weight: 700;
-  font-size: 12px;
-  color: var(--green-darker);
-  transition: color 0.3s ease;
-
-  &.active::after {
-    content: '';
-    position: absolute;
-    bottom: -5px;
-    left: 0;
-    height: 1.33px;
-    width: 100%;
-    background-color: var(--green-darker);
-  }
-  &:hover {
-    color: var(--green);
-  }
 }
 
 .join__link {
@@ -134,14 +125,13 @@
   padding: 12px 16px;
   background-color: var(--green);
   transition: background-color 0.3s ease;
-
-  &:hover {
-    background-color: var(--green-darker);
-    color: var(--white);
-  }
 }
 
-/* ========== Responsive Anpassungen ========== */
+.join__link:hover {
+  background-color: var(--green-darker);
+  color: var(--white);
+}
+
 @media screen and (min-width: 768px) {
 }
 
