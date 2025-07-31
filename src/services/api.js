@@ -3,6 +3,8 @@ import axios from 'axios';
 axios.defaults.baseURL = 'https://mindflow-backend-iwk7.onrender.com';
 axios.defaults.withCredentials = true;
 
+axios.defaults.withCredentials = true;
+
 export const setAuthHeader = (token) => {
   axios.defaults.headers.common.Authorization = `Bearer ${token}`;
 };

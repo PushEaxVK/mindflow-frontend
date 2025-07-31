@@ -1,6 +1,9 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, lazy, Suspense } from 'react';
-import { selectIsRefreshing } from '../../redux/auth/selectors';
+import {
+  selectIsRefreshing,
+  selectIsLoggedIn,
+} from '../../redux/auth/selectors';
 import { refreshUser } from '../../redux/auth/operations';
 import { Route, Routes } from 'react-router-dom';
 import { RestrictedRoute } from '../RestrictedRoute';
@@ -42,12 +45,21 @@ const NotFound = lazy(() => import('../../pages/NotFound/NotFound'));
 const App = () => {
   const dispatch = useDispatch();
   const isRefreshing = useSelector(selectIsRefreshing);
+  const isLoggedIn = useSelector(selectIsLoggedIn);
 
   useEffect(() => {
-    dispatch(refreshUser());
-  }, [dispatch]);
+    const hasSessionCookies = document.cookie.includes('refreshToken');
 
-  return isRefreshing ? null : (
+    if (hasSessionCookies && !isLoggedIn) {
+      dispatch(refreshUser());
+    }
+  }, [dispatch, isLoggedIn]);
+
+  if (isRefreshing) {
+    return <Loader />;
+  }
+
+  return (
     <Suspense fallback={<Loader />}>
       <Routes>
         <Route path="/" element={<Layout />}>
