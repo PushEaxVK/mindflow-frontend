@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   isOpen: false,
+  type: null, // 'mobileMenu', 'SignOut', 'ErrorSave'
 };
 
 const modalSlice = createSlice({
@@ -10,12 +11,22 @@ const modalSlice = createSlice({
   reducers: {
     openModal: (state, action) => {
       state.isOpen = true;
+      state.type = action.payload;
     },
     closeModal: (state, action) => {
       state.isOpen = false;
     },
+    // toggleModal: (state, action) => {
+    //   state.isOpen = !state.isOpen;
+    // },
     toggleModal: (state, action) => {
-      state.isOpen = !state.isOpen;
+      if (state.type === action.payload && state.isOpen) {
+        state.isOpen = false;
+        state.type = null;
+      } else {
+        state.isOpen = true;
+        state.type = action.payload;
+      }
     },
   },
 });

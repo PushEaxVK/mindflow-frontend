@@ -1,0 +1,20 @@
+.svgIcon {
+  fill: none;
+  stroke: var(--black);
+  width: 10px;
+  height: 6px;
+}
+
+@media only screen and (min-width: 768px) {
+  .svgIcon {
+    width: 16px;
+    height: 8px;
+  }
+}
+
+@media only screen and (min-width: 1440px) {
+  .svgIcon {
+    width: 20px;
+    height: 10px;
+  }
+}

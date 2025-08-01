@@ -37,6 +37,7 @@ button {
 
 body {
   font-family: var(--font-family);
+  background-color: var(--white);
 }
 
 /* Placeholder style для Tiptap */

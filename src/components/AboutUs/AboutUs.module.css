@@ -14,7 +14,7 @@
 }
 
 .content {
-  background-color: #d1e0d8;
+  background-color: var(--light-green);
   border-radius: 32px;
   padding: 32px;
   width: 496px;
@@ -23,17 +23,19 @@
 }
 
 .title {
+  font-family: var(--font-family);
   font-weight: 700;
   font-size: 40px;
-  color: black;
+  color: var(--black);
   margin-bottom: 32px;
 }
 
 .text {
+  font-family: var(--font-family);
   font-weight: 400;
   font-size: 16px;
   line-height: 155%;
-  color: black;
+  color: var(--black);
 }
 
 .imgTopRight {
@@ -45,6 +47,7 @@
 
 .imgRow {
   display: flex;
+  gap: 24px;
 }
 
 .img {
@@ -52,7 +55,6 @@
   width: 808px;
   height: 398px;
   object-fit: cover;
-  margin-right: 24px;
 }
 
 .imgtwo {
@@ -82,13 +84,13 @@
   }
 
   .imgRow {
-    margin-right: 0;
+    display: flex;
+    gap: 0;
   }
 
   .img {
     width: 704px;
     height: 398px;
-    margin-right: 0;
   }
 
   .imgtwo {
@@ -118,6 +120,11 @@
 
   .imgtwo {
     display: none;
+  }
+
+  .imgRow {
+    display: flex;
+    gap: 0;
   }
 
   .img {
