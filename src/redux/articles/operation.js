@@ -3,11 +3,21 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 
 export const fetchAllArticles = createAsyncThunk(
   'articles/fetchAll',
-  async (endpoint = '/articles?limit=12', thunkAPI) => {
+  async ({ page = 1, limit = 12, filter = '' }, thunkAPI) => {
     try {
-      const response = await axios.get(endpoint);
+      let url = '';
 
-      // Якщо бекенд повертає масив — обгортаємо вручну:
+      if (filter === 'popular') {
+        url = `/articles?limit=${limit}&page=${page}&sort=rate&order=desc`;
+      } else {
+        const query = `limit=${limit}&page=${page}${
+          filter ? `&${filter}` : ''
+        }`;
+        url = `/articles?${query}`;
+      }
+
+      const response = await axios.get(url);
+
       const data = Array.isArray(response.data)
         ? {
             articles: response.data,
