@@ -50,6 +50,10 @@
 }
 
 .buttons .primary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
   border-radius: 64px;
   padding: 16px;
   width: 184px;
@@ -62,13 +66,15 @@
   font-family: var(--font-family);
   font-weight: 700;
   font-size: 18px;
-}
-
-.btn {
   text-decoration: none;
   color: var(--white);
 }
+
 .buttons .secondary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
   padding: 0.8rem 1.5rem;
   border: 2px solid var(--green);
   background: none;
@@ -81,12 +87,10 @@
   font-family: var(--font-family);
   font-weight: 700;
   font-size: 18px;
-}
-
-.btn2 {
   text-decoration: none;
   color: var(--green);
 }
+
 .buttons .primary:hover,
 .buttons .primary:focus {
   background-color: var(--green-darker);
@@ -96,6 +100,7 @@
   border-color: var(--green-darker);
   color: var(--green-darker);
 }
+
 .image {
   position: absolute;
   top: 0;
@@ -126,6 +131,7 @@
     flex-direction: column;
     position: relative;
     margin: 0 auto;
+    margin-bottom: 72px;
   }
 
   .hero > div {
@@ -140,7 +146,6 @@
     flex-direction: column;
     justify-content: space-between;
     height: 383px;
-    /*flex-grow: 1;*/
   }
 
   .title {
@@ -222,7 +227,7 @@
     text-align: left;
     font-weight: 700;
     font-size: 40px;
-    max-width: 372px;
+    max-width: 361px;
   }
 
   .buttons {
@@ -230,7 +235,7 @@
     flex-direction: column;
     align-items: center;
     gap: 24px;
-    width: 100%;
+    width: 361px;
   }
 
   .buttons .primary,
@@ -244,8 +249,7 @@
 
   .image {
     position: static;
-    width: 100%;
-    max-width: 361px;
+    width: 361px;
     height: 321px;
     background-image: url('/img/Union-m-1x.png');
     background-size: cover;
@@ -262,6 +266,7 @@
     }
   }
 }
+
 @media (max-width: 392px) {
   .hero {
     display: flex;
