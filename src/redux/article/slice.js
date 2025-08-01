@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import {
   fetchArticleById,
   fetchThreePopularArticles,
-  toggleSaveBookmark,
+  saveArticle,
 } from './operation';
 
 const initialState = {
@@ -52,16 +52,16 @@ const articleSlice = createSlice({
         state.article.error = payload;
       })
 
-      // toggleSaveBookmark
-      .addCase(toggleSaveBookmark.pending, (state) => {
+      //saveArticle
+      .addCase(saveArticle.pending, (state) => {
         state.isLoading = true;
         state.error = null;
       })
-      .addCase(toggleSaveBookmark.fulfilled, (state, { payload }) => {
+      .addCase(saveArticle.fulfilled, (state, { payload }) => {
         state.isLoading = false;
         state.isSaved = payload?.isSaved;
       })
-      .addCase(toggleSaveBookmark.rejected, (state, { payload }) => {
+      .addCase(saveArticle.rejected, (state, { payload }) => {
         state.isLoading = false;
         state.error = payload;
       });

@@ -137,7 +137,15 @@
   font-weight: 700;
   font-size: 18px;
 }
-.iconSaveBtn {
+.iconIsSavedBtn {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  stroke-width: 0;
+  stroke: currentColor;
+  fill: white;
+}
+.iconNotSavedBtn {
   display: inline-block;
   width: 24px;
   height: 24px;

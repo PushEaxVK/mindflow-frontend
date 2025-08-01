@@ -4,10 +4,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   fetchArticleById,
   fetchThreePopularArticles,
-  toggleSaveBookmark,
+  saveArticle,
 } from '../../redux/article/operation';
 import {
   selectArticle,
+  selectIsArticleSaved,
   selectIsArticlesLoading,
   selectPopularArticles,
 } from '../../redux/article/selectors';
@@ -16,6 +17,7 @@ import NotFound from '../NotFound/NotFound';
 import css from '../ArticlePage/ArticlePage.module.css';
 import Loader from '../../components/Loader/Loader';
 import { clearArticle } from '../../redux/article/slice.js';
+import toast from 'react-hot-toast';
 const ArticlePage = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
@@ -24,6 +26,7 @@ const ArticlePage = () => {
   const isLoading = useSelector(selectIsArticlesLoading);
   const article = useSelector(selectArticle);
   const popular = useSelector(selectPopularArticles);
+  const isArticleSaved = useSelector(selectIsArticleSaved);
 
   useEffect(() => {
     if (!id) return;
@@ -36,9 +39,23 @@ const ArticlePage = () => {
     navigate(`/articles/${listItem._id}`);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
+  const handleSave = async () => {
+    if (!article?._id) {
+      toast.error('Invalid article ID');
+      return;
+    }
 
-  const handleSave = () => {
-    dispatch(toggleSaveBookmark(article._id));
+    try {
+      const resultAction = await dispatch(saveArticle(article._id));
+
+      if (saveArticle.fulfilled.match(resultAction)) {
+        toast.success('Article saved successfully');
+      } else {
+        toast.error(resultAction.payload || 'Save failed');
+      }
+    } catch {
+      toast.error('Unexpected error occurred');
+    }
   };
 
   if (isLoading) return <Loader />;
@@ -104,9 +121,15 @@ const ArticlePage = () => {
             </div>
             <button onClick={handleSave} className={css.saveBtn}>
               <span className={css.saveBtnText}>Save</span>
-              <svg className={css.iconSaveBtn}>
-                <use href="/icons-articlePage.svg#icon-save"></use>
-              </svg>
+              {isArticleSaved ? (
+                <svg className={css.iconIsSavedBtn}>
+                  <use href="/icons-articlePage.svg#icon-save"></use>
+                </svg>
+              ) : (
+                <svg className={css.iconNotSavedBtn}>
+                  <use href="/icons-articlePage.svg#icon-save"></use>
+                </svg>
+              )}
             </button>
           </div>
         </div>

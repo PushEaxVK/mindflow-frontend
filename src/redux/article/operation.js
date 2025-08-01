@@ -22,6 +22,22 @@ export const fetchThreePopularArticles = createAsyncThunk(
   }
 );
 
-export const toggleSaveBookmark = createThunk('articles/save', () =>
-  axios.post(`/articles/save`)
+export const saveArticle = createThunk(
+  'articles/saveArticle',
+  async (articleId, thunkAPI) => {
+    const state = thunkAPI.getState();
+    const token = state.auth.token;
+
+    if (!token) {
+      throw new Error('User not authenticated');
+    }
+
+    // axios вже має збережений заголовок Authorization, але для надійності додаємо:
+    const response = await axios.post(`/articles/${articleId}/save`, null, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  }
 );
