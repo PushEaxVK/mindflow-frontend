@@ -20,7 +20,15 @@ const articlesSlice = createSlice({
     builder
       .addCase(fetchAllArticles.fulfilled, (state, action) => {
         const { articles, page, pages, total } = action.payload;
-        state.articles.items = articles;
+
+        if (page === 1) {
+          // Якщо перша сторінка, замінюємо список
+          state.articles.items = articles;
+        } else {
+          // Якщо наступні сторінки, додаємо нові статті в кінець списку
+          state.articles.items = [...state.articles.items, ...articles];
+        }
+
         state.articles.page = page;
         state.articles.pages = pages;
         state.articles.total = total;

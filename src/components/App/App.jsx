@@ -67,7 +67,24 @@ const App = () => {
           <Route path="articles" element={<ArticlesPage />} />
           <Route path="articles/:id" element={<ArticlePage />} />
           <Route path="authors" element={<AuthorsPage />} />
-          <Route path="authors/:id" element={<AuthorProfilePage />} />
+          <Route path="authors/:id" element={<AuthorProfilePage />}>
+            <Route
+              path="my-articles"
+              element={
+                <PrivateRoute>
+                  <MyArticles />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="saved-articles"
+              element={
+                <PrivateRoute>
+                  <SavedArticles />
+                </PrivateRoute>
+              }
+            />
+          </Route>
 
           <Route
             path="register"
@@ -75,7 +92,6 @@ const App = () => {
               <RestrictedRoute redirectTo="/" component={<RegisterPage />} />
             }
           />
-
           <Route
             path="create"
             element={
@@ -90,7 +106,6 @@ const App = () => {
               <PrivateRoute redirectTo="/login" component={<UploadPhoto />} />
             }
           />
-
           <Route
             path="login"
             element={
