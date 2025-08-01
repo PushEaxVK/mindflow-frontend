@@ -1,10 +1,8 @@
-import { useDispatch, useSelector } from 'react-redux';
-import { useEffect, lazy, Suspense } from 'react';
-import {
-  selectIsRefreshing,
-  selectIsLoggedIn,
-} from '../../redux/auth/selectors';
-import { refreshUser } from '../../redux/auth/operations';
+import { useSelector } from 'react-redux';
+import { lazy, Suspense } from 'react';
+import { selectIsRefreshing } from '../../redux/auth/selectors';
+import { useAuthInitializer } from '../../hooks/useAuthInitializer';
+import { useAutoRefresh } from '../../hooks/useAutoRefresh';
 import { Route, Routes } from 'react-router-dom';
 import { RestrictedRoute } from '../RestrictedRoute';
 import { PrivateRoute } from '../PrivateRoute';
@@ -43,19 +41,13 @@ const SavedArticles = lazy(() =>
 const NotFound = lazy(() => import('../../pages/NotFound/NotFound'));
 
 const App = () => {
-  const dispatch = useDispatch();
   const isRefreshing = useSelector(selectIsRefreshing);
-  const isLoggedIn = useSelector(selectIsLoggedIn);
 
-  useEffect(() => {
-    const hasSessionCookies = document.cookie.includes('refreshToken');
+  const isInitialized = useAuthInitializer();
 
-    if (hasSessionCookies && !isLoggedIn) {
-      dispatch(refreshUser());
-    }
-  }, [dispatch, isLoggedIn]);
+  useAutoRefresh();
 
-  if (isRefreshing) {
+  if (!isInitialized || isRefreshing) {
     return <Loader />;
   }
 

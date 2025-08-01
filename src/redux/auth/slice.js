@@ -13,7 +13,7 @@ const initialState = {
     articlesAmount: 0,
     role: 'user',
   },
-  token: null,
+  accessToken: null,
   isLoggedIn: false,
   isRefreshing: false,
 };
@@ -31,15 +31,33 @@ const cleanUser = (user) => {
   };
 };
 
+const saveAccessTokenToStorage = (accessToken) => {
+  localStorage.setItem('accessToken', accessToken);
+};
+
+const removeAccessTokenFromStorage = () => {
+  localStorage.removeItem('accessToken');
+};
+
 const slice = createSlice({
   name: 'auth',
   initialState,
+  reducers: {
+    clearAuth: () => {
+      removeAccessTokenFromStorage();
+      return initialState;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(register.fulfilled, (state, action) => {
         state.user = cleanUser(action.payload.user);
-        state.token = action.payload.token;
+        state.accessToken = action.payload.accessToken;
         state.isLoggedIn = true;
+        
+        saveAccessTokenToStorage(action.payload.accessToken);
+        setAuthHeader(action.payload.accessToken);
+        
         toast.success('Registration complete! You are now logged in.');
       })
       .addCase(register.rejected, (state, action) => {
@@ -48,9 +66,12 @@ const slice = createSlice({
       
       .addCase(login.fulfilled, (state, action) => {
         state.user = cleanUser(action.payload.user);
-        state.token = action.payload.token;
+        state.accessToken = action.payload.accessToken;
         state.isLoggedIn = true;
-        setAuthHeader(action.payload.token);
+        
+        saveAccessTokenToStorage(action.payload.accessToken);
+        setAuthHeader(action.payload.accessToken);
+        
         toast.success('Login complete!');
       })
       .addCase(login.rejected, (state, action) => {
@@ -58,24 +79,31 @@ const slice = createSlice({
       })
       
       .addCase(logout.fulfilled, () => {
+        removeAccessTokenFromStorage();
         toast.success('Logout complete!');
         return initialState;
       })
       .addCase(logout.rejected, () => {
+        removeAccessTokenFromStorage();
         toast.error('Logout failed');
         return initialState;
       })
+      
       .addCase(refreshUser.fulfilled, (state, action) => {
-        if (action.payload && action.payload.user && action.payload.token) {
+        if (action.payload && action.payload.user && action.payload.accessToken) {
           state.user = cleanUser(action.payload.user);
-          state.token = action.payload.token;
+          state.accessToken = action.payload.accessToken;
           state.isLoggedIn = true;
           state.isRefreshing = false;
+          
+          saveAccessTokenToStorage(action.payload.accessToken);
+          setAuthHeader(action.payload.accessToken);
         } else {
           state.isRefreshing = false;
           state.isLoggedIn = false;
-          state.token = null;
+          state.accessToken = null;
           state.user = initialState.user;
+          removeAccessTokenFromStorage();
           toast.error('Session refresh failed. Please login again.');
         }
       })
@@ -85,11 +113,12 @@ const slice = createSlice({
       .addCase(refreshUser.rejected, (state, action) => {
         state.isRefreshing = false;
         state.isLoggedIn = false;
-        state.token = null;
+        state.accessToken = null;
         state.user = initialState.user;
+        removeAccessTokenFromStorage();
         
         const errorMessage = action.payload;
-        if (errorMessage !== 'No valid session found' && 
+        if (errorMessage !== 'No valid session found' &&
             errorMessage !== 'No refresh token provided in cookies') {
           toast.error('Session expired. Please login again.');
         }
@@ -97,4 +126,5 @@ const slice = createSlice({
   },
 });
 
+export const { clearAuth } = slice.actions;
 export default slice.reducer;
