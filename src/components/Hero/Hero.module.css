@@ -131,6 +131,7 @@
     flex-direction: column;
     position: relative;
     margin: 0 auto;
+    margin-bottom: 72px;
   }
 
   .hero > div {
@@ -145,7 +146,6 @@
     flex-direction: column;
     justify-content: space-between;
     height: 383px;
-    /*flex-grow: 1;*/
   }
 
   .title {
@@ -227,7 +227,7 @@
     text-align: left;
     font-weight: 700;
     font-size: 40px;
-    max-width: 372px;
+    max-width: 361px;
   }
 
   .buttons {
@@ -235,7 +235,7 @@
     flex-direction: column;
     align-items: center;
     gap: 24px;
-    width: 100%;
+    width: 361px;
   }
 
   .buttons .primary,
@@ -249,8 +249,7 @@
 
   .image {
     position: static;
-    width: 100%;
-    max-width: 361px;
+    width: 361px;
     height: 321px;
     background-image: url('/img/Union-m-1x.png');
     background-size: cover;
@@ -267,6 +266,7 @@
     }
   }
 }
+
 @media (max-width: 392px) {
   .hero {
     display: flex;

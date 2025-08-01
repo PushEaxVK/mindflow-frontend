@@ -8,7 +8,7 @@ function TopCreators() {
   const [creators, setCreators] = useState([]);
 
   useEffect(() => {
-    fetch('/harmoniq') // Замінити на бекенд-ендпоінт
+    fetch('https://mindflow-backend-iwk7.onrender.com/authors') // Замінити на бекенд-ендпоінт
       .then((res) => {
         if (!res.ok) {
           throw new Error('Network response was not ok');
