@@ -47,6 +47,7 @@
 
 .imgRow {
   display: flex;
+  gap: 24px;
 }
 
 .img {
@@ -54,7 +55,6 @@
   width: 808px;
   height: 398px;
   object-fit: cover;
-  margin-right: 24px;
 }
 
 .imgtwo {
@@ -84,13 +84,13 @@
   }
 
   .imgRow {
-    margin-right: 0;
+    display: flex;
+    gap: 0;
   }
 
   .img {
     width: 704px;
     height: 398px;
-    margin-right: 0;
   }
 
   .imgtwo {
@@ -120,6 +120,11 @@
 
   .imgtwo {
     display: none;
+  }
+
+  .imgRow {
+    display: flex;
+    gap: 0;
   }
 
   .img {
