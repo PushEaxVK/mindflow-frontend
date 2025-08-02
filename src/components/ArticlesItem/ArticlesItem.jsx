@@ -6,7 +6,7 @@ const ArticlesItem = ({ item, icon, btnStyle }) => {
     <li className={css.articlesItem}>
       <img className={css.imgArticle} src={item.img} alt={item.title} />
       <div className={css.infoArticle}>
-        <p className={css.authorArticle}>{item.ownerId}</p>
+        <p className={css.authorArticle}>{item.ownerId?.name}</p>
         <p className={css.title}>{item.title}</p>
         <p className={css.desc}>
           {item.desc?.length > 180
