@@ -4,7 +4,7 @@ import { refreshUser } from '../redux/auth/operations';
 
 export const useAutoRefresh = () => {
   const dispatch = useDispatch();
-  const { isLoggedIn, accessToken } = useSelector(state => state.auth);
+  const { isLoggedIn, accessToken } = useSelector((state) => state.auth);
   const refreshTimeoutRef = useRef(null);
 
   useEffect(() => {
@@ -20,7 +20,7 @@ export const useAutoRefresh = () => {
       const payload = JSON.parse(atob(accessToken.split('.')[1]));
       const currentTime = Math.floor(Date.now() / 1000);
       const expiresAt = payload.exp;
-      
+
       const refreshAt = expiresAt - 120; // 2 minutes before
       const timeUntilRefresh = (refreshAt - currentTime) * 1000;
 
@@ -29,16 +29,15 @@ export const useAutoRefresh = () => {
           try {
             await dispatch(refreshUser()).unwrap();
           } catch {
-            console.log('Auto-refresh failed');
+            // Auto-refresh failed
           }
         }, timeUntilRefresh);
       } else {
         dispatch(refreshUser());
       }
     } catch {
-      console.log('Invalid token format for auto-refresh');
+      // Invalid token format
     }
-
     return () => {
       if (refreshTimeoutRef.current) {
         clearTimeout(refreshTimeoutRef.current);

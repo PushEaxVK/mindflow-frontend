@@ -1,6 +1,8 @@
 import axios from 'axios';
 
-axios.defaults.baseURL = 'https://mindflow-backend-iwk7.onrender.com';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://mindflow-backend-iwk7.onrender.com';
+
+axios.defaults.baseURL = API_BASE_URL;
 axios.defaults.withCredentials = true;
 
 export const setAuthHeader = (token) => {

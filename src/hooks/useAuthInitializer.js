@@ -1,8 +1,6 @@
-// hooks/useAuthInitializer.js
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { refreshUser } from '../redux/auth/operations';
-import { setAuthHeader } from '../services/api';
 import { selectIsLoggedIn, selectIsRefreshing } from '../redux/auth/selectors';
 
 export const useAuthInitializer = () => {
@@ -13,20 +11,15 @@ export const useAuthInitializer = () => {
 
   useEffect(() => {
     const init = async () => {
-      const token = localStorage.getItem('accessToken');
-      if (!token) {
-        setIsInitialized(true);
-        return;
-      }
-
       try {
-        const { exp } = JSON.parse(atob(token.split('.')[1]));
-        if (exp > Date.now() / 1000) {
-          setAuthHeader(token);
-        }
         await dispatch(refreshUser()).unwrap();
-      } catch {
-        localStorage.removeItem('accessToken');
+      } catch (err) {
+        if (
+          err !== 'No valid session found' &&
+          err !== 'No refresh token provided in cookies'
+        ) {
+          console.error('Unexpected refresh error:', err);
+        }
       } finally {
         setIsInitialized(true);
       }
