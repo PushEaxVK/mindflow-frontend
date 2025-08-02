@@ -84,14 +84,11 @@ const App = () => {
               <RestrictedRoute redirectTo="/" component={<RegisterPage />} />
             }
           />
-          <Route
-            path="create"
-            element={
-              <PrivateRoute redirectTo="/login">
-                <CreateArticlePage />
-              </PrivateRoute>
-            }
-          />
+
+           <Route path="create" element={<PrivateRoute redirectTo="/login" />}>
+            <Route index element={<CreateArticlePage />} />
+          </Route>
+
           <Route
             path="photo"
             element={
