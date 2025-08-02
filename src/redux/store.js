@@ -14,12 +14,13 @@ import {
 import storage from 'redux-persist/lib/storage';
 import { articlesReducer } from './articles/slice';
 import { articleReducer } from './article/slice.js';
+import { authorReducer } from './user/slice.js';
 
 const persistConfig = {
   key: 'root-auth',
   version: 1,
   storage,
-  whitelist: ['token'],
+  whitelist: [],
 };
 
 const persistedReducer = persistReducer(persistConfig, authReducer);
@@ -30,6 +31,7 @@ export const store = configureStore({
     modal: modalReducer,
     articlesList: articlesReducer,
     article: articleReducer,
+    author: authorReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

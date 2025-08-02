@@ -14,9 +14,9 @@
 }
 
 .wrapper:hover {
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18), 0 0 32px rgba(234, 246, 239, 1);
-  transform: translateY(-8px);
-  filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.1));
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.18), 0 0 32px rgba(234, 246, 239, 1);
+  transform: translateY(-2px);
+  filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.1));
 }
 
 .form {
@@ -29,7 +29,7 @@
 .fieldWrapper {
   display: flex;
   flex-direction: column;
-  position: relative; /* For absolute positioning of error containers */
+  position: relative;
 }
 
 .fieldWrapper:last-of-type {
@@ -61,19 +61,34 @@
   border: 1px solid var(--light-gray);
   border-radius: 8px;
   font-size: 16px;
-  transition: border-color 0.2s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   box-sizing: border-box;
   background-color: var(--white);
+  transform: translateY(0);
+  will-change: transform, box-shadow, border-color;
 }
 
 .field:focus {
   outline: none;
   border-color: #3498db;
-  box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.1);
+  box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.1),
+    0 4px 12px rgba(52, 152, 219, 0.08);
+  transform: translateY(-2px);
+}
+
+.field:hover:not(:focus) {
+  border-color: rgba(52, 152, 219, 0.3);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
 .field::placeholder {
   color: #999;
+  transition: color 0.3s ease;
+}
+
+.field:focus::placeholder {
+  color: rgba(153, 153, 153, 0.6);
 }
 
 .errorContainer {
@@ -184,7 +199,6 @@
   display: none;
 }
 
-/* Tablet styles */
 @media (min-width: 768px) {
   .wrapper {
     width: 522px;
@@ -211,7 +225,6 @@
   }
 }
 
-/* Desktop styles */
 @media (min-width: 1440px) {
   .wrapper {
     width: 392px;
