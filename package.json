@@ -40,6 +40,7 @@
     "react-spinners": "^0.17.0",
     "redux-persist": "^6.0.0",
     "redux-thunk": "^3.1.0",
+    "tiptap": "^1.32.2",
     "yup": "^1.6.1"
   },
   "devDependencies": {
