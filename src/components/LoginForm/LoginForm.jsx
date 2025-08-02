@@ -40,8 +40,8 @@ const LoginForm = () => {
       if (login.fulfilled.match(result)) {
         navigate('/');
       }
-    } catch (err) {
-      console.error('Login error:', err);
+    } catch {
+      // handled by Redux slice with toast notifications
     } finally {
       setSubmitting(false);
     }
