@@ -90,10 +90,8 @@ const AuthorProfilePage = () => {
 
   console.log(articles);
 
-
-  const isOwnProfile = isLoggedIn && OwnProfile?.id === ownerId;
+  // const isOwnProfile = isLoggedIn && OwnProfile?.id === ownerId;
   //const isOwnProfile = true;
-
 
   return (
     <section className={css.section_AuthorProfilePage}>
@@ -131,9 +129,6 @@ const AuthorProfilePage = () => {
         )}
 
         {!isOwnProfile && (
-
-      
-
           <>
             <ArticlesList
               icon={'icon-favorite-article'}
