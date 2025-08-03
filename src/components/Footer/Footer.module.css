@@ -1,11 +1,11 @@
 .footer {
-  background-color: #d1e0d8;
+  background-color: var(--light-green);
   padding: 24px 16px;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 32px;
-  font-family: 'Manrope', sans-serif;
+  font-family: var(--font-family);
 }
 
 .inner {
@@ -18,10 +18,10 @@
 }
 
 .logo {
-  font-family: 'DM Sans', sans-serif;
+  font-family: var(--second-family);
   font-size: 32px;
   font-weight: 700;
-  color: #649179;
+  color: var(--green);
   width: 165px;
   height: 46px;
   display: flex;
@@ -32,7 +32,7 @@
 .copyright {
   font-size: 14px;
   font-weight: 400;
-  color: #070721;
+  color: var(--black);
   text-align: center;
 }
 
@@ -64,7 +64,7 @@
   border-radius: 8px;
   font-size: 16px;
   font-weight: 700;
-  color: #374f42;
+  color: var(--green-darker);
   text-decoration: none;
   background: transparent;
 }
@@ -100,7 +100,7 @@
 @media (min-width: 1226px) {
   .footer {
     padding: 24px 108px;
-    background-color: #d1e0d8;
+    background-color: var(--light-green);
   }
 
   .inner {
@@ -117,7 +117,7 @@
     white-space: nowrap;
     font-size: 14px;
     font-weight: 400;
-    color: #070721;
+    color: var(--black);
     text-align: center;
   }
 
