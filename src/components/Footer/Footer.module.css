@@ -1,4 +1,135 @@
 .footer {
-  background-color: #333;
-  color: white;
+  background-color: #d1e0d8;
+  padding: 24px 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+  font-family: 'Manrope', sans-serif;
+}
+
+.inner {
+  width: 100%;
+  max-width: 809px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+}
+
+.logo {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 32px;
+  font-weight: 700;
+  color: #649179;
+  width: 165px;
+  height: 46px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.copyright {
+  font-size: 14px;
+  font-weight: 400;
+  color: #070721;
+  text-align: center;
+}
+
+.links {
+  width: 100%;
+  max-width: 127px;
+}
+
+.links ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+}
+
+.links ul li {
+  margin: 0;
+}
+
+.link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 61px;
+  height: 26px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 700;
+  color: #374f42;
+  text-decoration: none;
+  background: transparent;
+}
+
+@media (min-width: 768px) {
+  .footer {
+    padding: 24px 108px;
+  }
+
+  .inner {
+    flex-direction: column;
+    align-items: center;
+    gap: 32px;
+    max-width: 704px;
+  }
+
+  .links {
+    max-width: none;
+    width: auto;
+  }
+
+  .links ul {
+    flex-direction: row;
+    gap: 40px;
+  }
+
+  .link {
+    width: auto;
+    padding: 0 12px;
+  }
+}
+
+@media (min-width: 1226px) {
+  .footer {
+    padding: 24px 108px;
+    background-color: #d1e0d8;
+  }
+
+  .inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 120px;
+  }
+
+  .copyright {
+    white-space: nowrap;
+    font-size: 14px;
+    font-weight: 400;
+    color: #070721;
+    text-align: center;
+  }
+
+  .links ul {
+    flex-direction: row;
+    gap: 21px;
+  }
+
+  .link {
+    width: 61px;
+    height: 26px;
+    padding: 0;
+    background: transparent;
+  }
 }

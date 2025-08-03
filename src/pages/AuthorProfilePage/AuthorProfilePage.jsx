@@ -87,7 +87,14 @@ const AuthorProfilePage = () => {
       dispatch(fetchArticlesAuthorById({ ownerId, page: currentPage + 1 }));
     }
   };
+
   console.log(articles);
+
+
+  const isOwnProfile = isLoggedIn && OwnProfile?.id === ownerId;
+  //const isOwnProfile = true;
+
+
   return (
     <section className={css.section_AuthorProfilePage}>
       <Container>
@@ -122,7 +129,11 @@ const AuthorProfilePage = () => {
             <Outlet />
           </>
         )}
+
         {!isOwnProfile && (
+
+      
+
           <>
             <ArticlesList
               icon={'icon-favorite-article'}
