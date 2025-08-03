@@ -54,12 +54,14 @@ const AuthorProfilePage = () => {
   const isLoggedIn = useSelector(selectIsLoggedIn);
   //const isLoggedIn = true;
 
+  // console.log('OwnProfile', OwnProfile.id);
+
   ///////////////////////////////////////////
 
   const author = authorData?.data || {};
   const articles = authorArticles || [];
 
-  console.log('Інформація про :', articles);
+  //console.log('Інформація про :', articles);
 
   const { id: ownerId } = useParams();
 
@@ -76,7 +78,7 @@ const AuthorProfilePage = () => {
     }
   };
 
-  const isOwnProfile = isLoggedIn && OwnProfile?._id === ownerId;
+  const isOwnProfile = isLoggedIn && OwnProfile?.id === ownerId;
   //const isOwnProfile = true;
 
   return (
@@ -109,9 +111,10 @@ const AuthorProfilePage = () => {
                 Saved Articles
               </NavLink>
             </nav>
+
+            <Outlet />
           </>
         )}
-        <Outlet />
         {isBaseProfile && (
           <>
             <ArticlesList
