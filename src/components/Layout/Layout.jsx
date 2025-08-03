@@ -1,7 +1,7 @@
 import AppBar from '../AppBar/AppBar';
 import { Outlet } from 'react-router-dom';
 import Footer from '../Footer/Footer';
-import ModalMenu from '../ModalMenu/ModalMenu.jsx';
+import ModalMenu from '../ModalMenu/ModalMenu';
 import { useSelector } from 'react-redux';
 import {
   selectModalIsOpen,
@@ -24,4 +24,5 @@ const Layout = () => {
     </>
   );
 };
+
 export default Layout;
