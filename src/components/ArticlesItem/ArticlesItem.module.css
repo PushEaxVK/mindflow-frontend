@@ -13,7 +13,9 @@
 
 .imgArticle {
   border-radius: 24px;
-  margin-bottom: 12px;
+  margin-bottom: 28.5px;
+  width: 337px;
+  height: 233px;
 }
 
 .infoArticle {
@@ -120,6 +122,15 @@
   .btnLearnMore {
     width: 268px;
   }
+  .imgArticle {
+    margin-bottom: 12px;
+    width: 316px;
+  }
+
+  .infoArticle {
+    max-width: 316px;
+    margin-bottom: 12px;
+  }
 }
 
 @media only screen and (min-width: 1440px) {
@@ -128,5 +139,12 @@
   }
   .btnLearnMore {
     width: 320px;
+  }
+  .imgArticle {
+    width: 368px;
+  }
+
+  .infoArticle {
+    max-width: 368px;
   }
 }
