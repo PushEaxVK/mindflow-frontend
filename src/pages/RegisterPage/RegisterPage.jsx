@@ -1,18 +1,29 @@
+// import React from 'react';
+// import RegisterForm from '../../components/RegisterForm/RegisterForm';
+// import Container from '../../components/Container/Container';
+// import styles from './RegisterPage.module.css';
+
+// const RegisterPage = () => {
+//   return (
+//     <section className={styles.pageWrapper}>
+//       <Container>
+//         <RegisterForm />
+//       </Container>
+//     </section>
+//   );
+// };
+
+// export default RegisterPage;
+
 import React from 'react';
-import { Helmet } from 'react-helmet';
-import Container from '../../components/Container/Container';
 import RegisterForm from '../../components/RegisterForm/RegisterForm';
+import Container from '../../components/Container/Container';
 import styles from './RegisterPage.module.css';
 
 const RegisterPage = () => {
   return (
-    <section className={styles.container}>
-      <Helmet>
-        <title>Register | Harmoniq</title>
-      </Helmet>
-      <Container>
-        <RegisterForm />
-      </Container>
+    <section className={styles.pageWrapper}>
+      <RegisterForm />
     </section>
   );
 };
