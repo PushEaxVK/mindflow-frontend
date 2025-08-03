@@ -8,7 +8,6 @@ import {
   selectModalType,
 } from '../../redux/modal/selectors.js';
 import Modal from '../Modal/Modal.jsx';
-import Footer from '../Footer/Footer';
 
 const Layout = () => {
   const isOpen = useSelector(selectModalIsOpen);
