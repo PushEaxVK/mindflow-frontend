@@ -1,5 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 import authReducer from './auth/slice';
+import photoReducer from './uploadPhoto/reducer';
 import {
   persistStore,
   persistReducer,
@@ -24,6 +25,7 @@ const persistedReducer = persistReducer(persistConfig, authReducer);
 export const store = configureStore({
   reducer: {
     auth: persistedReducer,
+    photo: photoReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
