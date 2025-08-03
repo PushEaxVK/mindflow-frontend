@@ -7,17 +7,17 @@ const ArticlesList = ({
   btnStyle = 'EditArticle',
   queryArticles = [],
 }) => {
-  console.log(queryArticles);
+  // console.log(queryArticles);
 
   return (
     <>
       <ul className={css.articlesList}>
         {queryArticles &&
-          queryArticles.map((item) => (
+          queryArticles.map((item, index) => (
             <ArticlesItem
               icon={icon}
               btnStyle={btnStyle}
-              key={item._id}
+              key={`${item._id}-${index}`} // комбінуємо _id та індекс
               item={item}
             />
           ))}

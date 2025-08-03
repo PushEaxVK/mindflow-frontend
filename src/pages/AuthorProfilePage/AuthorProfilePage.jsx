@@ -52,7 +52,6 @@ const AuthorProfilePage = () => {
 
   const OwnProfile = useSelector(selectUser);
   const isLoggedIn = useSelector(selectIsLoggedIn);
-  //const isLoggedIn = true;
 
   // console.log('OwnProfile', OwnProfile.id);
 
@@ -67,7 +66,6 @@ const AuthorProfilePage = () => {
   const navigate = useNavigate();
 
   const isOwnProfile = isLoggedIn && OwnProfile?.id === ownerId;
-  //const isOwnProfile = true;
 
   useEffect(() => {
     if (ownerId) {
@@ -88,10 +86,7 @@ const AuthorProfilePage = () => {
     }
   };
 
-  console.log(articles);
-
-  // const isOwnProfile = isLoggedIn && OwnProfile?.id === ownerId;
-  //const isOwnProfile = true;
+  // console.log(articles);
 
   return (
     <section className={css.section_AuthorProfilePage}>
@@ -108,8 +103,8 @@ const AuthorProfilePage = () => {
           <li>
             <p className={css.userName}>{author?.name}</p>
             <p className={css.countArticles}>
-              {author?.articlesAmount}
-              {author?.articlesAmount === 1 ? ' article' : ' articles'}
+              {author?.articlesAmount ?? 0}
+              {(author?.articlesAmount ?? 0) === 1 ? ' article' : ' articles'}
             </p>
           </li>
         </ul>
