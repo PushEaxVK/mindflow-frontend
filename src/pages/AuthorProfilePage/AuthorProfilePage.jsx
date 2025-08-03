@@ -1,10 +1,29 @@
-import ArticlesList from '../../components/ArticlesList/ArticleList.jsx';
+import ArticlesList from '../../components/ArticlesList/ArticlesList';
 import css from './AuthorProfilePage.module.css';
-import { NavLink, Outlet } from 'react-router-dom';
+import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 import Container from '../../components/Container/Container';
-import { useLocation, useMatch } from 'react-router-dom';
+import { useLocation, useMatch, useParams } from 'react-router-dom';
 import clsx from 'clsx';
-import LoadMore from '../../components/LoadMore/LoadMore.jsx';
+import LoadMore from '../../components/LoadMore/LoadMore';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  fetchAuthorById,
+  fetchArticlesAuthorById,
+} from '../../redux/user/operation.js';
+import {
+  selectAuthorData,
+  selectAuthorLoading,
+  selectAuthorError,
+  selectAuthorArticles,
+  selectAuthorArticlesPage,
+  selectAuthorArticlesPages,
+  selectAuthorArticlesTotal,
+  selectAuthorArticlesLoading,
+  selectAuthorArticlesError,
+} from '../../redux/user/selectors.js';
+
+import { selectIsLoggedIn, selectUser } from '../../redux/auth/selectors.js';
 
 const AuthorProfilePage = () => {
   const location = useLocation();
@@ -15,6 +34,53 @@ const AuthorProfilePage = () => {
     return clsx(css.tabItem, isActive && css.active);
   };
 
+  const dispatch = useDispatch();
+
+  const authorData = useSelector(selectAuthorData);
+  const authorLoading = useSelector(selectAuthorLoading);
+  const authorError = useSelector(selectAuthorError);
+  const authorArticlesLoading = useSelector(selectAuthorArticlesLoading);
+
+  // Статті автора
+
+  const authorArticles = useSelector(selectAuthorArticles);
+
+  const currentPage = useSelector(selectAuthorArticlesPage);
+  const totalPages = useSelector(selectAuthorArticlesPages);
+
+  ///////////////////////////////////
+
+  const OwnProfile = useSelector(selectUser);
+  const isLoggedIn = useSelector(selectIsLoggedIn);
+  //const isLoggedIn = true;
+
+  // console.log('OwnProfile', OwnProfile.id);
+
+  ///////////////////////////////////////////
+
+  const author = authorData?.data || {};
+  const articles = authorArticles || [];
+
+  //console.log('Інформація про :', articles);
+
+  const { id: ownerId } = useParams();
+
+  useEffect(() => {
+    if (ownerId) {
+      dispatch(fetchAuthorById({ ownerId }));
+      dispatch(fetchArticlesAuthorById({ ownerId, page: 1 }));
+    }
+  }, [ownerId, dispatch]);
+
+  const handleLoadMore = () => {
+    if (currentPage < totalPages && !authorArticlesLoading) {
+      dispatch(fetchArticlesAuthorById({ ownerId, page: currentPage + 1 }));
+    }
+  };
+
+  const isOwnProfile = isLoggedIn && OwnProfile?.id === ownerId;
+  //const isOwnProfile = true;
+
   return (
     <section className={css.section_AuthorProfilePage}>
       <Container>
@@ -23,26 +89,50 @@ const AuthorProfilePage = () => {
           <li>
             <img
               className={css.imgProfile}
-              src="https://res.cloudinary.com/dfoiy9rn5/image/upload/v1753462124/profile_img_lhcerd.png"
-              alt=""
+              src={author?.avatarUrl}
+              alt={author?.name}
             />
           </li>
           <li>
-            <p className={css.userName}>Naomi</p>
-            <p className={css.countArticles}>96 articles</p>
+            <p className={css.userName}>{author?.name}</p>
+            <p className={css.countArticles}>
+              {author?.articlesAmount}
+              {author?.articlesAmount === 1 ? 'article' : 'articles'}
+            </p>
           </li>
         </ul>
-        <nav className={css.profileTabList}>
-          <NavLink to="my-articles" className={buildLinkClass}>
-            My Articles
-          </NavLink>
-          <NavLink to="saved-articles" className={buildLinkClass}>
-            Saved Articles
-          </NavLink>
-        </nav>
-        <Outlet />
-        {isBaseProfile && <ArticlesList />}
-        <LoadMore />
+        {isOwnProfile && (
+          <>
+            <nav className={css.profileTabList}>
+              <NavLink to="my-articles" className={buildLinkClass}>
+                My Articles
+              </NavLink>
+              <NavLink to="saved-articles" className={buildLinkClass}>
+                Saved Articles
+              </NavLink>
+            </nav>
+
+            <Outlet />
+          </>
+        )}
+        {isBaseProfile && (
+          <>
+            <ArticlesList
+              icon={'icon-favorite-article'}
+              btnStyle={'FavoriteArticleNotSaved'}
+              queryArticles={articles}
+            />
+            {totalPages > 1 &&
+              currentPage < totalPages &&
+              !authorArticlesLoading && (
+                <LoadMore
+                  page={currentPage}
+                  pages={totalPages}
+                  onLoadMore={handleLoadMore}
+                />
+              )}
+          </>
+        )}
       </Container>
     </section>
   );

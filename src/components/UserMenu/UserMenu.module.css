@@ -1,0 +1,55 @@
+.user__wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+
+.user__menu {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  justify-content: center;
+  align-items: center;
+}
+
+.user__name {
+  font-weight: 700;
+  font-size: 12px;
+  color: var(--green-darker);
+}
+
+.btn__logout {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: none;
+  border: none;
+  display: flex;
+  width: 24px;
+  height: 24px;
+  transition: transform 0.3s ease;
+  &:hover {
+    transform: scale(1.2);
+  }
+}
+.user__avatar {
+  background-color: var(--white);
+}
+
+.btn__icon {
+  width: 17px;
+  height: 16px;
+  stroke: var(--green-darker);
+  stroke-width: 1.33px;
+  fill: none;
+}
+.user__divider {
+  width: 1px;
+  height: 39px;
+  background-color: var(--green-darker);
+  margin-left: 16px;
+  margin-right: 16px;
+  display: inline-block;
+  vertical-align: middle;
+}

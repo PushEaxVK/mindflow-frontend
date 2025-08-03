@@ -1,24 +1,28 @@
 import serviceApi from '../../services/api';
+import { removeAuthHeader } from '../../services/api';
 import { createThunk } from '../createThunk';
 
-export const register = createThunk('auth/register', async (body) =>
-  serviceApi.auth.signup(body)
-);
+export const register = createThunk('auth/register', async (body) => {
+  return serviceApi.auth.signup(body);
+});
 
-export const login = createThunk('auth/login', async (body) =>
-  serviceApi.auth.login(body)
-);
+export const login = createThunk('auth/login', async (body) => {
+  return serviceApi.auth.login(body);
+});
 
-export const logout = createThunk('auth/logout', async () =>
-  serviceApi.auth.logout()
-);
+export const logout = createThunk('auth/logout', async () => {
+  const response = await serviceApi.auth.logout();
+  removeAuthHeader();
+  return response.data || { success: true };
+});
 
-export const refreshUser = createThunk('auth/refresh', async (_, thunkAPI) => {
-  const savedToken = thunkAPI.getState().auth.token;
-  if (!savedToken) {
-    console.log('User is not logged in!');
-    throw new Error('Token is not exist!');
+export const refreshUser = createThunk('auth/refresh', async () => {
+  try {
+    const response = await serviceApi.auth.refresh();
+    return response.data;
+  } catch (error) {
+    removeAuthHeader();
+    localStorage.removeItem('accessToken');
+    throw error;
   }
-
-  return serviceApi.auth.refresh({ token: savedToken });
 });

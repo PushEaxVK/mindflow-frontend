@@ -1,0 +1,380 @@
+.form {
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 24px;
+  padding-top: 16px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.leftColumn {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.rightColumn {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  width: 100%;
+  padding-top: 16px;
+}
+
+.topSection {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 361px;
+  height: 338px;
+  box-sizing: border-box;
+}
+
+.label {
+  display: flex;
+  flex-direction: column;
+  font-weight: 600;
+  color: #333;
+}
+
+.titleLabel .articleWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  color: #070721;
+  box-sizing: border-box;
+  position: relative;
+}
+
+.titleLabel {
+  width: 361px;
+  height: 81px;
+}
+
+.articleWrapper {
+  width: 361px;
+  min-height: 393px;
+  margin-top: 4px;
+  margin-bottom: 24px;
+}
+
+.labelText {
+  font: 400 18px 'Manrope', sans-serif;
+  color: #070721;
+  display: flex;
+}
+
+.input {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px;
+  width: 361px;
+  height: 48px;
+  border: 1px solid #9f9f9f;
+  border-radius: 8px;
+  background: #f7fffb;
+  font: 400 18px 'Manrope', sans-serif;
+  box-sizing: border-box;
+}
+
+.input::placeholder {
+  color: #595d62;
+  font: 400 18px 'Manrope', sans-serif;
+}
+
+.ProseMirror {
+  width: 100%;
+  min-height: 393px;
+  background: #f7fffb;
+  border: 1px solid #9f9f9f;
+  border-radius: 8px;
+  font: 400 18px 'Manrope', sans-serif;
+  padding: 12px;
+  box-sizing: border-box;
+  white-space: pre-wrap;
+  border-color: #0b0b0b;
+  outline: none;
+  transition: height 0.15s ease-in-out, border-color 0.15s ease-in-out;
+  caret-color: #070721;
+  cursor: text;
+  position: relative;
+  overflow-y: auto;
+}
+
+.ProseMirror:focus {
+  border-color: #0b0b0b;
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+
+.ProseMirror > p {
+  margin: 0;
+  padding: 4px 8px;
+}
+
+/* Placeholder для порожнього параграфа */
+.ProseMirror p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  color: #999999;
+  font: 400 18px 'Manrope', sans-serif;
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+  opacity: 1;
+  display: block;
+}
+
+.ProseMirror p.is-editor-empty:first-child > br {
+  display: none;
+}
+span {
+  display: none;
+}
+
+.toolbar {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.toolbar button {
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1px solid #9f9f9f;
+  background-color: #f7fffb;
+  cursor: pointer;
+  font: 700 16px 'Manrope', sans-serif;
+  color: #070721;
+  user-select: none;
+  transition: background-color 0.2s ease;
+}
+
+.toolbar button:hover {
+  background-color: #d9e9d6;
+}
+
+.toolbar button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.activeBtn {
+  background-color: #649179;
+  border-color: #649179;
+  color: white;
+}
+
+.submitBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border-radius: 64px;
+  width: 361px;
+  height: 46px;
+  background: #649179;
+  font: 700 16px 'Manrope', sans-serif;
+  border: none;
+  cursor: pointer;
+  color: #f7fffb;
+  transition: background-color 0.3s ease;
+  box-sizing: border-box;
+}
+
+.submitBtn:hover {
+  background-color: #4e755f;
+}
+
+.imageUploadBox {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  width: 361px;
+  height: 233px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.imageLabel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 361px;
+  height: 233px;
+  border-radius: 16px;
+  background: #9f9f9f;
+  position: relative;
+}
+
+.imagePreview {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 16px;
+}
+
+.tooltipOverlay {
+  display: flex;
+  position: absolute;
+  bottom: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  font-size: 14px;
+  padding: 4px 8px;
+  border-radius: 6px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  border: 2px solid yellow; 
+}
+
+.imageUploadBox:hover .tooltipOverlay {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.error {
+  color: red;
+  font-size: 14px;
+  margin-top: 4px;
+}
+
+.pickerDate {
+  font: 700 18px 'Manrope', sans-serif;
+}
+.datePicker {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font: 400 16px 'Manrope', sans-serif;
+  box-sizing: border-box;
+}
+
+@media only screen and (min-width: 393px) {
+  .form {
+    gap: 24px;
+  }
+
+  .topSection {
+    flex-direction: column;
+  }
+
+  .imageUploadBox,
+  .imageLabel,
+  .titleLabel,
+  .input {
+    width: 100%;
+  }
+
+  .submitBtn {
+    width: 100%;
+  }
+
+  .articleWrapper {
+    width: 100%;
+    height: auto;
+  }
+
+  .ProseMirror {
+    min-height: 393px;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .topSection {
+    flex-direction: row;
+    width: 704px;
+    height: 219px;
+    gap: 24px;
+  }
+
+  .imageUploadBox {
+    width: 340px;
+    height: 268px;
+  }
+
+  .imageLabel {
+    width: 340px;
+    height: 219px;
+  }
+
+  .titleLabel {
+    width: 340px;
+  }
+
+  .leftColumn {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .articleWrapper {
+    width: 704px;
+  }
+
+  .toolbar {
+    margin-top: 12px;
+  }
+
+  .submitBtn {
+    width: 704px;
+  }
+}
+
+@media only screen and (min-width: 1226px) {
+  .form {
+    flex-direction: column-reverse;
+  }
+
+  .leftColumn {
+    flex-direction: column;
+  }
+
+  .topSection {
+    flex-direction: row-reverse;
+    width: 1226px;
+    height: 81px;
+  }
+
+  .titleLabel,
+  .articleWrapper,
+  .input,
+  .submitBtn {
+    width: 809px;
+  }
+  .articleWrapper {
+    margin-top: 8px;
+    margin-bottom: 36px;
+  }
+
+  .toolbar {
+    margin-top: 18px;
+  }
+
+  .imageUploadBox {
+    padding-top: 32px;
+    width: 391px;
+    height: 312px;
+  }
+
+  .imageLabel {
+    width: 391px;
+    height: 280px;
+  }
+}
