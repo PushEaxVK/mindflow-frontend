@@ -8,9 +8,9 @@ const initialState = {
 
   // Додано для fetchArticlesAuthorById
   authorArticles: [],
-  articlesPage: 1,
-  articlesPages: 1,
-  articlesTotal: 0,
+  authorArticlesPage: 1,
+  authorArticlesPages: 1,
+  authorArticlesTotal: 0,
   loadingArticles: false,
   errorArticles: null,
 };
@@ -48,9 +48,9 @@ const authorSlice = createSlice({
         state.authorArticles =
           page === 1 ? articles : [...state.authorArticles, ...articles];
 
-        state.articlesPage = page;
-        state.articlesTotal = total;
-        state.articlesPages = Math.ceil(total / perPage); // <-- підрахунок totalPages
+        state.authorArticlesPage = page;
+        state.authorArticlesTotal = total;
+        state.authorArticlesPages = Math.ceil(total / perPage); // <-- підрахунок totalPages
       })
       .addCase(fetchArticlesAuthorById.rejected, (state, action) => {
         state.loadingArticles = false;

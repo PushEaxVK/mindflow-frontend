@@ -27,8 +27,8 @@ import { selectIsLoggedIn, selectUser } from '../../redux/auth/selectors.js';
 
 const AuthorProfilePage = () => {
   const location = useLocation();
-  const match = useMatch('/authors/:id');
-  const isBaseProfile = match && location.pathname === match.pathname;
+  //const match = useMatch('/authors/:id');
+  //const isBaseProfile = match && location.pathname === match.pathname;
 
   const buildLinkClass = ({ isActive }) => {
     return clsx(css.tabItem, isActive && css.active);
@@ -64,6 +64,10 @@ const AuthorProfilePage = () => {
   //console.log('Інформація про :', articles);
 
   const { id: ownerId } = useParams();
+  const navigate = useNavigate();
+
+  const isOwnProfile = isLoggedIn && OwnProfile?.id === ownerId;
+  //const isOwnProfile = true;
 
   useEffect(() => {
     if (ownerId) {
@@ -72,14 +76,24 @@ const AuthorProfilePage = () => {
     }
   }, [ownerId, dispatch]);
 
+  useEffect(() => {
+    if (isOwnProfile && location.pathname === `/authors/${ownerId}`) {
+      navigate('my-articles', { replace: true });
+    }
+  }, [isOwnProfile, location.pathname, navigate, ownerId]);
+
   const handleLoadMore = () => {
     if (currentPage < totalPages && !authorArticlesLoading) {
       dispatch(fetchArticlesAuthorById({ ownerId, page: currentPage + 1 }));
     }
   };
 
+  console.log(articles);
+
+
   const isOwnProfile = isLoggedIn && OwnProfile?.id === ownerId;
   //const isOwnProfile = true;
+
 
   return (
     <section className={css.section_AuthorProfilePage}>
@@ -97,7 +111,7 @@ const AuthorProfilePage = () => {
             <p className={css.userName}>{author?.name}</p>
             <p className={css.countArticles}>
               {author?.articlesAmount}
-              {author?.articlesAmount === 1 ? 'article' : 'articles'}
+              {author?.articlesAmount === 1 ? ' article' : ' articles'}
             </p>
           </li>
         </ul>
@@ -115,7 +129,11 @@ const AuthorProfilePage = () => {
             <Outlet />
           </>
         )}
-        {isBaseProfile && (
+
+        {!isOwnProfile && (
+
+      
+
           <>
             <ArticlesList
               icon={'icon-favorite-article'}
