@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { uploadPhoto } from '../../redux/uploadPhoto/action';
 
 
-const UploadForm = () => {
+const UploadPhoto = () => {
   const [selectedFile, setSelectedFile] = useState(null);
 
   const dispatch = useDispatch();
@@ -41,4 +41,4 @@ const UploadForm = () => {
   );
 };
 
-export default UploadForm;
+export default UploadPhoto;
