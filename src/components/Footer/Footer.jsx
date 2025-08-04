@@ -11,29 +11,25 @@ const Footer = () => {
 
   return (
     <footer className={css.footer}>
-      <Container noVerticalPadding>
-        <div className={css.inner}>
-          <svg className={css.logo}>
-            <use href="/img/icons.svg#icon-logo-min"></use>
-          </svg>
-          <p className={css.copyright}>© 2025 Harmoniq. All rights reserved.</p>
-          <nav className={css.links}>
-            <ul className={css.linkList}>
-              <li>
-                <Link to="/articles" className={css.link}>
-                  Articles
-                </Link>
-              </li>
-              {user?.id && (
+    <Container noVerticalPadding>
+      <div className={css.inner}>
+        <svg className={css.logo}>
+              <use href="/img/icons.svg#icon-logo-min"></use>
+            </svg>
+        <p className={css.copyright}>© 2025 Harmoniq. All rights reserved.</p>
+        <nav className={css.links}>
+          <ul className={css.linkList}>
+            <li><Link to="/articles" className={css.link}>Articles</Link></li>
+             {user?.id && (
                 <li>
-                  <Link to={userUrl} className={css.link}>
+                  <Link to={`/authors/${user.id}`} className={css.link}>
                     Account
                   </Link>
                 </li>
               )}
-            </ul>
-          </nav>
-        </div>
+          </ul>
+        </nav>
+      </div>
       </Container>
     </footer>
   );
