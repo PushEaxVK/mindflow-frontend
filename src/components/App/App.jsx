@@ -69,14 +69,12 @@ const App = () => {
               element={<PrivateRoute component={<SavedArticles />} />}
             />
           </Route>
-
           <Route
             path="register"
             element={
               <RestrictedRoute redirectTo="/" component={<RegisterPage />} />
             }
           />
-
           <Route
             path="create"
             element={
