@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom';
 import Container from '../Container/Container';
 import css from './Footer.module.css'; // Import the CSS module for this component
+import { selectUser } from "../../redux/auth/selectors.js";
+import { useSelector } from 'react-redux';
 
 const Footer = () => {
   const user = useSelector(selectUser);
