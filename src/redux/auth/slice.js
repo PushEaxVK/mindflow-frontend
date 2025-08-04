@@ -100,9 +100,14 @@ const slice = createSlice({
         state.user = initialState.user;
         
         const errorMessage = action.payload;
-        if (errorMessage !== 'No valid session found' &&
-            errorMessage !== 'No refresh token provided in cookies') {
-          toast.error('Session expired. Please login again.');
+        
+        if (errorMessage && 
+            errorMessage !== 'No valid session found' &&
+            errorMessage !== 'No refresh token provided in cookies' &&
+            errorMessage !== 'Invalid or expired refresh token' &&
+            errorMessage !== 'Session not found!' &&
+            errorMessage !== 'Session expired!') {
+          toast.error('Session refresh failed. Please login again.');
         }
       });
   },
