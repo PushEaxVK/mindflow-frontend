@@ -73,11 +73,16 @@ const App = () => {
             }
           />
 
-           <Route path="create" element={<PrivateRoute redirectTo="/login" />}>
-            <Route index element={<CreateArticlePage />} />
-          </Route>
+          <Route
+            path="create"
+            element={
+              <PrivateRoute
+                redirectTo="/login"
+                component={<CreateArticlePage />}
+              />
+            }
+          />
 
-          
           <Route
             path="photo"
             element={
