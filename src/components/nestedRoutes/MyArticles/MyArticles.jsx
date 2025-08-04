@@ -10,11 +10,9 @@ import {
   selectAuthorArticles,
   selectAuthorArticlesPage,
   selectAuthorArticlesPages,
-  selectAuthorArticlesTotal,
   selectAuthorArticlesLoading,
   selectAuthorArticlesError,
 } from '../../../redux/user/selectors.js';
-
 
 const MyArticles = () => {
   const dispatch = useDispatch();
@@ -25,15 +23,17 @@ const MyArticles = () => {
   const currentPage = useSelector(selectAuthorArticlesPage);
   const totalPages = useSelector(selectAuthorArticlesPages);
 
+  const isLoading = useSelector(selectAuthorArticlesLoading);
+
   const { id: ownerId } = useParams();
 
   const articles = authorArticles || [];
 
   useEffect(() => {
-    if (ownerId) {
+    if (ownerId && currentPage === 1) {
       dispatch(fetchArticlesAuthorById({ ownerId, page: 1 }));
     }
-  }, [ownerId, dispatch]);
+  }, [ownerId, currentPage, dispatch]);
 
   const handleLoadMore = () => {
     if (currentPage < totalPages) {
@@ -43,7 +43,7 @@ const MyArticles = () => {
 
   return (
     <>
-      {articles.length === 0 && <ProfileArticlesEmpty />}
+      {!isLoading && articles.length === 0 && <ProfileArticlesEmpty />}
       <ArticlesList
         icon={'icon-edit-article'}
         btnStyle={'EditArticle'}

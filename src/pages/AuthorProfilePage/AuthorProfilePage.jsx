@@ -48,6 +48,8 @@ const AuthorProfilePage = () => {
   const currentPage = useSelector(selectAuthorArticlesPage);
   const totalPages = useSelector(selectAuthorArticlesPages);
 
+  const totalArticles = useSelector(selectAuthorArticlesTotal);
+
   ///////////////////////////////////
 
   const OwnProfile = useSelector(selectUser);
@@ -68,10 +70,12 @@ const AuthorProfilePage = () => {
   const isOwnProfile = isLoggedIn && OwnProfile?.id === ownerId;
 
   useEffect(() => {
-    if (ownerId) {
-      dispatch(fetchAuthorById({ ownerId }));
-      dispatch(fetchArticlesAuthorById({ ownerId, page: 1 }));
-    }
+    if (!ownerId) return;
+
+    dispatch(fetchAuthorById({ ownerId }));
+
+    if (currentPage === 1) return;
+    dispatch(fetchArticlesAuthorById({ ownerId, page: 1 }));
   }, [ownerId, dispatch]);
 
   useEffect(() => {
@@ -97,14 +101,14 @@ const AuthorProfilePage = () => {
             <img
               className={css.imgProfile}
               src={author?.avatarUrl}
-              alt={author?.name}
+              alt={author?.name || 'Author avatar'}
             />
           </li>
           <li>
             <p className={css.userName}>{author?.name}</p>
             <p className={css.countArticles}>
-              {author?.articlesAmount ?? 0}
-              {(author?.articlesAmount ?? 0) === 1 ? ' article' : ' articles'}
+              {totalArticles ?? 0}
+              {(totalArticles ?? 0) === 1 ? ' article' : ' articles'}
             </p>
           </li>
         </ul>
