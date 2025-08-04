@@ -11,6 +11,10 @@
   color: var(--white);
 }
 
+.btnLoadMore:hover:not(:disabled) {
+  transform: scale(1.03);
+}
+
 @media only screen and (min-width: 768px) {
   .btnLoadMore {
     width: 289px;

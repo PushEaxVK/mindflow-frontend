@@ -47,8 +47,7 @@ export const logout = async () => {
 
 export const refresh = async () => {
   const response = await axios.post('/auth/refresh');
-
-  const responseData = response.data?.data;
+  const responseData = response.data?.data || response.data;
 
   if (responseData && responseData.accessToken) {
     const transformedData = transformAuthResponse(responseData);
