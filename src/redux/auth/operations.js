@@ -1,5 +1,5 @@
 import serviceApi from '../../services/api';
-import { setAuthHeader, removeAuthHeader } from '../../services/api';
+import { removeAuthHeader } from '../../services/api';
 import { createThunk } from '../createThunk';
 
 export const register = createThunk('auth/register', async (body) => {
@@ -16,19 +16,13 @@ export const logout = createThunk('auth/logout', async () => {
   return response.data || { success: true };
 });
 
-export const refreshUser = createThunk('auth/refresh', async (_, thunkAPI) => {
-  const state = thunkAPI.getState();
-  const savedAccessToken = state.auth.token;
-
-  if (savedAccessToken) {
-    setAuthHeader(savedAccessToken);
-  }
-
+export const refreshUser = createThunk('auth/refresh', async () => {
   try {
     const response = await serviceApi.auth.refresh();
-    return response;
+    return response.data;
   } catch (error) {
     removeAuthHeader();
+    localStorage.removeItem('accessToken');
     throw error;
   }
 });

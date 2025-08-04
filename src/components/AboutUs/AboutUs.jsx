@@ -17,7 +17,8 @@ function AboutUs() {
               reflect, and grow.
             </p>
           </div>
-          <picture>
+
+          <picture className={styles.imgTopRight}>
             <source
               srcSet="
             /img/Image-d-1x.jpg 1x,
@@ -40,14 +41,14 @@ function AboutUs() {
               media="(max-width: 767px)"
             />
             <img
-              className={styles.imgTopRight}
+              className={styles.img}
               src="/img/Image-d-1x.jpg"
               alt="Lotus flower"
             />
           </picture>
         </div>
         <ul className={styles.imgRow}>
-          <li>
+          <li className={styles.imgButtom}>
             <picture>
               <source
                 srcSet="
@@ -77,7 +78,7 @@ function AboutUs() {
               />
             </picture>
           </li>
-          <li>
+          <li className={styles.imgtwo}>
             <picture>
               <source
                 srcSet="
@@ -87,7 +88,7 @@ function AboutUs() {
                 media="(min-width: 1440px)"
               />
               <img
-                className={styles.imgtwo}
+                className={styles.img}
                 src="/img/Image-3-d-1x.jpg"
                 alt="Person meditating at sunrise"
               />

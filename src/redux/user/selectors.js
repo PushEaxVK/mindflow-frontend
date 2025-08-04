@@ -1,0 +1,17 @@
+// Автор
+export const selectAuthorData = (state) => state.author.authorData;
+export const selectAuthorLoading = (state) => state.author.loading;
+export const selectAuthorError = (state) => state.author.error;
+
+// Статті автора
+export const selectAuthorArticles = (state) => state.author.authorArticles;
+export const selectAuthorArticlesPage = (state) =>
+  state.author.authorArticlesPage;
+export const selectAuthorArticlesPages = (state) =>
+  state.author.authorArticlesPages;
+export const selectAuthorArticlesTotal = (state) =>
+  state.author.authorArticlesTotal;
+
+export const selectAuthorArticlesLoading = (state) =>
+  state.author.loadingArticles;
+export const selectAuthorArticlesError = (state) => state.author.errorArticles;
