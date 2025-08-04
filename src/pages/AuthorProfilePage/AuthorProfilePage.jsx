@@ -2,7 +2,7 @@ import ArticlesList from '../../components/ArticlesList/ArticlesList';
 import css from './AuthorProfilePage.module.css';
 import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 import Container from '../../components/Container/Container';
-import { useLocation, useMatch, useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import clsx from 'clsx';
 import LoadMore from '../../components/LoadMore/LoadMore';
 import { useEffect } from 'react';
@@ -27,8 +27,6 @@ import { selectIsLoggedIn, selectUser } from '../../redux/auth/selectors.js';
 
 const AuthorProfilePage = () => {
   const location = useLocation();
-  //const match = useMatch('/authors/:id');
-  //const isBaseProfile = match && location.pathname === match.pathname;
 
   const buildLinkClass = ({ isActive }) => {
     return clsx(css.tabItem, isActive && css.active);
@@ -73,10 +71,8 @@ const AuthorProfilePage = () => {
     if (!ownerId) return;
 
     dispatch(fetchAuthorById({ ownerId }));
-
-    if (currentPage === 1) return;
-    dispatch(fetchArticlesAuthorById({ ownerId, page: 1 }));
-  }, [ownerId, dispatch]);
+    dispatch(fetchArticlesAuthorById({ ownerId, page: currentPage }));
+  }, [ownerId, currentPage, dispatch]);
 
   useEffect(() => {
     if (isOwnProfile && location.pathname === `/authors/${ownerId}`) {
