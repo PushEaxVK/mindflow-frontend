@@ -33,6 +33,11 @@
   margin-bottom: 16px;
 }
 
+.link:hover,
+.link:focus {
+  color: var(--green);
+}
+
 .icon {
   width: 1em;
   height: 1em;
