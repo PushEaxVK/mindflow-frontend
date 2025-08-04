@@ -17,6 +17,7 @@ import Placeholder from '@tiptap/extension-placeholder';
 import Underline from '@tiptap/extension-underline';
 
 import styles from './AddArticleForm.module.css';
+import descStyles from './DescLabel.module.css';  // Окремий стиль для дескриптора
 
 export const AddArticleForm = () => {
   const { id: articleId } = useParams();
@@ -33,11 +34,22 @@ export const AddArticleForm = () => {
   const formik = useFormik({
     initialValues: {
       title: '',
+      desc: '',
       article: '',
     },
     validationSchema: Yup.object({
-      title: Yup.string().required('Title is required'),
-      article: Yup.string().required('Article text is required'),
+      title: Yup.string()
+        .min(3, 'Title must be at least 3 characters')
+        .max(48, 'Title must not exceed 48 characters')
+        .required('Title is required'),
+      desc: Yup.string()
+        .min(5, 'Description must be at least 5 characters')
+        .max(100, 'Description must not exceed 100 characters')
+        .required('Description is required'),
+      article: Yup.string()
+        .min(100, 'Article must be at least 100 characters')
+        .max(4000, 'Article must not exceed 4000 characters')
+        .required('Article text is required'),
     }),
     onSubmit: async (values) => {
       if (!isLoggedIn) {
@@ -52,6 +64,7 @@ export const AddArticleForm = () => {
 
       const formData = new FormData();
       formData.append('title', values.title);
+      formData.append('desc', values.desc);
       formData.append('article', values.article);
       formData.append('date', selectedDate.toISOString());
       formData.append('ownerId', user._id);
@@ -82,6 +95,7 @@ export const AddArticleForm = () => {
         const { data } = await axios.get(`/articles/${articleId}`);
         setValues({
           title: data.title,
+          desc: data.desc || '',
           article: data.article,
         });
         setSelectedDate(new Date(data.createdAt || data.date));
@@ -265,42 +279,50 @@ export const AddArticleForm = () => {
               <div className={styles.error}>{formik.errors.title}</div>
             )}
           </label>
+
+          {/* Окремий стиль для desc */}
+          <label className={descStyles.descLabel}>
+            <span>Description:</span>
+            <input
+              name="desc"
+              className={styles.input}
+              placeholder="Enter description"
+              value={formik.values.desc}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+            />
+            {formik.touched.desc && formik.errors.desc && (
+              <div className={styles.error}>{formik.errors.desc}</div>
+            )}
+          </label>
         </div>
 
-        {/* Static Toolbar */}
-        <div className={styles.toolbar}>
-          <button type="button" onClick={toggleBold}>
-            <b>B</b>
-          </button>
-          <button type="button" onClick={toggleItalic}>
-            <i>I</i>
-          </button>
-          <button type="button" onClick={toggleUnderline}>
-            <u>U</u>
-          </button>
-          <button type="button" onClick={toggleStrike}>
-            <s>S</s>
-          </button>
-          <button type="button" onClick={toggleBulletList}>
-            • List
-          </button>
-          <button type="button" onClick={toggleOrderedList}>
-            1. List
-          </button>
-          <button type="button" onClick={setLink}>
-            🔗
-          </button>
+        <div className={styles.datePickerWrapper}>
+          <DatePicker
+            selected={selectedDate}
+            onChange={(date) => setSelectedDate(date)}
+            dateFormat="dd.MM.yyyy"
+          />
+        </div>
+      </div>
+
+      <div className={styles.rightColumn}>
+        <div ref={textareaRef} className={styles.editorWrapper}>
+          <EditorContent editor={editor} />
         </div>
 
-        {/* Floating Toolbar */}
+        {/* Floating toolbar */}
         {floatingVisible && (
           <div
-            ref={floatingToolbarRef}
             className={styles.floatingToolbar}
             style={{
               top: toolbarPosition.top,
               left: toolbarPosition.left,
+              position: 'absolute',
+              transform: 'translate(-50%, -100%)',
+              zIndex: 10,
             }}
+            ref={floatingToolbarRef}
           >
             <button type="button" onClick={toggleBold}>
               <b>B</b>
@@ -314,46 +336,18 @@ export const AddArticleForm = () => {
             <button type="button" onClick={toggleStrike}>
               <s>S</s>
             </button>
-            <button type="button" onClick={setLink}>
-              🔗
-            </button>
+            <button type="button" onClick={toggleBulletList}>• List</button>
+            <button type="button" onClick={toggleOrderedList}>1. List</button>
+            <button type="button" onClick={setLink}>Link</button>
           </div>
         )}
 
-        {/* Editor */}
-        <div className={styles.articleWrapper} ref={textareaRef}>
-          <span id="articleLabel">Article</span>
-          <EditorContent
-            editor={editor}
-            aria-labelledby="articleLabel"
-            data-placeholder="Enter the text"
-            className="ProseMirror"
-            style={{
-              height: MIN_TEXTAREA_HEIGHT + 'px',
-              overflow: 'hidden',
-              transition: 'height 0.15s ease-in-out',
-            }}
-          />
-          {formik.touched.article && formik.errors.article && (
-            <div className={styles.error}>{formik.errors.article}</div>
-          )}
-        </div>
-
-        <button type="submit" className={styles.submitBtn}>
-          {isEditing ? 'Publish' : 'Publish Article'}
+        <button
+          type="submit"
+          className={styles.submitButton}
+        >
+          {isEditing ? 'Update Article' : 'Publish Article'}
         </button>
-      </div>
-
-      <div className={styles.rightColumn}>
-        <label className={styles.pickerDate}>
-          Date:
-          <DatePicker
-            selected={selectedDate}
-            onChange={(date) => setSelectedDate(date)}
-            dateFormat="dd.MM.yyyy"
-            placeholderText="Select date"
-          />
-        </label>
       </div>
     </form>
   );

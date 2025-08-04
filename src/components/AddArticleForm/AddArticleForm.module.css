@@ -81,6 +81,29 @@
   font: 400 18px 'Manrope', sans-serif;
 }
 
+.descLabel {
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+  font-weight: 600;
+  font-size: 16px;
+  color: #333;
+}
+
+.descLabel input {
+  margin-top: 5px;
+  padding: 8px 12px;
+  font-size: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  outline: none;
+  transition: border-color 0.2s ease-in-out;
+}
+
+.descLabel input:focus {
+  border-color: #28292a;
+}
+
 .articleWrapper {
   width: 361px;
   min-height: 393px;
