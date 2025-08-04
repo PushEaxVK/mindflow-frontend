@@ -1,0 +1,84 @@
+import { Link } from 'react-router-dom';
+import styles from './PopularArticles.module.css';
+import ArticlesList from '../ArticlesList/ArticlesList';
+import React, { useEffect, useState, useCallback } from 'react';
+import Container from '../../components/Container/Container';
+
+function PopularArticles() {
+  const [articles, setArticles] = useState([]);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+  // Функція для отримання та фільтрації статей
+  const fetchAndFilterArticles = useCallback(async (width) => {
+    try {
+      const res = await fetch(
+        'https://mindflow-backend-iwk7.onrender.com/articles'
+      );
+      const data = await res.json();
+
+      const articlesArray = data.articles;
+
+      if (!Array.isArray(articlesArray)) {
+        console.error('Expected an array but got:', articlesArray);
+        return;
+      }
+
+      const articlesToShow = width >= 1440 ? 3 : 4;
+
+      const sorted = articlesArray
+        .filter((article) => typeof article.rate === 'number') // ігнорувати без rate
+        .sort((a, b) => b.rate - a.rate)
+        .slice(0, articlesToShow);
+
+      setArticles(sorted);
+    } catch (err) {
+      console.error('Failed to load articles:', err);
+    }
+  }, []);
+
+  // 1. Після монтування компонента
+  useEffect(() => {
+    fetchAndFilterArticles(window.innerWidth);
+
+    const handleResize = () => {
+      const newWidth = window.innerWidth;
+      setWindowWidth(newWidth);
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    return () => window.removeEventListener('resize', handleResize);
+  }, [fetchAndFilterArticles]);
+
+  // 2. Коли змінюється ширина вікна
+  useEffect(() => {
+    fetchAndFilterArticles(windowWidth);
+  }, [windowWidth, fetchAndFilterArticles]);
+
+  return (
+    <section id="popular-articles" className="PopularArticles">
+      <Container noVerticalPadding>
+        <div className={styles.content}>
+          <div className={styles.firstpart}>
+            <h2 className={styles.title}>Popular Articles</h2>
+            <Link to="/articles" className={styles.link}>
+              <span className={styles.linkText}>Go to all Articles</span>
+              <svg className={`${styles.icon} icon-Icon-2`}>
+                <use xlinkHref="/symbol-defs.svg#icon-Icon-2" />
+              </svg>
+            </Link>
+          </div>
+          <ul className={styles.articlesGrid}>
+            <ArticlesList
+              queryArticles={articles}
+              icon="icon-favorite-article"
+              btnStyle={'FavoriteArticleNotSaved'}
+            />
+          </ul>
+        </div>
+      </Container>
+    </section>
+  );
+}
+
+export default PopularArticles;

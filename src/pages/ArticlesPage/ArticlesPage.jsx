@@ -12,7 +12,7 @@ import {
   selectErrorArticles,
   selectPage,
   selectPages,
-  selectTotal,
+  selectTotalArticles,
 } from '../../redux/articles/selectors';
 import Loader from '../../components/Loader/Loader';
 
@@ -21,7 +21,7 @@ const ArticlesPage = () => {
   //console.log('ARTICLES:', articles);
   const loading = useSelector(selectLoadingArticles);
   const error = useSelector(selectErrorArticles);
-  const total = useSelector(selectTotal);
+  const totalArticles = useSelector(selectTotalArticles);
   const currentPage = useSelector(selectPage);
   const totalPages = useSelector(selectPages);
   const [filter, setFilter] = useState('all'); // локальний фільтр
@@ -52,7 +52,7 @@ const ArticlesPage = () => {
         <div className={css.boxSelect}>
           <div>
             <p className={css.countArticles}>
-              {total} {total === 1 ? 'article' : 'articles'}
+              {totalArticles} {totalArticles === 1 ? 'article' : 'articles'}
             </p>
           </div>
           <div className={css.formSelect}>
@@ -62,17 +62,22 @@ const ArticlesPage = () => {
         {loading ? (
           <Loader />
         ) : (
-          <ArticlesList
-            icon={'icon-favorite-article'}
-            btnStyle={'FavoriteArticleNotSaved'}
-            queryArticles={articles}
-          />
+          <>
+            <ArticlesList
+              icon={'icon-favorite-article'}
+              btnStyle={'FavoriteArticleNotSaved'}
+              queryArticles={articles}
+            />
+
+            {totalPages > 1 && currentPage < totalPages && (
+              <LoadMore
+                page={currentPage}
+                pages={totalPages}
+                onLoadMore={handleLoadMore}
+              />
+            )}
+          </>
         )}
-        <LoadMore
-          page={currentPage}
-          pages={totalPages}
-          onLoadMore={handleLoadMore}
-        />
       </Container>
     </section>
   );

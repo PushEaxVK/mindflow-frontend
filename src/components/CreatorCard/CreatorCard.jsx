@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from './CreatorCard.module.css';
 import clsx from 'clsx';
+import { Link } from 'react-router-dom';
 
 function CreatorCard({ creator, page = 'home' }) {
   if (!creator) return null;
@@ -20,7 +21,9 @@ function CreatorCard({ creator, page = 'home' }) {
         alt={creator.name}
         className={clsx(styles.avatar, isLarge && styles['avatar--lg'])}
       />
-      <p className={styles.name}>{creator.name?.split(' ')[0]}</p>
+      <Link to={`/authors/${creator._id}`} className={styles.name}>
+        {creator.name?.split(' ')[0]}
+      </Link>
     </div>
   );
 }

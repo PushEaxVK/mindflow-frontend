@@ -7,62 +7,91 @@ import clsx from 'clsx';
 import LoadMore from '../../components/LoadMore/LoadMore';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchAllArticles } from '../../redux/articles/operation';
 import {
-  selectAllArticles,
-  selectLoadingArticles,
-  selectErrorArticles,
-  selectPage,
-  selectPages,
-  selectTotal,
-} from '../../redux/articles/selectors';
-import { selectIsLoggedIn } from '../../redux/auth/selectors.js';
+  fetchAuthorById,
+  fetchArticlesAuthorById,
+} from '../../redux/user/operation.js';
+import {
+  selectAuthorData,
+  selectAuthorLoading,
+  selectAuthorError,
+  selectAuthorArticles,
+  selectAuthorArticlesPage,
+  selectAuthorArticlesPages,
+  selectAuthorArticlesTotal,
+  selectAuthorArticlesLoading,
+  selectAuthorArticlesError,
+} from '../../redux/user/selectors.js';
+
+import { selectIsLoggedIn, selectUser } from '../../redux/auth/selectors.js';
 
 const AuthorProfilePage = () => {
   const location = useLocation();
-  const match = useMatch('/authors/:id');
-  const isBaseProfile = match && location.pathname === match.pathname;
+  //const match = useMatch('/authors/:id');
+  //const isBaseProfile = match && location.pathname === match.pathname;
 
   const buildLinkClass = ({ isActive }) => {
     return clsx(css.tabItem, isActive && css.active);
   };
 
   const dispatch = useDispatch();
-  const articles = useSelector(selectAllArticles);
-  const loading = useSelector(selectLoadingArticles);
-  const error = useSelector(selectErrorArticles);
-  const total = useSelector(selectTotal);
+
+  const authorData = useSelector(selectAuthorData);
+  const authorLoading = useSelector(selectAuthorLoading);
+  const authorError = useSelector(selectAuthorError);
+  const authorArticlesLoading = useSelector(selectAuthorArticlesLoading);
+
+  // Статті автора
+
+  const authorArticles = useSelector(selectAuthorArticles);
+
+  const currentPage = useSelector(selectAuthorArticlesPage);
+  const totalPages = useSelector(selectAuthorArticlesPages);
+
+  ///////////////////////////////////
+
+  const OwnProfile = useSelector(selectUser);
   const isLoggedIn = useSelector(selectIsLoggedIn);
-  const currentPage = useSelector(selectPage);
-  const totalPages = useSelector(selectPages);
+  //const isLoggedIn = true;
 
-  //console.log('Масив статтей:', allArticles);
+  // console.log('OwnProfile', OwnProfile.id);
 
-  const { id: authorId } = useParams();
+  ///////////////////////////////////////////
+
+  const author = authorData?.data || {};
+  const articles = authorArticles || [];
+
+  //console.log('Інформація про :', articles);
+
+  const { id: ownerId } = useParams();
+  const navigate = useNavigate();
+
+  const isOwnProfile = isLoggedIn && OwnProfile?.id === ownerId;
+  //const isOwnProfile = true;
 
   useEffect(() => {
-    if (authorId) {
-      dispatch(fetchAllArticles({ page: 1, filter: `author=${authorId}` }));
+    if (ownerId) {
+      dispatch(fetchAuthorById({ ownerId }));
+      dispatch(fetchArticlesAuthorById({ ownerId, page: 1 }));
     }
-  }, [authorId, dispatch]);
+  }, [ownerId, dispatch]);
+
+  useEffect(() => {
+    if (isOwnProfile && location.pathname === `/authors/${ownerId}`) {
+      navigate('my-articles', { replace: true });
+    }
+  }, [isOwnProfile, location.pathname, navigate, ownerId]);
 
   const handleLoadMore = () => {
-    dispatch(
-      fetchAllArticles({ page: currentPage + 1, filter: `author=${authorId}` })
-    );
+    if (currentPage < totalPages && !authorArticlesLoading) {
+      dispatch(fetchArticlesAuthorById({ ownerId, page: currentPage + 1 }));
+    }
   };
 
-  // const userId = useSelector((state) => state.auth.user?._id);
+  console.log(articles);
 
-  // const isOwner = isLoggedIn && userId === authorId;
-
-  // const navigate = useNavigate();
-
-  // useEffect(() => {
-  //   if (isLoggedIn && isBaseProfile) {
-  //     navigate('my-articles', { replace: true });
-  //   }
-  // }, [isBaseProfile, isLoggedIn, navigate]);
+  // const isOwnProfile = isLoggedIn && OwnProfile?.id === ownerId;
+  //const isOwnProfile = true;
 
   return (
     <section className={css.section_AuthorProfilePage}>
@@ -72,16 +101,19 @@ const AuthorProfilePage = () => {
           <li>
             <img
               className={css.imgProfile}
-              src="https://res.cloudinary.com/dfoiy9rn5/image/upload/v1753462124/profile_img_lhcerd.png"
-              alt=""
+              src={author?.avatarUrl}
+              alt={author?.name}
             />
           </li>
           <li>
-            <p className={css.userName}>Naomi</p>
-            <p className={css.countArticles}>{`${total} articles`}</p>
+            <p className={css.userName}>{author?.name}</p>
+            <p className={css.countArticles}>
+              {author?.articlesAmount}
+              {author?.articlesAmount === 1 ? ' article' : ' articles'}
+            </p>
           </li>
         </ul>
-        {isLoggedIn && (
+        {isOwnProfile && (
           <>
             <nav className={css.profileTabList}>
               <NavLink to="my-articles" className={buildLinkClass}>
@@ -91,21 +123,27 @@ const AuthorProfilePage = () => {
                 Saved Articles
               </NavLink>
             </nav>
+
+            <Outlet />
           </>
         )}
-        <Outlet />
-        {isBaseProfile && (
+
+        {!isOwnProfile && (
           <>
             <ArticlesList
               icon={'icon-favorite-article'}
               btnStyle={'FavoriteArticleNotSaved'}
               queryArticles={articles}
             />
-            <LoadMore
-              page={currentPage}
-              pages={totalPages}
-              onLoadMore={handleLoadMore}
-            />
+            {totalPages > 1 &&
+              currentPage < totalPages &&
+              !authorArticlesLoading && (
+                <LoadMore
+                  page={currentPage}
+                  pages={totalPages}
+                  onLoadMore={handleLoadMore}
+                />
+              )}
           </>
         )}
       </Container>

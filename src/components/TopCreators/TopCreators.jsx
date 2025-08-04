@@ -8,7 +8,7 @@ function TopCreators() {
   const [creators, setCreators] = useState([]);
 
   useEffect(() => {
-    fetch('/harmoniq') // Замінити на бекенд-ендпоінт
+    fetch('https://mindflow-backend-iwk7.onrender.com/users')
       .then((res) => {
         if (!res.ok) {
           throw new Error('Network response was not ok');
@@ -16,9 +16,13 @@ function TopCreators() {
         return res.json();
       })
       .then((data) => {
-        const sorted = data
+        const users = data.data?.users || [];
+
+        const sorted = users
+          .filter((user) => typeof user.articlesAmount === 'number')
           .sort((a, b) => b.articlesAmount - a.articlesAmount)
           .slice(0, 6);
+
         setCreators(sorted);
       })
       .catch((err) => console.error('Failed to load creators:', err));

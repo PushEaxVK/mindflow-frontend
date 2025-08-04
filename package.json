@@ -17,6 +17,10 @@
     "@fontsource/merienda": "^5.2.6",
     "@fontsource/noto-sans": "^5.2.7",
     "@reduxjs/toolkit": "^2.8.2",
+    "@tiptap/extension-link": "^3.0.9",
+    "@tiptap/extension-placeholder": "^3.0.7",
+    "@tiptap/react": "^3.0.9",
+    "@tiptap/starter-kit": "^3.0.9",
     "axios": "^1.11.0",
     "classnames": "^2.5.1",
     "clsx": "^2.1.1",
@@ -36,6 +40,7 @@
     "react-spinners": "^0.17.0",
     "redux-persist": "^6.0.0",
     "redux-thunk": "^3.1.0",
+    "tiptap": "^1.32.2",
     "yup": "^1.6.1"
   },
   "devDependencies": {
