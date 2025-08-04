@@ -1,0 +1,18 @@
+.pageWrapper {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: column;
+  gap: 16px;
+  padding: 48px 0;
+}
+.heading {
+  font: 700 40px 'Manrope', sans-serif;
+  color: #070721;
+}
+
+@media only screen and (min-width: 1440px) {
+  .pageWrapper {
+    margin: 0 1px;
+  }
+}
