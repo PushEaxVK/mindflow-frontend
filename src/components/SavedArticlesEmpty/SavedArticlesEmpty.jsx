@@ -12,8 +12,8 @@ const SavedArticlesEmpty = () => {
       <h3 className={css.subTitleAlert}>Nothing found.</h3>
       <p className={css.textAlert}>Save your first article</p>
       <div className={css.btnCreateArticle}>
-        <Link className={css.btnText} to="/">
-          Create an article
+        <Link className={css.btnText} to="/articles">
+          Go to articles
         </Link>
       </div>
     </div>

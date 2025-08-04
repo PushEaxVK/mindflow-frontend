@@ -18,11 +18,12 @@
 }
 
 .logo {
-  .logoIcon {
-    width: 149px;
-    height: 36px;
-    fill: var(--green);
-  }
+}
+
+.logoIcon {
+  width: 149px;
+  height: 36px;
+  fill: var(--green);
 }
 
 .copyright {
