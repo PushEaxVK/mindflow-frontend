@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { uploadPhoto } from '../../redux/uploadPhoto/action';
-
+import { uploadPhoto } from '../../redux/uploadPhoto/photoSlice';
+import { toast } from 'react-toastify';
 
 const UploadPhoto = () => {
   const [selectedFile, setSelectedFile] = useState(null);
 
   const dispatch = useDispatch();
-  const { loading, photoUrl, error } = useSelector(state => state.photo);
+  const { loading, photoUrl } = useSelector(state => state.photo);
 
   const handleFileChange = (event) => {
     setSelectedFile(event.target.files[0]);
@@ -15,7 +15,7 @@ const UploadPhoto = () => {
 
   const handleUpload = () => {
     if (!selectedFile) {
-      alert('Будь ласка, виберіть файл для завантаження!');
+      toast.error('Будь ласка, виберіть файл для завантаження!');
       return;
     }
     dispatch(uploadPhoto(selectedFile));
@@ -29,8 +29,6 @@ const UploadPhoto = () => {
         {loading ? 'Завантаження...' : 'Save'}
       </button>
 
-      {error && <p>{error}</p>}
-      
       {photoUrl && (
         <div>
           <p>Фото успішно завантажено!</p>
