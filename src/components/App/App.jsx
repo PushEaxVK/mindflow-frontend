@@ -75,6 +75,7 @@ const App = () => {
               <RestrictedRoute redirectTo="/" component={<RegisterPage />} />
             }
           />
+
           <Route
             path="create"
             element={
