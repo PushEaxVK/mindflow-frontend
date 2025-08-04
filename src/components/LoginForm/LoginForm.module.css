@@ -188,10 +188,23 @@
   width: 20px;
   height: 20px;
   transition: opacity 0.2s ease;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 1;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  color: #666;
+  flex-shrink: 0;
+}
+
+.passwordToggle:hover .icon {
+  color: #333;
 }
 
 .iconMobile {
   display: block;
+  width: 10px;
+  height: 10px;
 }
 
 .iconTablet,
@@ -220,8 +233,11 @@
   .iconMobile {
     display: none;
   }
+
   .iconTablet {
     display: block;
+    width: 16px;
+    height: 15px;
   }
 }
 
@@ -242,8 +258,11 @@
   .iconTablet {
     display: none;
   }
+
   .iconDesktop {
     display: block;
+    width: 20px;
+    height: 19px;
   }
 }
 
