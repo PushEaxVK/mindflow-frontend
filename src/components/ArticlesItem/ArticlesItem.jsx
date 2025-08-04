@@ -1,9 +1,13 @@
 import css from './ArticlesItem.module.css';
 import { Link } from 'react-router-dom';
+import { forwardRef } from 'react';
 
-const ArticlesItem = ({ item, icon, btnStyle }) => {
+const ArticlesItem = forwardRef(function ArticlesItem(
+  { item, icon, btnStyle },
+  ref
+) {
   return (
-    <li className={css.articlesItem}>
+    <li className={css.articlesItem} ref={ref}>
       <img className={css.imgArticle} src={item.img} alt={item.title} />
       <div className={css.infoArticle}>
         <p className={css.authorArticle}>{item.ownerId?.name}</p>
@@ -30,6 +34,6 @@ const ArticlesItem = ({ item, icon, btnStyle }) => {
       </div>
     </li>
   );
-};
+});
 
 export default ArticlesItem;
