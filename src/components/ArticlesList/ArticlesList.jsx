@@ -7,7 +7,8 @@ const ArticlesList = ({
   btnStyle = 'EditArticle',
   queryArticles = [],
 }) => {
-  //console.log(queryArticles);
+  console.log(queryArticles);
+
   return (
     <>
       <ul className={css.articlesList}>
