@@ -4,7 +4,7 @@ const AuthorPage = () => {
   return (
     <section>
       <Container>
-        <h1>AuthorPage</h1>
+        <h1>AuthorPage!</h1>
       </Container>
     </section>
   );
