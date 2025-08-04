@@ -38,7 +38,7 @@ const ArticlesPage = () => {
   };
 
   const handleLoadMore = () => {
-    console.log('Load more clicked. Current page:', currentPage);
+    //console.log('Load more clicked. Current page:', currentPage);
     if (currentPage < totalPages && !loading) {
       //  scroll-орієнтир
       if (lastArticleRef.current) {
