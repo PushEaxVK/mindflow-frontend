@@ -55,6 +55,7 @@
   font-weight: 700;
   font-size: 16px;
   color: var(--green-darker);
+  text-decoration: none;
 }
 
 @media only screen and (min-width: 768px) {

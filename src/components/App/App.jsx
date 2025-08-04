@@ -86,6 +86,8 @@ const App = () => {
             }
           />
 
+         
+
           <Route
             path="photo"
             element={
