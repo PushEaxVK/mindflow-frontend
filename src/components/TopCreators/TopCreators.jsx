@@ -8,24 +8,46 @@ function TopCreators() {
   const [creators, setCreators] = useState([]);
 
   useEffect(() => {
-    fetch('https://mindflow-backend-iwk7.onrender.com/users')
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return res.json();
-      })
-      .then((data) => {
-        const users = data.data?.users || [];
+    const fetchAllUsers = async () => {
+      try {
+        const res = await fetch(
+          'https://mindflow-backend-iwk7.onrender.com/users?perPage=20&page=1'
+        );
+        if (!res.ok) throw new Error('Failed to load page 1');
+        const firstData = await res.json();
+        const users = firstData.data?.users || [];
+        const totalPages = firstData.data?.pages || 1;
 
-        const sorted = users
+        const promises = [];
+
+        for (let page = 2; page <= totalPages; page++) {
+          promises.push(
+            fetch(
+              `https://mindflow-backend-iwk7.onrender.com/users?perPage=20&page=${page}`
+            )
+              .then((res) => {
+                if (!res.ok) throw new Error(`Failed to load page ${page}`);
+                return res.json();
+              })
+              .then((data) => data.data?.users || [])
+          );
+        }
+
+        const restPages = await Promise.all(promises);
+        const allUsers = [...users, ...restPages.flat()];
+
+        const top6 = allUsers
           .filter((user) => typeof user.articlesAmount === 'number')
           .sort((a, b) => b.articlesAmount - a.articlesAmount)
           .slice(0, 6);
 
-        setCreators(sorted);
-      })
-      .catch((err) => console.error('Failed to load creators:', err));
+        setCreators(top6);
+      } catch (error) {
+        console.error(' Failed to load all users:', error);
+      }
+    };
+
+    fetchAllUsers();
   }, []);
 
   return (

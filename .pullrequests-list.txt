@@ -1,4 +1,5 @@
 https://github.com/PushEaxVK/mindflow-frontend/pull/18
 https://github.com/PushEaxVK/mindflow-frontend/pull/34
 https://github.com/PushEaxVK/mindflow-frontend/pull/40
+https://github.com/PushEaxVK/mindflow-frontend/pull/61
 
