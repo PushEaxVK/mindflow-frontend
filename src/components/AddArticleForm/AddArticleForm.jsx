@@ -132,7 +132,10 @@ export const AddArticleForm = () => {
 
   const editor = useEditor({
     extensions: [
-      StarterKit.configure({ link: false }),
+    StarterKit.configure({
+      link: false,
+      underline: false, 
+    }),
       Link.configure({
         openOnClick: false,
         HTMLAttributes: {
