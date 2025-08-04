@@ -59,3 +59,4 @@ const photoSlice = createSlice({
 });
 
 export default photoSlice.reducer;
+
