@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import toast from 'react-hot-toast';
@@ -14,6 +14,7 @@ import { useEditor, EditorContent } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import Link from '@tiptap/extension-link';
 import Placeholder from '@tiptap/extension-placeholder';
+import Underline from '@tiptap/extension-underline';
 
 import styles from './AddArticleForm.module.css';
 
@@ -55,8 +56,8 @@ export const AddArticleForm = () => {
       formData.append('title', values.title);
       formData.append('article', values.article);
       formData.append('date', selectedDate.toISOString());
-      formData.append('author', user._id);
-      if (image) formData.append('image', image);
+      formData.append('ownerId', user._id);
+      if (image) formData.append('img', image);
 
       try {
         const res = isEditing
@@ -73,7 +74,7 @@ export const AddArticleForm = () => {
       }
     },
   });
-  
+
   const { setValues } = formik;
 
   useEffect(() => {
@@ -98,6 +99,9 @@ export const AddArticleForm = () => {
 
   const textareaRef = useRef(null);
   const MIN_TEXTAREA_HEIGHT = 393;
+  const floatingToolbarRef = useRef(null);
+  const [floatingVisible, setFloatingVisible] = useState(false);
+  const [toolbarPosition, setToolbarPosition] = useState({ top: 0, left: 0 });
 
   const resizeTextarea = () => {
     if (!textareaRef.current) return;
@@ -132,52 +136,64 @@ export const AddArticleForm = () => {
         showOnlyWhenEditable: true,
         showOnlyCurrent: false,
       }),
+      Underline,
     ],
     content: formik.values.article,
     onUpdate: ({ editor }) => {
       formik.setFieldValue('article', editor.getHTML());
       resizeTextarea();
-
       const proseMirror = textareaRef.current?.querySelector('.ProseMirror');
       if (!proseMirror) return;
-
-      if (editor.isEmpty) {
-        proseMirror.classList.add('is-empty');
-      } else {
-        proseMirror.classList.remove('is-empty');
-      }
+      proseMirror.classList.toggle('is-empty', editor.isEmpty);
     },
   });
 
-  useEffect(() => {
-    if (editor && formik.values.article !== editor.getHTML()) {
-      editor.commands.setContent(formik.values.article || '');
-      setTimeout(() => resizeTextarea(), 0);
-    }
-  }, [formik.values.article, editor]);
-
-  // Formatting handlers
-  const toggleBold = () => editor.chain().focus().toggleBold().run();
-  const toggleItalic = () => editor.chain().focus().toggleItalic().run();
-  const toggleUnderline = () => editor.chain().focus().toggleUnderline().run();
-  const toggleStrike = () => editor.chain().focus().toggleStrike().run();
-  const toggleBulletList = () => editor.chain().focus().toggleBulletList().run();
-  const toggleOrderedList = () => editor.chain().focus().toggleOrderedList().run();
-
-  const setLink = () => {
-    const previousUrl = editor.getAttributes('link').href;
-    const url = window.prompt('Enter URL', previousUrl);
-
-    if (url === null) return;
-    if (url === '') {
-      editor.chain().focus().extendMarkRange('link').unsetLink().run();
+  const updateFloatingToolbar = useCallback(() => {
+    if (!editor) return;
+    const selection = window.getSelection();
+    if (!selection || selection.isCollapsed || selection.rangeCount === 0) {
+      setFloatingVisible(false);
       return;
     }
+    const range = selection.getRangeAt(0);
+    const rect = range.getBoundingClientRect();
+    setToolbarPosition({
+      top: rect.top + window.scrollY - 45,
+      left: rect.left + window.scrollX + rect.width / 2,
+    });
+    setFloatingVisible(true);
+  }, [editor]);
 
-    editor.chain().focus().extendMarkRange('link').setLink({ href: url }).run();
+  useEffect(() => {
+    if (!editor) return;
+    editor.on('selectionUpdate', updateFloatingToolbar);
+    return () => editor.off('selectionUpdate', updateFloatingToolbar);
+  }, [editor, updateFloatingToolbar]);
+
+  const toggleBold = () => editor?.chain().focus().toggleBold().run();
+  const toggleItalic = () => editor?.chain().focus().toggleItalic().run();
+  const toggleUnderline = () => editor?.chain().focus().toggleUnderline().run();
+  const toggleStrike = () => editor?.chain().focus().toggleStrike().run();
+  const toggleBulletList = () =>
+    editor?.chain().focus().toggleBulletList().run();
+  const toggleOrderedList = () =>
+    editor?.chain().focus().toggleOrderedList().run();
+  const setLink = () => {
+    const previousUrl = editor?.getAttributes('link').href;
+    const url = window.prompt('Enter URL', previousUrl);
+    if (url === null) return;
+    if (url === '') {
+      editor?.chain().focus().extendMarkRange('link').unsetLink().run();
+      return;
+    }
+    editor
+      ?.chain()
+      .focus()
+      .extendMarkRange('link')
+      .setLink({ href: url })
+      .run();
   };
 
-  
   return (
     <form
       onSubmit={formik.handleSubmit}
@@ -255,30 +271,58 @@ export const AddArticleForm = () => {
           </label>
         </div>
 
-        {/* Toolbar */}
+        {/* Static Toolbar */}
         <div className={styles.toolbar}>
-          <button type="button" onClick={toggleBold} aria-label="Bold">
+          <button type="button" onClick={toggleBold}>
             <b>B</b>
           </button>
-          <button type="button" onClick={toggleItalic} aria-label="Italic">
+          <button type="button" onClick={toggleItalic}>
             <i>I</i>
           </button>
-          <button type="button" onClick={toggleUnderline} aria-label="Underline">
+          <button type="button" onClick={toggleUnderline}>
             <u>U</u>
           </button>
-          <button type="button" onClick={toggleStrike} aria-label="Strike">
+          <button type="button" onClick={toggleStrike}>
             <s>S</s>
           </button>
-          <button type="button" onClick={toggleBulletList} aria-label="Bullet List">
+          <button type="button" onClick={toggleBulletList}>
             • List
           </button>
-          <button type="button" onClick={toggleOrderedList} aria-label="Ordered List">
+          <button type="button" onClick={toggleOrderedList}>
             1. List
           </button>
-          <button type="button" onClick={setLink} aria-label="Insert Link">
+          <button type="button" onClick={setLink}>
             🔗
           </button>
         </div>
+
+        {/* Floating Toolbar */}
+        {floatingVisible && (
+          <div
+            ref={floatingToolbarRef}
+            className={styles.floatingToolbar}
+            style={{
+              top: toolbarPosition.top,
+              left: toolbarPosition.left,
+            }}
+          >
+            <button type="button" onClick={toggleBold}>
+              <b>B</b>
+            </button>
+            <button type="button" onClick={toggleItalic}>
+              <i>I</i>
+            </button>
+            <button type="button" onClick={toggleUnderline}>
+              <u>U</u>
+            </button>
+            <button type="button" onClick={toggleStrike}>
+              <s>S</s>
+            </button>
+            <button type="button" onClick={setLink}>
+              🔗
+            </button>
+          </div>
+        )}
 
         {/* Editor */}
         <div className={styles.articleWrapper} ref={textareaRef}>
@@ -286,13 +330,12 @@ export const AddArticleForm = () => {
           <EditorContent
             editor={editor}
             aria-labelledby="articleLabel"
-            className={`${styles.ProseMirror} ProseMirror`}
+            data-placeholder="Enter the text"
+            className="ProseMirror"
             style={{
-              overflow: 'hidden',
               height: MIN_TEXTAREA_HEIGHT + 'px',
+              overflow: 'hidden',
               transition: 'height 0.15s ease-in-out',
-              whiteSpace: 'pre-wrap',
-              outline: 'none',
             }}
           />
           {formik.touched.article && formik.errors.article && (
