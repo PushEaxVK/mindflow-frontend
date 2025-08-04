@@ -24,7 +24,11 @@ const ArticlesItem = forwardRef(function ArticlesItem(
       dispatch(openModal('ErrorSave'));
       return;
     }
-    console.log('Article save');
+    const action = isSaved ? 'REMOVE (DELETE)' : 'SAVE (POST)';
+    console.log(`Toggle Save Clicked - Aktion: ${action}`);
+    console.log('Artikel-ID:', item._id);
+    console.log('User-ID:', user.id);
+
     dispatch(
       toggleSaveArticle({
         userId: user.id,

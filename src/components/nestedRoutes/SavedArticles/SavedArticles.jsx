@@ -1,22 +1,19 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-
 import Loader from '../../Loader/Loader.jsx';
 import ArticlesList from '../../ArticlesList/ArticlesList.jsx';
-
 import { selectUser } from '../../../redux/auth/selectors.js';
-
 import SavedArticlesEmpty from '../../SavedArticlesEmpty/SavedArticlesEmpty.jsx';
 import { fetchSavedArticles } from '../../../redux/SavedArticles/operations.js';
 import {
-  selectSavedArticlesError,
+  selectSavedArticles,
   selectSavedArticlesLoading,
 } from '../../../redux/SavedArticles/selectors.js';
 
 const SavedArticles = () => {
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
-  const savedArticles = useSelector(selectSavedArticlesError);
+  const savedArticles = useSelector(selectSavedArticles);
   const isLoading = useSelector(selectSavedArticlesLoading);
 
   useEffect(() => {
