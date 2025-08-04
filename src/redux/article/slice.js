@@ -10,10 +10,10 @@ import {
 const initialState = {
   article: null,
   popularArticles: [],
+  savedArticles: [],
   isSaved: false,
   isLoading: false,
   error: null,
-  savedArticles: [],
 };
 
 const articleSlice = createSlice({
@@ -28,7 +28,6 @@ const articleSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      // fetchArticleById
       .addCase(fetchArticleById.pending, (state) => {
         state.isLoading = true;
         state.error = null;
@@ -36,7 +35,6 @@ const articleSlice = createSlice({
       .addCase(fetchArticleById.fulfilled, (state, action) => {
         state.isLoading = false;
         state.article = action.payload;
-        // Якщо у payload є інфо, чи збережена стаття — онови
         state.isSaved = action.payload?.isSaved || false;
       })
       .addCase(fetchArticleById.rejected, (state, action) => {
@@ -44,7 +42,6 @@ const articleSlice = createSlice({
         state.error = action.payload || 'Error fetching article';
       })
 
-      // fetchThreePopularArticles
       .addCase(fetchThreePopularArticles.pending, (state) => {
         state.isLoading = true;
         state.error = null;
@@ -58,44 +55,56 @@ const articleSlice = createSlice({
         state.error = payload;
       })
 
-      // saveArticle
-      .addCase(saveArticle.pending, (state) => {
-        state.isLoading = true;
-        state.error = null;
-      })
-      .addCase(saveArticle.fulfilled, (state) => {
-        state.isLoading = false;
-        state.isSaved = true;
-      })
-      .addCase(saveArticle.rejected, (state, { payload }) => {
-        state.isLoading = false;
-        state.error = payload;
-      })
-
-      // unsaveArticle
-      .addCase(unsaveArticle.pending, (state) => {
-        state.isLoading = true;
-        state.error = null;
-      })
-      .addCase(unsaveArticle.fulfilled, (state) => {
-        state.isLoading = false;
-        state.isSaved = false;
-      })
-      .addCase(unsaveArticle.rejected, (state, { payload }) => {
-        state.isLoading = false;
-        state.error = payload;
-      })
       .addCase(fetchSavedArticles.pending, (state) => {
         state.isLoading = true;
         state.error = null;
       })
       .addCase(fetchSavedArticles.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.savedArticles = action.payload; // список збережених статей
+        state.savedArticles = action.payload;
       })
       .addCase(fetchSavedArticles.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload || 'Failed to fetch saved articles';
+      })
+
+      .addCase(saveArticle.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(saveArticle.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSaved = true;
+
+        const articleId = action.meta?.arg?.articleId;
+        if (
+          articleId &&
+          !state.savedArticles.some((a) => a._id === articleId)
+        ) {
+          state.savedArticles.push({ _id: articleId });
+        }
+      })
+      .addCase(saveArticle.rejected, (state, { payload }) => {
+        state.isLoading = false;
+        state.error = payload;
+      })
+
+      .addCase(unsaveArticle.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(unsaveArticle.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSaved = false;
+
+        const articleId = action.payload.articleId || action.meta.arg;
+        state.savedArticles = state.savedArticles.filter(
+          (a) => a._id !== articleId
+        );
+      })
+      .addCase(unsaveArticle.rejected, (state, { payload }) => {
+        state.isLoading = false;
+        state.error = payload;
       });
   },
 });

@@ -3,11 +3,13 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   fetchArticleById,
+  fetchSavedArticles,
   fetchThreePopularArticles,
   saveArticle,
   unsaveArticle,
 } from '../../redux/article/operation';
 import {
+  makeSelectIsArticleSaved,
   selectArticle,
   selectIsArticlesLoading,
   selectPopularArticles,
@@ -27,18 +29,23 @@ const ArticlePage = () => {
   const article = useSelector(selectArticle);
   const popular = useSelector(selectPopularArticles);
   const userId = useSelector((state) => state.auth.user?.id);
+  const token = useSelector((state) => state.auth.accessToken);
 
-  const isSaved = true;
+  const isSaved = useSelector(makeSelectIsArticleSaved(id));
 
   useEffect(() => {
     if (!id) return;
 
     dispatch(fetchArticleById(id));
     dispatch(fetchThreePopularArticles());
+    if (userId) {
+      dispatch(fetchSavedArticles({ userId }));
+    }
     return () => {
       dispatch(clearArticle());
     };
   }, [dispatch, id, userId]);
+
   const handleClickReadMore = (listItem) => {
     dispatch(clearArticle());
     navigate(`/articles/${listItem._id}`);
@@ -50,16 +57,15 @@ const ArticlePage = () => {
       toast.error('Invalid article ID');
       return;
     }
-    if (!userId) {
+
+    if (!token) {
       toast.error('User not authenticated');
       return;
     }
 
     try {
       const resultAction = await dispatch(
-        isSaved
-          ? unsaveArticle({ userId, articleId: article._id })
-          : saveArticle({ userId, articleId: article._id })
+        isSaved ? unsaveArticle(article._id) : saveArticle(article._id)
       );
 
       if (
@@ -71,6 +77,8 @@ const ArticlePage = () => {
             ? 'Article removed from saved list'
             : 'Article saved successfully'
         );
+
+        await dispatch(fetchSavedArticles({ userId }));
       } else {
         toast.error(resultAction.payload || 'Action failed');
       }
@@ -82,6 +90,7 @@ const ArticlePage = () => {
 
   if (isLoading) return <Loader />;
   if (!article) return <NotFound />;
+  console.log('isSaved:', isSaved);
 
   return (
     <section className={css.section}>
@@ -118,7 +127,7 @@ const ArticlePage = () => {
               <p className={css.articleDate}>
                 Date:{' '}
                 <span className={css.articleDateName}>
-                  {new Date(article.createdAt).toLocaleDateString()}
+                  {new Date(article.date).toLocaleDateString()}
                 </span>
               </p>
 
@@ -136,6 +145,7 @@ const ArticlePage = () => {
                       <button
                         onClick={() => handleClickReadMore(item)}
                         className={css.readMoreBtn}
+                        disabled={isLoading}
                       >
                         <svg className={css.iconReadMore}>
                           <use href="/icons-articlePage.svg#icon-readMoreBtn"></use>
