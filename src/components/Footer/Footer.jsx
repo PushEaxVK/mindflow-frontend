@@ -17,7 +17,13 @@ const Footer = () => {
         <nav className={css.links}>
           <ul className={css.linkList}>
             <li><Link to="/articles" className={css.link}>Articles</Link></li>
-            <li><Link to="/authors/${user.id}" className={css.link}>Account</Link></li>
+             {user?.id && (
+                <li>
+                  <Link to={`/authors/${user.id}`} className={css.link}>
+                    Account
+                  </Link>
+                </li>
+              )}
           </ul>
         </nav>
       </div>
