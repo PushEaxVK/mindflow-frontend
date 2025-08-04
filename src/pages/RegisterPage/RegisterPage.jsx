@@ -1,12 +1,12 @@
+import React from 'react';
 import Container from '../../components/Container/Container';
+import RegisterForm from '../../components/RegisterForm/RegisterForm';
 
 const RegisterPage = () => {
   return (
-    <section>
-      <Container>
-        <h1>RegisterPage!</h1>
-      </Container>
-    </section>
+    <Container>
+      <RegisterForm />
+    </Container>
   );
 };
 

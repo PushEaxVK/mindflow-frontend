@@ -24,6 +24,7 @@ export const AddArticleForm = () => {
   const isEditing = Boolean(articleId);
 
   const navigate = useNavigate();
+
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [image, setImage] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
@@ -51,6 +52,7 @@ export const AddArticleForm = () => {
         .max(4000, 'Article must not exceed 4000 characters')
         .required('Article text is required'),
     }),
+
     onSubmit: async (values) => {
       if (!isLoggedIn) {
         toast.error('Please log in to create an article');
@@ -90,6 +92,7 @@ export const AddArticleForm = () => {
 
   useEffect(() => {
     if (!isEditing) return;
+
     const loadArticle = async () => {
       try {
         const { data } = await axios.get(`/articles/${articleId}`);
@@ -104,6 +107,7 @@ export const AddArticleForm = () => {
         toast.error('Failed to load article');
       }
     };
+
     loadArticle();
   }, [articleId, isEditing, setValues]);
 

@@ -1,16 +1,24 @@
 import axios from 'axios';
 
-axios.defaults.baseURL = 'http://localhost:3000';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://mindflow-backend-iwk7.onrender.com';
+
+axios.defaults.baseURL = API_BASE_URL;
+axios.defaults.withCredentials = true;
 
 export const setAuthHeader = (token) => {
   axios.defaults.headers.common.Authorization = `Bearer ${token}`;
 };
 
 export const removeAuthHeader = () => {
-  axios.defaults.headers.common.Authorization = ``;
+  axios.defaults.headers.common.Authorization = '';
 };
 
-// Auth API
+const transformAuthResponse = (backendData) => {
+  return {
+    user: backendData.user,
+    accessToken: backendData.accessToken,
+  };
+};
 
 export const signup = async ({ name, email, password }) => {
   const response = await axios.post('/auth/register', {
@@ -18,14 +26,17 @@ export const signup = async ({ name, email, password }) => {
     email,
     password,
   });
-  setAuthHeader(response.data.token);
-  return response;
+
+  const transformedData = transformAuthResponse(response.data.data);
+  setAuthHeader(transformedData.accessToken);
+  return { data: transformedData };
 };
 
 export const login = async ({ email, password }) => {
   const response = await axios.post('/auth/login', { email, password });
-  setAuthHeader(response.data.token);
-  return response;
+  const transformedData = transformAuthResponse(response.data.data);
+  setAuthHeader(transformedData.accessToken);
+  return { data: transformedData };
 };
 
 export const logout = async () => {
@@ -34,9 +45,18 @@ export const logout = async () => {
   return response;
 };
 
-export const refresh = async ({ token }) => {
-  setAuthHeader(token);
-  return await axios.get('/auth/refresh');
+export const refresh = async () => {
+  const response = await axios.post('/auth/refresh');
+
+  const responseData = response.data?.data;
+
+  if (responseData && responseData.accessToken) {
+    const transformedData = transformAuthResponse(responseData);
+    setAuthHeader(transformedData.accessToken);
+    return { data: transformedData };
+  } else {
+    throw new Error('Missing access token in refresh response');
+  }
 };
 
 const serviceApi = {

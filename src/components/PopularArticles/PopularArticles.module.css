@@ -1,25 +1,24 @@
 .PopularArticles {
-  display: flex;
-  justify-content: space-between;
-  width: 1440px;
-  height: 100%;
+  max-width: 393px;
+  width: 100%;
+  margin: 0 auto;
   margin-bottom: 72px;
 }
 
 .content {
-  width: 1224px;
+  max-width: 361px;
 }
 
 .firstpart {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
 }
 
 .title {
+  font-family: var(--font-family);
   font-weight: 700;
-  font-size: 40px;
-  color: black;
+  margin-bottom: 16px;
+  color: var(--black);
+  margin-bottom: 16px;
 }
 
 .link {
@@ -27,93 +26,81 @@
   align-items: flex-end;
   gap: 12px;
   text-decoration: none;
+  font-family: var(--font-family);
   font-weight: 700;
   font-size: 16px;
-  color: #374f42;
+  color: var(--green-darker);
   margin-bottom: 16px;
+}
+
+.link:hover,
+.link:focus {
+  color: var(--green);
 }
 
 .icon {
   width: 1em;
   height: 1em;
-  stroke: #374f42;
-  fill: #374f42;
+  stroke: var(--green-darker);
+  fill: var(--green-darker);
   display: inline-block;
 }
 
-@media (min-width: 768px) and (max-width: 1439px) {
+.articlesGrid {
+  display: flex;
+  gap: 24px;
+}
+
+@media only screen and (min-width: 768px) {
   .PopularArticles {
-    width: 768px;
+    max-width: 768px;
   }
 
   .content {
-    width: 704px;
+    max-width: 704px;
+  }
+
+  .firstpart {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
 
   .title {
     font-size: 32px;
   }
 
-  .link {
-    font-size: 16px;
-  }
-
-  .icon {
-    width: 1em;
-    height: 1em;
-    stroke: #374f42;
-    fill: #374f42;
-    display: inline-block;
+  .articlesGrid {
+    display: flex;
+    gap: 24px;
   }
 }
 
-@media (min-width: 393px) and (max-width: 767px) {
+@media only screen and (min-width: 1440px) {
   .PopularArticles {
-    width: 393px;
     display: flex;
-    flex-wrap: wrap;
-    width: 100%;
+    max-width: 1440px;
+    height: 100%;
   }
 
   .content {
-    width: 361px;
+    max-width: 1224px;
   }
 
   .firstpart {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .title {
-    margin-bottom: 16px;
-  }
-
-  .link {
-    font-size: 16px;
-  }
-}
-
-@media (max-width: 392px) {
-  .PopularArticles {
     display: flex;
-    flex-wrap: wrap;
-    width: 100%;
-  }
-
-  .content {
-    width: 100%;
+    justify-content: space-between;
+    align-items: center;
   }
 
   .title {
-    margin-bottom: 16px;
+    font-size: 40px;
   }
 
-  .link {
-    font-size: 16px;
-  }
-
-  .firstpart {
-    flex-direction: column;
-    align-items: flex-start;
+  .articlesGrid {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
   }
 }

@@ -1,49 +1,97 @@
-import s from './ModalMenu.module.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectModalIsOpen } from '../../redux/modal/selectors.js';
-import { closeModal } from '../../redux/modal/slice.js';
-import { selectIsLoggedIn } from '../../redux/auth/selectors.js';
-import Navigation from '../Navigation/Navigation.jsx';
-import Container from '../Container/Container.jsx';
-import UserMenu from '../UserMenu/UserMenu.jsx';
-import AuthNav from '../AuthNav/AuthNav.jsx';
+import { NavLink } from 'react-router-dom';
+import { useMediaQuery } from 'react-responsive';
+import clsx from 'clsx';
+
+import {
+  selectModalIsOpen,
+  selectModalType,
+} from '../../redux/modal/selectors';
+import { closeModal } from '../../redux/modal/slice';
+import { selectIsLoggedIn } from '../../redux/auth/selectors';
+
+import Navigation from '../Navigation/Navigation';
+import UserMenu from '../UserMenu/UserMenu';
+import ButtonCreate from '../ButtonCreate/ButtonCreate';
+
+import s from './ModalMenu.module.css';
 
 const ModalMenu = () => {
+  const isTablet = useMediaQuery({ minWidth: 768, maxWidth: 1439 });
+  const isMobile = useMediaQuery({ maxWidth: 767 });
+
   const dispatch = useDispatch();
   const isOpen = useSelector(selectModalIsOpen);
+  const modalType = useSelector(selectModalType);
   const isLoggedIn = useSelector(selectIsLoggedIn);
-  const handleCloseModal = () => {
-    dispatch(closeModal());
+
+  const handleClose = () => dispatch(closeModal());
+
+  const handleOverlayClick = (e) => {
+    if (e.target === e.currentTarget) handleClose();
   };
 
-  if (!isOpen) return null;
+  if (modalType !== 'mobileMenu') return null;
+
+  const setActiveClass = ({ isActive }) => {
+    return clsx(s.link, isActive && s.active);
+  };
 
   return (
-    <Container>
-      <div className={s.modal_wrapper}>
-        <div className={s.modal}>
-          <div className={s.appbar__wrapper}>
-            <div className={s.logo}>
-              <svg className={s.logo__icon}>
-                <use href="/img/icons.svg#icon-logo-min"></use>
-              </svg>
-            </div>
-          </div>
-          <button className={s.btn__close} onClick={handleCloseModal}>
-            <svg className={s.btn__icon}>
-              <use href="/img/icons.svg#icon-close"></use>
-            </svg>
-          </button>
-        </div>
-        <div className={s.navigation__wrapper}>
-          <nav className={s.nav} onClick={handleCloseModal}>
+    <div
+      className={clsx(s.overlay, {
+        [s.show]: isOpen,
+        [s.hide]: !isOpen,
+      })}
+      onClick={handleOverlayClick}
+    >
+      <div
+        className={clsx(s.modal, {
+          [s.slide__In]: isOpen,
+          [s.slide__Out]: !isOpen,
+        })}
+      >
+        <div className={s.modal__content}>
+          <nav className={s.nav} onClick={handleClose}>
             <Navigation />
           </nav>
 
-          {isLoggedIn ? <UserMenu /> : <AuthNav />}
+          <div className={s.bottom__section} onClick={handleClose}>
+            {isLoggedIn ? (
+              <div className={s.user__mobile}>
+                {isMobile && <ButtonCreate />}
+                <UserMenu />
+              </div>
+            ) : (
+              <>
+                {isMobile && (
+                  <div className={s.auth__mobile}>
+                    <nav className={s.auth__wrapper}>
+                      <NavLink className={setActiveClass} to="/login">
+                        Log In
+                      </NavLink>
+                      <NavLink
+                        className={clsx(s.link, s.join__link)}
+                        to="/register"
+                      >
+                        Join now
+                      </NavLink>
+                    </nav>
+                  </div>
+                )}
+                {isTablet && (
+                  <nav className={s.auth__tablet}>
+                    <NavLink className={setActiveClass} to="/login">
+                      Log In
+                    </NavLink>
+                  </nav>
+                )}
+              </>
+            )}
+          </div>
         </div>
       </div>
-    </Container>
+    </div>
   );
 };
 

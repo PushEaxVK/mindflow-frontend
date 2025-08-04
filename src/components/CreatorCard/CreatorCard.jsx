@@ -1,17 +1,29 @@
 import React from 'react';
 import styles from './CreatorCard.module.css';
+import clsx from 'clsx';
+import { Link } from 'react-router-dom';
 
-function CreatorCard({ creator }) {
+function CreatorCard({ creator, page = 'home' }) {
   if (!creator) return null;
 
+  const isLarge = page === 'creators';
+
   return (
-    <div className={styles.creatorCard}>
+    <div
+      className={clsx(
+        styles.creatorCard,
+        isLarge && styles['creatorCard--lg'],
+        styles[`page--${page}`]
+      )}
+    >
       <img
         src={creator.avatarUrl}
         alt={creator.name}
-        className={styles.avatar}
+        className={clsx(styles.avatar, isLarge && styles['avatar--lg'])}
       />
-      <p className={styles.name}>{creator.name?.split(' ')[0]}</p>
+      <Link to={`/authors/${creator._id}`} className={styles.name}>
+        {creator.name?.split(' ')[0]}
+      </Link>
     </div>
   );
 }

@@ -37,9 +37,8 @@ button {
 
 body {
   font-family: var(--font-family);
+  background-color: var(--white);
 }
-
-
 
 .tiptap.ProseMirror {
   position: relative;
