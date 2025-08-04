@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -9,10 +9,10 @@ import {
   unsaveArticle,
 } from '../../redux/article/operation';
 import {
-  makeSelectIsArticleSaved,
   selectArticle,
   selectIsArticlesLoading,
   selectPopularArticles,
+  selectSavedArticles,
 } from '../../redux/article/selectors';
 import Container from '../../components/Container/Container';
 import NotFound from '../NotFound/NotFound';
@@ -23,28 +23,41 @@ import toast from 'react-hot-toast';
 
 const ArticlePage = () => {
   const dispatch = useDispatch();
-  const { id } = useParams();
   const navigate = useNavigate();
-  const isLoading = useSelector(selectIsArticlesLoading);
+  const { id } = useParams();
+
   const article = useSelector(selectArticle);
   const popular = useSelector(selectPopularArticles);
+  const savedArticles = useSelector(selectSavedArticles);
+  const isLoading = useSelector(selectIsArticlesLoading);
+
   const userId = useSelector((state) => state.auth.user?.id);
   const token = useSelector((state) => state.auth.accessToken);
 
-  const isSaved = useSelector(makeSelectIsArticleSaved(id));
+  const [isSaved, setIsSaved] = useState(false);
 
   useEffect(() => {
     if (!id) return;
-
     dispatch(fetchArticleById(id));
     dispatch(fetchThreePopularArticles());
-    if (userId) {
-      dispatch(fetchSavedArticles({ userId }));
-    }
+
     return () => {
       dispatch(clearArticle());
     };
-  }, [dispatch, id, userId]);
+  }, [dispatch, id]);
+
+  useEffect(() => {
+    if (userId) {
+      dispatch(fetchSavedArticles({ userId }));
+    }
+  }, [dispatch, userId]);
+
+  useEffect(() => {
+    if (savedArticles && id) {
+      const isAlreadySaved = savedArticles.articles?.some((a) => a._id === id);
+      setIsSaved(isAlreadySaved);
+    }
+  }, [savedArticles, id]);
 
   const handleClickReadMore = (listItem) => {
     dispatch(clearArticle());

@@ -98,8 +98,8 @@ const articleSlice = createSlice({
         state.isSaved = false;
 
         const articleId = action.payload.articleId || action.meta.arg;
-        state.savedArticles = state.savedArticles.filter(
-          (a) => a._id !== articleId
+        state.savedArticles.articles = state.savedArticles.articles.filter(
+          (article) => article._id !== articleId
         );
       })
       .addCase(unsaveArticle.rejected, (state, { payload }) => {
