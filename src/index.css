@@ -40,19 +40,6 @@ body {
   background-color: var(--white);
 }
 
-/* Placeholder style для Tiptap */
-.is-editor-empty::before {
-  content: attr(data-placeholder);
-   color: #595d62;
-  font: 400 18px 'Manrope', sans-serif;
-  float: left;
-  height: 0;
-  pointer-events: none;
-  opacity: 0.7;
-}
-
-
-
 .tiptap.ProseMirror {
   position: relative;
   width: 100%;
