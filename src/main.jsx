@@ -9,7 +9,7 @@ import 'modern-normalize';
 import './index.css';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import App from './components/App/App.jsx';
+import App from './components/App/App';
 import { Toaster } from 'react-hot-toast';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';

@@ -5,6 +5,7 @@ import { selectIsLoggedIn } from '../../redux/auth/selectors';
 import { NavLink } from 'react-router-dom';
 
 const Navigation = () => {
+  const user = useSelector((state) => state.auth.user);
   const isLoggedIn = useSelector(selectIsLoggedIn);
   const setActiveClass = ({ isActive }) => {
     return clsx(s.link, isActive && s.active);
@@ -22,7 +23,7 @@ const Navigation = () => {
         Creators
       </NavLink>
       {isLoggedIn && (
-        <NavLink className={setActiveClass} to="/profile">
+        <NavLink className={setActiveClass} to={`/authors/${user.id}`}>
           My Profile
         </NavLink>
       )}

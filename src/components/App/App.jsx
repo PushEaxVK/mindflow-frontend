@@ -1,7 +1,8 @@
-import { useDispatch, useSelector } from 'react-redux';
-import { useEffect, lazy, Suspense } from 'react';
+import { useSelector } from 'react-redux';
+import { lazy, Suspense } from 'react';
 import { selectIsRefreshing } from '../../redux/auth/selectors';
-import { refreshUser } from '../../redux/auth/operations';
+import { useAuthInitializer } from '../../hooks/useAuthInitializer';
+import { useAutoRefresh } from '../../hooks/useAutoRefresh';
 import { Route, Routes } from 'react-router-dom';
 import { RestrictedRoute } from '../RestrictedRoute';
 import { PrivateRoute } from '../PrivateRoute';
@@ -40,14 +41,17 @@ const SavedArticles = lazy(() =>
 const NotFound = lazy(() => import('../../pages/NotFound/NotFound'));
 
 const App = () => {
-  const dispatch = useDispatch();
   const isRefreshing = useSelector(selectIsRefreshing);
 
-  useEffect(() => {
-    dispatch(refreshUser());
-  }, [dispatch]);
+  const isInitialized = useAuthInitializer();
 
-  return isRefreshing ? null : (
+  useAutoRefresh();
+
+  if (!isInitialized || isRefreshing) {
+    return <Loader />;
+  }
+
+  return (
     <Suspense fallback={<Loader />}>
       <Routes>
         <Route path="/" element={<Layout />}>
@@ -55,17 +59,17 @@ const App = () => {
           <Route path="articles" element={<ArticlesPage />} />
           <Route path="articles/:id" element={<ArticlePage />} />
           <Route path="authors" element={<AuthorsPage />} />
-          <Route path="authors/:id" element={<AuthorProfilePage />} />
-
-          <Route
-            path="profile"
-            element={
-              <PrivateRoute redirectTo="/login" component={<MyProfilePage />} />
-            }
-          >
-            <Route path="my-articles" element={<MyArticles />} />
-            <Route path="saved-articles" element={<SavedArticles />} />
+          <Route path="authors/:id" element={<AuthorProfilePage />}>
+            <Route
+              path="my-articles"
+              element={<PrivateRoute component={<MyArticles />} />}
+            />
+            <Route
+              path="saved-articles"
+              element={<PrivateRoute component={<SavedArticles />} />}
+            />
           </Route>
+
           <Route
             path="register"
             element={
@@ -89,17 +93,10 @@ const App = () => {
               <PrivateRoute redirectTo="/login" component={<UploadPhoto />} />
             }
           />
-
           <Route
             path="login"
             element={
               <RestrictedRoute redirectTo="/" component={<LoginPage />} />
-            }
-          />
-          <Route
-            path="register"
-            element={
-              <RestrictedRoute redirectTo="/" component={<RegisterPage />} />
             }
           />
           <Route path="*" element={<NotFound />} />
