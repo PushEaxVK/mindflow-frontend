@@ -3,10 +3,12 @@ import css from './Footer.module.css'; // Import the CSS module for this compone
 
 const Footer = () => {
   return (
-    <Container noVerticalPadding>
     <footer className={css.footer}>
+    <Container noVerticalPadding>
       <div className={css.inner}>
-        <div className={css.logo}>harmoniq</div>
+        <svg className={css.logo}>
+              <use href="/img/icons.svg#icon-logo-min"></use>
+            </svg>
         <p className={css.copyright}>© 2025 Harmoniq. All rights reserved.</p>
         <nav className={css.links}>
           <ul className={css.linkList}>
@@ -15,8 +17,8 @@ const Footer = () => {
           </ul>
         </nav>
       </div>
-      </footer>
       </Container>
+      </footer>
   );
 };
 
