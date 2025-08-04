@@ -64,7 +64,7 @@ const App = () => {
             }
           />
           <Route
-            path="upload-photo"
+            path="photo"
             element={
               <PrivateRoute redirectTo="/login" component={<UploadPhoto />} />
             }
@@ -79,7 +79,7 @@ const App = () => {
           <Route
             path="register"
             element={
-              <RestrictedRoute redirectTo="/photo" component={<RegisterPage />} />
+              <RestrictedRoute redirectTo="/" component={<RegisterPage />} />
             }
           />
 
