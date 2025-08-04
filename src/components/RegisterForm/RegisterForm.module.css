@@ -15,32 +15,26 @@
   --red: #d66b5d;
 }
 
-/* Новий обгортуючий контейнер з perspective */
 .formPerspective {
   perspective: 1000px;
 }
 
-/* Скидання кнопок */
 button {
   background: none;
   border: none;
+  cursor: pointer;
 }
-/* Контейнер форми */
+
 .formWrapper {
   display: flex;
   flex-direction: column;
   align-items: center;
   background-color: var(--light-green);
   padding: 48px 32px;
-  /* padding: 0 32px 48px; */
   border-radius: 32px;
   max-width: 360px;
   width: 100%;
-  margin: 85px auto 0 auto; /* зверху 40px, горизонтально  auto, знизу 0 */
-  /* padding: 32px 24px; */
-  /* margin: 85px auto; /* ЦЕНТРУЄ форму горизонтально */
-
-  /* box-shadow: 0 0 16px rgba(0, 0, 0, 0.05); */
+  margin: 85px auto;
   transform: translateZ(0);
   transform-style: preserve-3d;
   backface-visibility: hidden;
@@ -48,27 +42,20 @@ button {
 }
 
 .formWrapper:hover {
-  /* transform: translateZ(0) translateY(-8px);
-box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18), 0 0 32px #eaf6ef;
-transition: all 0.3s ease; */
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.18), 0 0 32px rgba(234, 246, 239, 1);
   transform: translateY(-2px);
   filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.1));
 }
 
-/* Заголовок */
 h2 {
   font-family: var(--font-family);
   font-size: 32px;
   font-weight: 700;
   color: var(--black);
   text-align: center;
-  margin-bottom: 20px;
-  /* margin-top: 48px; */
-  margin-top: 48px;
+  margin: 48px 0 20px;
 }
 
-/* Опис */
 .description {
   font-size: var(--font-size-base);
   line-height: 1.5;
@@ -81,21 +68,19 @@ h2 {
   display: block;
 }
 
-/* Форма */
 .form {
   display: flex;
   flex-direction: column;
   width: 100%;
   max-width: 296px;
-  /* gap: 16px; */
+  gap: 8px; /* 🟢 збільшено gap між полями */
 }
 
-/* Поле форми */
 .fieldWrapper {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 4px;
+  gap: 6px;
   width: 100%;
 }
 
@@ -105,11 +90,10 @@ h2 {
   color: var(--black);
 }
 
-/* Інпути */
 .inputWithIcon,
 input {
   width: 100%;
-  padding: 8px;
+  padding: 8px 40px 8px 8px;
   max-width: 296px;
   height: 41px;
   background-color: var(--white);
@@ -121,9 +105,9 @@ input {
   transition: border-color var(--transition), box-shadow var(--transition);
 }
 
-input::placeholder {
-  color: var(--gray);
-  opacity: 1;
+.inputWithIcon.invalid {
+  border-color: var(--red);
+  box-shadow: 0 0 0 2px rgba(214, 107, 93, 0.3);
 }
 
 .inputWithIcon:focus,
@@ -133,40 +117,32 @@ input:focus {
   box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.15);
 }
 
-/* При помилці — завжди */
-.fieldWrapper:has(.error:not(:empty)) input,
-.fieldWrapper:has(.error:not(:empty)) .inputWithIcon {
-  border-color: var(--red);
-  box-shadow: 0 0 0 2px rgba(231, 76, 60, 0.2);
-}
-
-/* При помилці + фокус — залишаємо */
-.fieldWrapper:has(.error:not(:empty)) input:focus,
-.fieldWrapper:has(.error:not(:empty)) .inputWithIcon:focus {
-  border-color: var(--red);
-  box-shadow: 0 0 0 2px rgba(231, 76, 60, 0.3);
-}
-
-/* Контейнер помилки */
 .errorContainer {
-  min-height: 16px;
-  height: 16px;
+  min-height: 12px;
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   font-family: var(--font-family);
+  margin-top: -2px;
 }
 
-/* Текст помилки */
 .error {
   color: var(--red);
   font-size: var(--font-size-sm);
   font-family: var(--font-family);
+  visibility: visible;
 }
 
-/* Пароль + іконка */
 .passwordWrapper {
   position: relative;
   width: 100%;
+}
+
+.passwordField {
+  margin-bottom: 0;
+}
+.repeatPassword {
+  margin-top: 0 !important;
+  padding-top: 0;
 }
 
 .iconWrapper {
@@ -174,7 +150,6 @@ input:focus {
   top: 8.5px;
   right: 8.5px;
   transform: none;
-  cursor: pointer;
   z-index: 2;
 }
 
@@ -192,23 +167,17 @@ input:focus {
   transform: scale(1.1);
 }
 
-/* Кнопка */
 .btn {
   width: 100%;
-  /* padding: 27px 32px 20px; */
   background-color: var(--green);
   color: var(--white);
   border-radius: 64px;
   font-size: var(--font-size-base);
   font-weight: 700;
   font-family: var(--font-family);
-  /* transition: background-color var(--transition), transform var(--transition);
-  padding: 8px; */
-  margin-top: 20px;
-  margin-bottom: 20px;
-  /* margin-bottom: 0;  */
-
-  /* 🧩 Додаємо плавність */
+  margin-top: 12px; /* 🟢 Зменшено верхній відступ */
+  margin-bottom: 16px; /* 🟢 Зменшено нижній */
+  padding: 10px;
   transition: transform 0.25s var(--transition-curve),
     background-color 0.25s ease, box-shadow 0.25s ease;
 }
@@ -226,7 +195,36 @@ input:focus {
   transform: none;
 }
 
-/* Посилання під формою */
+.strengthWrapper {
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.strengthBar {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 2px;
+}
+
+.segment {
+  height: 6px;
+  flex: 1;
+  background-color: #ddd;
+  border-radius: 2px;
+  transition: background-color 0.3s ease;
+}
+
+.strengthText {
+  font-size: var(--font-size-sm);
+  font-family: var(--font-family);
+  color: var(--black);
+  text-align: left;
+}
+
 .login {
   text-align: center;
   font-size: var(--font-size-base);
@@ -234,8 +232,7 @@ input:focus {
   margin: 0;
   padding-top: 0;
   line-height: 1.5;
-  text-align: center;
-  padding-bottom: 48px;
+  padding-bottom: 32px;
 }
 
 .login a {
@@ -249,56 +246,55 @@ input:focus {
   opacity: 0.8;
 }
 
-/* ---------- Адаптація ---------- */
+/* ---------- MEDIA ---------- */
+
 @media screen and (min-width: 768px) {
   .formWrapper {
     grid-column: 3 / span 4;
     max-width: 522px;
-    margin: 120px auto 0 auto; /* зверху 40px, горизонтально  auto, знизу 0 */
+    margin: 120px auto;
   }
 
-  .iconMobile {
-    display: none; /*Приховує мобільну версію іконки на планшетах та десктопах*/
+  .inputWithIcon,
+  input {
+    max-width: 458px;
   }
 
-  .iconTablet {
-    display: block; /* Показує іконку, оптимізовану для планшетів*/
+  .form {
+    max-width: 458px;
   }
 
-  /* h2 {
-  } */
-
-  p,
-  .description {
-    font-size: 0.9rem;
-  }
-
-  .toggle {
-    font-size: 1rem;
+  .icon {
+    width: 24px;
   }
 }
 
 @media screen and (min-width: 1440px) {
   .formWrapper {
-    padding: 1.5rem;
-    max-width: 342px;
+    max-width: 392px;
+    margin: 50px auto;
     grid-column: 5 / span 4;
   }
 
+  .form {
+    max-width: 328px;
+  }
+
+  .inputWithIcon,
   input {
-    font-size: 0.95rem;
-    padding: 10px 12px;
+    max-width: 328px;
   }
 
   button[type='submit'] {
-    padding: 10px;
-    font-size: 0.95rem;
+    padding: 8px;
+    margin-top: 16px;
   }
 
-  h2 {
-    font-size: 1.75rem;
+  .icon {
+    width: 24px;
   }
 }
+
 .formWrapper,
 .formWrapper * {
   transition-property: box-shadow, transform, background-color, border-color;

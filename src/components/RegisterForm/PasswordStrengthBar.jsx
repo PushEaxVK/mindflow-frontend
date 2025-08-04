@@ -45,7 +45,10 @@ const PasswordStrengthBar = ({ password, confirmPassword }) => {
         )}
         {confirmPassword && (
           <span
-            style={{ marginLeft: '1rem', color: isMatch ? 'green' : 'red' }}
+            style={{
+              marginLeft: '1rem',
+              color: isMatch ? 'var(--green)' : 'var(--red)',
+            }}
           >
             {isMatch ? 'Passwords match' : 'Passwords do not match'}
           </span>
