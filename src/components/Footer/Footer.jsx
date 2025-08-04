@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import Container from '../Container/Container';
 import css from './Footer.module.css'; // Import the CSS module for this component
 

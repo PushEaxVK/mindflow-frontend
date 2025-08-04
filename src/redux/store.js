@@ -1,5 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 import authReducer from './auth/slice';
+import photoReducer from './uploadPhoto/reducer';
 import modalReducer from './modal/slice';
 import {
   persistStore,
@@ -28,6 +29,7 @@ const persistedReducer = persistReducer(persistConfig, authReducer);
 export const store = configureStore({
   reducer: {
     auth: persistedReducer,
+    photo: photoReducer,
     modal: modalReducer,
     articlesList: articlesReducer,
     article: articleReducer,

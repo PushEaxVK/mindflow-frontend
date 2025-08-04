@@ -62,19 +62,11 @@ const App = () => {
           <Route path="authors/:id" element={<AuthorProfilePage />}>
             <Route
               path="my-articles"
-              element={
-                <PrivateRoute>
-                  <MyArticles />
-                </PrivateRoute>
-              }
+              element={<PrivateRoute component={<MyArticles />} />}
             />
             <Route
               path="saved-articles"
-              element={
-                <PrivateRoute>
-                  <SavedArticles />
-                </PrivateRoute>
-              }
+              element={<PrivateRoute component={<SavedArticles />} />}
             />
           </Route>
 
