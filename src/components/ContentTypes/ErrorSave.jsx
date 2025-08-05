@@ -22,7 +22,7 @@ const ErrorSave = () => {
     <div className={s.modal__wrapper}>
       <h2 className={s.modal__headline}>Error while saving</h2>
       <p className={s.modal__text}>
-        To save this article, you need to be authorize first
+        To save this article, you need to authorize first
       </p>
       <div className={s.modal__btns}>
         <button className={clsx(s.modal__btn, s.second)} onClick={handleLogin}>
