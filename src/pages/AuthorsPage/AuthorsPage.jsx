@@ -28,8 +28,12 @@ const AuthorsPage = () => {
       );
 
       const newAuthors = response.data?.data?.users || [];
+
+      const pagination = response.data?.data?.pagination || {};
       const totalPagesFromBackend =
-        response.data?.data?.pagination?.totalPages || 1;
+        pagination.totalPages ||
+        Math.ceil((pagination.totalItems?.total || 0) / LIMIT) ||
+        1;
 
       setAuthors((prev) => (reset ? newAuthors : [...prev, ...newAuthors]));
       setTotalPages(totalPagesFromBackend);
