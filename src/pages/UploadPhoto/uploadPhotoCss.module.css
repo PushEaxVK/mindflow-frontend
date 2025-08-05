@@ -36,8 +36,8 @@
 }
 
 .cameraIcon {
-    width: 116px;
-    height: 97px;
+    width: 69px;
+    height: 58px;
     fill: black;
     
 }
@@ -65,4 +65,32 @@
     border: 1px solid rgb(197, 216, 201);
     cursor: not-allowed;
     color: rgba(197, 216, 201, 1);
+}
+
+
+@media (min-width: 768px) {
+.boxContainer{
+    width: 522px;
+    height: 378 px;
+}
+
+
+.buttonSave {
+    width:458 px;
+    height:38 px;
+}
+
+}
+
+
+@media (min-width: 1440px) {
+.boxContainer {
+        width: 392px;
+        height:354 px;
+    }
+
+    .buttonSave {
+        width:328 px;
+        height:38 px;
+    }
 }
