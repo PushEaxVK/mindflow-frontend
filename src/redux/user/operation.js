@@ -20,13 +20,11 @@ export const fetchArticlesAuthorById = createAsyncThunk(
   'authorArticles/fetchByAuthorId',
   async ({ ownerId, page = 1 }, thunkAPI) => {
     try {
-      //console.log('Fetching articles for ownerId:', ownerId, 'page:', page);
       const response = await axios.get(`/users/${ownerId}/articles`, {
         params: { page },
       });
 
       const data = response.data.data;
-      //console.log('Received articles:', data.userArticles);
 
       return {
         articles: data.userArticles,

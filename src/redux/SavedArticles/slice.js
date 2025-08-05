@@ -25,7 +25,7 @@ const savedArticlesSlice = createSlice({
 
         state.savedArticlesPage = page;
         state.savedArticlesTotal = total;
-        state.savedArticlesPages = Math.ceil(total / perPage); // <-- підрахунок totalPages
+        state.savedArticlesPages = Math.ceil(total / perPage);
       })
       .addCase(fetchSavedArticles.rejected, (state, action) => {
         state.isLoading = false;
