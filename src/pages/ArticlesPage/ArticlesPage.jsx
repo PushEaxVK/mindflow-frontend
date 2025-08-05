@@ -3,7 +3,7 @@ import css from './ArticlesPage.module.css';
 import ArticlesDropdown from '../../components/ArticlesDropdown/ArticlesDropdown';
 import ArticlesList from '../../components/ArticlesList/ArticlesList';
 import LoadMore from '../../components/LoadMore/LoadMore';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchAllArticles } from '../../redux/articles/operation';
 import {
@@ -25,6 +25,7 @@ const ArticlesPage = () => {
   const currentPage = useSelector(selectPage);
   const totalPages = useSelector(selectPages);
   const [filter, setFilter] = useState('all'); // локальний фільтр
+  const lastArticleRef = useRef(null);
 
   const dispatch = useDispatch();
 
@@ -38,10 +39,13 @@ const ArticlesPage = () => {
 
   const handleLoadMore = () => {
     console.log('Load more clicked. Current page:', currentPage);
-    if (currentPage < totalPages) {
-      const nextPage = currentPage + 1;
-      console.log('Fetching next page:', nextPage, 'with filter:', filter);
-      dispatch(fetchAllArticles({ page: nextPage, filter }));
+    if (currentPage < totalPages && !loading) {
+      //  scroll-орієнтир
+      if (lastArticleRef.current) {
+        lastArticleRef.current.scrollIntoView({ behavior: 'auto' });
+      }
+
+      dispatch(fetchAllArticles({ page: currentPage + 1, filter }));
     }
   };
 
@@ -59,25 +63,27 @@ const ArticlesPage = () => {
             <ArticlesDropdown onChangeFilter={handleFilterChange} />
           </div>
         </div>
-        {loading ? (
-          <Loader />
-        ) : (
-          <>
-            <ArticlesList
-              icon={'icon-favorite-article'}
-              btnStyle={'FavoriteArticleNotSaved'}
-              queryArticles={articles}
-            />
 
-            {totalPages > 1 && currentPage < totalPages && (
-              <LoadMore
-                page={currentPage}
-                pages={totalPages}
-                onLoadMore={handleLoadMore}
-              />
-            )}
-          </>
-        )}
+        <>
+          <ArticlesList
+            icon={'icon-favorite-article'}
+            btnStyle={'FavoriteArticleNotSaved'}
+            queryArticles={articles}
+            lastArticleRef={lastArticleRef}
+          />
+          {loading && (
+            <div>
+              <p>Чекайте! Статті зараз завантажуються ....</p>
+            </div>
+          )}
+          {totalPages > 1 && currentPage < totalPages && !loading && (
+            <LoadMore
+              page={currentPage}
+              pages={totalPages}
+              onLoadMore={handleLoadMore}
+            />
+          )}
+        </>
       </Container>
     </section>
   );
