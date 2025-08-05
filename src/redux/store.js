@@ -21,7 +21,7 @@ const persistConfig = {
   key: 'root-auth',
   version: 1,
   storage,
-  whitelist: ['isLoggedIn', 'user'], 
+  whitelist: ['isLoggedIn', 'user'],
 };
 
 const persistedReducer = persistReducer(persistConfig, authReducer);
@@ -45,3 +45,5 @@ export const store = configureStore({
 });
 
 export const persistor = persistStore(store);
+
+import '../services/interceptors';
