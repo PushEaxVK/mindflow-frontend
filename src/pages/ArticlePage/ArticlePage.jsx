@@ -20,6 +20,8 @@ import css from '../ArticlePage/ArticlePage.module.css';
 import Loader from '../../components/Loader/Loader';
 import { clearArticle } from '../../redux/article/slice.js';
 import toast from 'react-hot-toast';
+import { selectIsLoggedIn } from '../../redux/auth/selectors.js';
+import { closeModal, toggleModal } from '../../redux/modal/slice.js';
 
 const ArticlePage = () => {
   const dispatch = useDispatch();
@@ -32,7 +34,7 @@ const ArticlePage = () => {
   const isLoading = useSelector(selectIsArticlesLoading);
 
   const userId = useSelector((state) => state.auth.user?.id);
-  const token = useSelector((state) => state.auth.accessToken);
+  const isLoggedIn = useSelector(selectIsLoggedIn);
 
   const [isSaved, setIsSaved] = useState(false);
 
@@ -59,6 +61,14 @@ const ArticlePage = () => {
     }
   }, [savedArticles, id]);
 
+  const handleErrorSaveModal = () => {
+    dispatch(closeModal());
+
+    setTimeout(() => {
+      dispatch(toggleModal('ErrorSave'));
+    }, 200);
+  };
+
   const handleClickReadMore = (listItem) => {
     dispatch(clearArticle());
     navigate(`/articles/${listItem._id}`);
@@ -71,8 +81,8 @@ const ArticlePage = () => {
       return;
     }
 
-    if (!token) {
-      toast.error('User not authenticated');
+    if (!isLoggedIn) {
+      handleErrorSaveModal();
       return;
     }
 
