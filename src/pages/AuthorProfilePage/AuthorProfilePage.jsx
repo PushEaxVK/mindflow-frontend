@@ -24,6 +24,7 @@ import {
 } from '../../redux/user/selectors.js';
 
 import { selectIsLoggedIn, selectUser } from '../../redux/auth/selectors.js';
+import UserAvatar from '../../components/UserAvatar/UserAvatar.jsx';
 
 const AuthorProfilePage = () => {
   const location = useLocation();
@@ -96,9 +97,18 @@ const AuthorProfilePage = () => {
           <li>
             <img
               className={css.imgProfile}
-              src={author?.avatarUrl}
+              src={
+                author?.avatarUrl ||
+                'https://res.cloudinary.com/dfoiy9rn5/image/upload/v1754398080/Avatar_VK_jwjvg7.jpg'
+              }
               alt={author?.name || 'Author avatar'}
             />
+            {/* // <UserAvatar
+            //   className={css.imgProfile}
+            //   src={author?.avatarUrl}
+            //   alt={author?.name || 'Author avatar'}
+            //   name={author?.name}
+            // /> */}
           </li>
           <li>
             <p className={css.userName}>{author?.name}</p>

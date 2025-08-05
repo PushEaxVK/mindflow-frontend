@@ -7,11 +7,12 @@
   justify-content: center;
   align-items: center;
   pointer-events: auto;
+  padding: 16px;
 }
 
 .modal {
   position: relative;
-  min-width: 361px;
+  max-width: 361px;
   height: auto;
   background-color: var(--light-green);
   border-radius: 32px;
@@ -52,7 +53,7 @@
 }
 @media screen and (min-width: 768px) {
   .modal {
-    width: 420px;
+    max-width: 420px;
     background-color: var(--light-green);
     border-radius: 32px;
     padding: 56px 32px 32px 32px;

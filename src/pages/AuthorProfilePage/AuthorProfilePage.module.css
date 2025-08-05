@@ -18,8 +18,8 @@
 
 .imgProfile {
   border-radius: 256px;
-  width: 137px;
-  height: 137px;
+  width: 124px;
+  height: 124px;
 }
 
 .userName {
@@ -58,6 +58,10 @@
 }
 
 @media only screen and (min-width: 768px) {
+  .imgProfile {
+    width: 137px;
+    height: 137px;
+  }
 }
 
 @media only screen and (min-width: 1440px) {
