@@ -46,6 +46,9 @@
 .articleDateName {
   font-weight: 400;
 }
+.articleAuthorName {
+  text-decoration: underline;
+}
 .interestedBlockTitle {
   font-weight: 700;
   font-size: 24px;
