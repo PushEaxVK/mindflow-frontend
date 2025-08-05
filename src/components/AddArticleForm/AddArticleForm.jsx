@@ -34,11 +34,22 @@ export const AddArticleForm = () => {
   const formik = useFormik({
     initialValues: {
       title: '',
+      desc: '',
       article: '',
     },
     validationSchema: Yup.object({
-      title: Yup.string().required('Title is required'),
-      article: Yup.string().required('Article text is required'),
+      title: Yup.string()
+        .min(3, 'Title must be at least 3 characters')
+        .max(48, 'Title must not exceed 48 characters')
+        .required('Title is required'),
+      desc: Yup.string()
+        .min(5, 'Description must be at least 5 characters')
+        .max(100, 'Description must not exceed 100 characters')
+        .required('Description is required'),
+      article: Yup.string()
+        .min(100, 'Article must be at least 100 characters')
+        .max(4000, 'Article must not exceed 4000 characters')
+        .required('Article text is required'),
     }),
 
     onSubmit: async (values) => {
@@ -54,6 +65,7 @@ export const AddArticleForm = () => {
 
       const formData = new FormData();
       formData.append('title', values.title);
+      formData.append('desc', values.desc);
       formData.append('article', values.article);
       formData.append('date', selectedDate.toISOString());
       formData.append('ownerId', user._id);
@@ -85,6 +97,7 @@ export const AddArticleForm = () => {
         const { data } = await axios.get(`/articles/${articleId}`);
         setValues({
           title: data.title,
+          desc: data.desc || '',
           article: data.article,
         });
         setSelectedDate(new Date(data.createdAt || data.date));
@@ -122,7 +135,10 @@ export const AddArticleForm = () => {
 
   const editor = useEditor({
     extensions: [
-      StarterKit.configure({ link: false }),
+      StarterKit.configure({
+        link: false,
+        underline: false,
+      }),
       Link.configure({
         openOnClick: false,
         HTMLAttributes: {
@@ -140,14 +156,23 @@ export const AddArticleForm = () => {
     ],
     content: formik.values.article,
     onUpdate: ({ editor }) => {
-      formik.setFieldValue('article', editor.getHTML());
+      const html = editor.getHTML();
+      formik.setFieldValue('article', html);
+
+      // Витягуємо чистий текст без HTML, щоб згенерувати desc
+      const tempDiv = document.createElement('div');
+      tempDiv.innerHTML = html;
+      const plainText = tempDiv.textContent || tempDiv.innerText || '';
+      const excerpt = plainText.trim().slice(0, 100);
+
+      formik.setFieldValue('desc', excerpt);
+
       resizeTextarea();
       const proseMirror = textareaRef.current?.querySelector('.ProseMirror');
       if (!proseMirror) return;
       proseMirror.classList.toggle('is-empty', editor.isEmpty);
     },
   });
-
   const updateFloatingToolbar = useCallback(() => {
     if (!editor) return;
     const selection = window.getSelection();
@@ -269,42 +294,55 @@ export const AddArticleForm = () => {
               <div className={styles.error}>{formik.errors.title}</div>
             )}
           </label>
-        </div>
 
-        {/* Static Toolbar */}
+          <input type="hidden" name="desc" value={formik.values.desc} />
+        </div>
+        {/* Toolbar */}
         <div className={styles.toolbar}>
-          <button type="button" onClick={toggleBold}>
+          <button type="button" onClick={toggleBold} aria-label="Bold">
             <b>B</b>
           </button>
-          <button type="button" onClick={toggleItalic}>
+          <button type="button" onClick={toggleItalic} aria-label="Italic">
             <i>I</i>
           </button>
-          <button type="button" onClick={toggleUnderline}>
+          <button
+            type="button"
+            onClick={toggleUnderline}
+            aria-label="Underline"
+          >
             <u>U</u>
           </button>
-          <button type="button" onClick={toggleStrike}>
+          <button type="button" onClick={toggleStrike} aria-label="Strike">
             <s>S</s>
           </button>
-          <button type="button" onClick={toggleBulletList}>
+          <button
+            type="button"
+            onClick={toggleBulletList}
+            aria-label="Bullet List"
+          >
             • List
           </button>
-          <button type="button" onClick={toggleOrderedList}>
+          <button
+            type="button"
+            onClick={toggleOrderedList}
+            aria-label="Ordered List"
+          >
             1. List
           </button>
-          <button type="button" onClick={setLink}>
+          <button type="button" onClick={setLink} aria-label="Insert Link">
             🔗
           </button>
         </div>
 
-        {/* Floating Toolbar */}
+        {/* Floating toolbar */}
         {floatingVisible && (
           <div
-            ref={floatingToolbarRef}
             className={styles.floatingToolbar}
             style={{
               top: toolbarPosition.top,
               left: toolbarPosition.left,
             }}
+            ref={floatingToolbarRef}
           >
             <button type="button" onClick={toggleBold}>
               <b>B</b>
@@ -318,7 +356,7 @@ export const AddArticleForm = () => {
             <button type="button" onClick={toggleStrike}>
               <s>S</s>
             </button>
-            <button type="button" onClick={setLink}>
+            <button type="button" onClick={setLink} aria-label="Insert Link">
               🔗
             </button>
           </div>

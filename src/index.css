@@ -40,18 +40,26 @@ body {
   background-color: var(--white);
 }
 
+.wrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+}
+
 /* Placeholder style для Tiptap */
 .is-editor-empty::before {
   content: attr(data-placeholder);
-   color: #595d62;
+  color: #595d62;
   font: 400 18px 'Manrope', sans-serif;
   float: left;
   height: 0;
   pointer-events: none;
   opacity: 0.7;
 }
-
-
 
 .tiptap.ProseMirror {
   position: relative;
@@ -80,7 +88,6 @@ body {
 .tiptap.ProseMirror p.is-editor-empty:first-child > br {
   display: none;
 }
-
 
 .ProseMirror:has(p.is-editor-empty:first-child:only-child)::before {
   content: attr(data-placeholder);

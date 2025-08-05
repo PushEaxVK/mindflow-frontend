@@ -1,0 +1,10 @@
+.title {
+  font-weight: 700;
+  font-size: 40px;
+  color: #000;
+
+  margin-bottom: 16px;
+}
+.authorsList {
+  margin-bottom: 24px;
+}
