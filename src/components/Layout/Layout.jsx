@@ -14,13 +14,15 @@ const Layout = () => {
   const type = useSelector(selectModalType);
   return (
     <>
-      <AppBar />
-      {isOpen && type === 'mobileMenu' && <ModalMenu />}
-      <Modal />
-      <main>
-        <Outlet />
-      </main>
-      <Footer />
+      <div className="wrapper">
+        <AppBar />
+        {isOpen && type === 'mobileMenu' && <ModalMenu />}
+        <Modal />
+        <main>
+          <Outlet />
+        </main>
+        <Footer />
+      </div>
     </>
   );
 };
