@@ -1,0 +1,12 @@
+.boxContainer{
+    display:flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 32px;
+    width: 360;
+        height: 378;
+        border-radius: 32px;
+        gap: 20px;
+        opacity: 1;
+
+}
