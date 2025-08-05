@@ -127,7 +127,7 @@ const ArticlePage = () => {
 
         <div className={css.secondBlock}>
           <p className={css.article}>
-            {article.article.split('\n').map((line, index) => (
+            {article.article.split('/n').map((line, index) => (
               <React.Fragment key={index}>
                 {line}
                 <br />
@@ -144,7 +144,7 @@ const ArticlePage = () => {
                     {article.ownerId.name}
                   </span>
                 ) : (
-                  <span>Unknown</span>
+                  <span className={css.articleAuthorName}>Unknown</span>
                 )}
               </p>
               <p className={css.articleDate}>
