@@ -1,32 +1,32 @@
 import { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { refreshUser } from '../redux/auth/operations';
+import { selectIsLoggedIn } from '../redux/auth/selectors';
+import { clearAuth } from '../redux/auth/slice';
 
 export const useAuthInitializer = () => {
   const dispatch = useDispatch();
+  const isLoggedIn = useSelector(selectIsLoggedIn);
   const [isInitialized, setIsInitialized] = useState(false);
 
   useEffect(() => {
     const init = async () => {
-      const hasCookies =
-        document.cookie.includes('refreshToken') ||
-        document.cookie.includes('sessionId');
-
-      if (hasCookies) {
+      if (isLoggedIn) {
         try {
           await dispatch(refreshUser()).unwrap();
-        } catch {
-          //auth slice
+          console.log('Token refreshed successfully');
+        } catch (err) {
+          console.log('Token refresh failed:', err);
+          dispatch(clearAuth());
         }
       }
-
       setIsInitialized(true);
     };
 
     if (!isInitialized) {
       init();
     }
-  }, [dispatch, isInitialized]);
+  }, [dispatch, isInitialized, isLoggedIn]);
 
   return isInitialized;
 };

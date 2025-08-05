@@ -3,6 +3,7 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
 import { login } from '../../redux/auth/operations';
 import s from './LoginForm.module.css';
 
@@ -27,6 +28,13 @@ const LoginForm = () => {
   };
 
   const handleSubmit = async (values, { setSubmitting }) => {
+    const hasEmptyFields = !values.email.trim() || !values.password.trim();
+    if (hasEmptyFields) {
+      toast.error('Please fill in all required fields');
+      setSubmitting(false);
+      return;
+    }
+
     try {
       const result = await dispatch(login(values));
 
@@ -34,7 +42,7 @@ const LoginForm = () => {
         navigate('/');
       }
     } catch {
-      // Redux slice with toast notifications
+      // Redux slice handles toast notifications
     } finally {
       setSubmitting(false);
     }
@@ -130,7 +138,7 @@ const LoginForm = () => {
             </button>
 
             <div className={s.linkWrapper}>
-              <span>Don&apos;t have an account?</span>
+              <span>Don't have an account?</span>
               <Link to="/register" className={s.link}>
                 Register
               </Link>
