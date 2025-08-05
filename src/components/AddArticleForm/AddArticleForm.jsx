@@ -68,7 +68,7 @@ export const AddArticleForm = () => {
       formData.append('desc', values.desc);
       formData.append('article', values.article);
       formData.append('date', selectedDate.toISOString());
-      formData.append('ownerId', user._id);
+      formData.append('ownerId', user.id);
       if (image) formData.append('img', image);
 
       try {
@@ -77,7 +77,7 @@ export const AddArticleForm = () => {
           : await axios.post('/articles/create', formData);
 
         toast.success('Article published successfully!');
-        const id = res.data._id?.$oid || res.data._id || res.data.id;
+        const id = res.data.data._id;
         navigate(`/articles/${id}`);
       } catch (error) {
         toast.error(
