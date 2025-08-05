@@ -7,6 +7,9 @@ const savedArticlesSlice = createSlice({
     items: [],
     isLoading: false,
     error: null,
+    savedArticlesPage: 1,
+    savedArticlesPages: 1,
+    savedArticlesTotal: 0,
   },
   extraReducers: (builder) => {
     builder
@@ -15,8 +18,14 @@ const savedArticlesSlice = createSlice({
         state.error = null;
       })
       .addCase(fetchSavedArticles.fulfilled, (state, action) => {
+        const { articles = [], page, total, perPage } = action.payload;
+
         state.isLoading = false;
-        state.items = action.payload;
+        state.items = page === 1 ? articles : [...state.items, ...articles];
+
+        state.savedArticlesPage = page;
+        state.savedArticlesTotal = total;
+        state.savedArticlesPages = Math.ceil(total / perPage); // <-- підрахунок totalPages
       })
       .addCase(fetchSavedArticles.rejected, (state, action) => {
         state.isLoading = false;

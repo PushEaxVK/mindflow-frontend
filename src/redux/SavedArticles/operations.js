@@ -3,12 +3,26 @@ import axios from 'axios';
 
 export const fetchSavedArticles = createAsyncThunk(
   'savedArticles/fetchAll',
-  async (userId, thunkAPI) => {
+  async ({ userId, page = 1, limit = 6 }, thunkAPI) => {
     try {
-      const response = await axios.get(`/users/${userId}/saved-articles`, {
-        withCredentials: true,
-      });
-      return response.data.data.articles;
+      const response = await axios.get(
+        `/users/${userId}/saved-articles?limit=${limit}&page=${page}`,
+        {
+          withCredentials: true,
+        }
+      );
+      //  return response.data.data.articles;
+      const data = response.data?.data;
+
+      const articles = data?.articles || [];
+      const pagination = data?.pagination?.totalItems || {};
+
+      return {
+        articles,
+        page: pagination.page || 1,
+        total: pagination.total || articles.length,
+        perPage: pagination.perPage || 10,
+      };
     } catch (error) {
       return thunkAPI.rejectWithValue(
         error.response?.data?.message || error.message
