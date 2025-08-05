@@ -11,7 +11,6 @@ export const fetchSavedArticles = createAsyncThunk(
           withCredentials: true,
         }
       );
-      //  return response.data.data.articles;
       const data = response.data?.data;
 
       const articles = data?.articles || [];

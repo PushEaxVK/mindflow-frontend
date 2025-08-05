@@ -6,7 +6,6 @@ const initialState = {
   loading: false,
   error: null,
 
-  // Додано для fetchArticlesAuthorById
   authorArticles: [],
   authorArticlesPage: 1,
   authorArticlesPages: 1,
@@ -20,7 +19,6 @@ const authorSlice = createSlice({
   initialState,
 
   extraReducers: (builder) => {
-    // Завантаження автора
     builder
       .addCase(fetchAuthorById.pending, (state) => {
         state.loading = true;
@@ -35,7 +33,6 @@ const authorSlice = createSlice({
         state.error = action.payload;
       });
 
-    // Завантаження статей автора
     builder
       .addCase(fetchArticlesAuthorById.pending, (state) => {
         state.loadingArticles = true;
@@ -50,7 +47,7 @@ const authorSlice = createSlice({
 
         state.authorArticlesPage = page;
         state.authorArticlesTotal = total;
-        state.authorArticlesPages = Math.ceil(total / perPage); // <-- підрахунок totalPages
+        state.authorArticlesPages = Math.ceil(total / perPage);
       })
       .addCase(fetchArticlesAuthorById.rejected, (state, action) => {
         state.loadingArticles = false;
