@@ -8,8 +8,6 @@ const ArticlesList = ({
   queryArticles = [],
   lastArticleRef,
 }) => {
-  // console.log(queryArticles);
-
   return (
     <>
       <ul className={css.articlesList}>
@@ -20,7 +18,7 @@ const ArticlesList = ({
               <ArticlesItem
                 icon={icon}
                 btnStyle={btnStyle}
-                key={`${item._id}-${index}`} // комбінуємо _id та індекс
+                key={`${item._id}-${index}`}
                 item={item}
                 ref={isLast ? lastArticleRef : null}
               />
@@ -32,12 +30,3 @@ const ArticlesList = ({
 };
 
 export default ArticlesList;
-
-//  <ArticlesList
-//       icon={'icon-favorite-article'}
-//       btnStyle={'FavoriteArticle'}
-//     /> для іконки saved прописуємо ці пропси
-
-//  <ArticlesList
-//     icon={'icon-edit-article'} btnStyle={'EditArticle'}
-//     /> для іконки edit прописуємо ці пропси

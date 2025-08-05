@@ -17,7 +17,6 @@ import Placeholder from '@tiptap/extension-placeholder';
 import Underline from '@tiptap/extension-underline';
 
 import styles from './AddArticleForm.module.css';
-import descStyles from './DescLabel.module.css';  // Окремий стиль для дескриптора
 
 export const AddArticleForm = () => {
   const { id: articleId } = useParams();
@@ -69,7 +68,7 @@ export const AddArticleForm = () => {
       formData.append('desc', values.desc);
       formData.append('article', values.article);
       formData.append('date', selectedDate.toISOString());
-      formData.append('ownerId', user._id);
+      formData.append('ownerId', user.id);
       if (image) formData.append('img', image);
 
       try {
@@ -78,7 +77,7 @@ export const AddArticleForm = () => {
           : await axios.post('/articles/create', formData);
 
         toast.success('Article published successfully!');
-        const id = res.data._id?.$oid || res.data._id || res.data.id;
+        const id = res.data.data._id;
         navigate(`/articles/${id}`);
       } catch (error) {
         toast.error(
@@ -136,10 +135,10 @@ export const AddArticleForm = () => {
 
   const editor = useEditor({
     extensions: [
-    StarterKit.configure({
-      link: false,
-      underline: false, 
-    }),
+      StarterKit.configure({
+        link: false,
+        underline: false,
+      }),
       Link.configure({
         openOnClick: false,
         HTMLAttributes: {
@@ -157,14 +156,23 @@ export const AddArticleForm = () => {
     ],
     content: formik.values.article,
     onUpdate: ({ editor }) => {
-      formik.setFieldValue('article', editor.getHTML());
+      const html = editor.getHTML();
+      formik.setFieldValue('article', html);
+
+      // Витягуємо чистий текст без HTML, щоб згенерувати desc
+      const tempDiv = document.createElement('div');
+      tempDiv.innerHTML = html;
+      const plainText = tempDiv.textContent || tempDiv.innerText || '';
+      const excerpt = plainText.trim().slice(0, 100);
+
+      formik.setFieldValue('desc', excerpt);
+
       resizeTextarea();
       const proseMirror = textareaRef.current?.querySelector('.ProseMirror');
       if (!proseMirror) return;
       proseMirror.classList.toggle('is-empty', editor.isEmpty);
     },
   });
-
   const updateFloatingToolbar = useCallback(() => {
     if (!editor) return;
     const selection = window.getSelection();
@@ -287,35 +295,43 @@ export const AddArticleForm = () => {
             )}
           </label>
 
-          {/* Окремий стиль для desc */}
-          <label className={descStyles.descLabel}>
-            <span>Description:</span>
-            <input
-              name="desc"
-              className={styles.input}
-              placeholder="Enter description"
-              value={formik.values.desc}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-            />
-            {formik.touched.desc && formik.errors.desc && (
-              <div className={styles.error}>{formik.errors.desc}</div>
-            )}
-          </label>
+          <input type="hidden" name="desc" value={formik.values.desc} />
         </div>
-
-        <div className={styles.datePickerWrapper}>
-          <DatePicker
-            selected={selectedDate}
-            onChange={(date) => setSelectedDate(date)}
-            dateFormat="dd.MM.yyyy"
-          />
-        </div>
-      </div>
-
-      <div className={styles.rightColumn}>
-        <div ref={textareaRef} className={styles.editorWrapper}>
-          <EditorContent editor={editor} />
+        {/* Toolbar */}
+        <div className={styles.toolbar}>
+          <button type="button" onClick={toggleBold} aria-label="Bold">
+            <b>B</b>
+          </button>
+          <button type="button" onClick={toggleItalic} aria-label="Italic">
+            <i>I</i>
+          </button>
+          <button
+            type="button"
+            onClick={toggleUnderline}
+            aria-label="Underline"
+          >
+            <u>U</u>
+          </button>
+          <button type="button" onClick={toggleStrike} aria-label="Strike">
+            <s>S</s>
+          </button>
+          <button
+            type="button"
+            onClick={toggleBulletList}
+            aria-label="Bullet List"
+          >
+            • List
+          </button>
+          <button
+            type="button"
+            onClick={toggleOrderedList}
+            aria-label="Ordered List"
+          >
+            1. List
+          </button>
+          <button type="button" onClick={setLink} aria-label="Insert Link">
+            🔗
+          </button>
         </div>
 
         {/* Floating toolbar */}
@@ -325,9 +341,6 @@ export const AddArticleForm = () => {
             style={{
               top: toolbarPosition.top,
               left: toolbarPosition.left,
-              position: 'absolute',
-              transform: 'translate(-50%, -100%)',
-              zIndex: 10,
             }}
             ref={floatingToolbarRef}
           >
@@ -343,18 +356,46 @@ export const AddArticleForm = () => {
             <button type="button" onClick={toggleStrike}>
               <s>S</s>
             </button>
-            <button type="button" onClick={toggleBulletList}>• List</button>
-            <button type="button" onClick={toggleOrderedList}>1. List</button>
-            <button type="button" onClick={setLink}>Link</button>
+            <button type="button" onClick={setLink} aria-label="Insert Link">
+              🔗
+            </button>
           </div>
         )}
 
-        <button
-          type="submit"
-          className={styles.submitButton}
-        >
-          {isEditing ? 'Update Article' : 'Publish Article'}
+        {/* Editor */}
+        <div className={styles.articleWrapper} ref={textareaRef}>
+          <span id="articleLabel">Article</span>
+          <EditorContent
+            editor={editor}
+            aria-labelledby="articleLabel"
+            data-placeholder="Enter the text"
+            className="ProseMirror"
+            style={{
+              height: MIN_TEXTAREA_HEIGHT + 'px',
+              overflow: 'hidden',
+              transition: 'height 0.15s ease-in-out',
+            }}
+          />
+          {formik.touched.article && formik.errors.article && (
+            <div className={styles.error}>{formik.errors.article}</div>
+          )}
+        </div>
+
+        <button type="submit" className={styles.submitBtn}>
+          {isEditing ? 'Publish' : 'Publish Article'}
         </button>
+      </div>
+
+      <div className={styles.rightColumn}>
+        <label className={styles.pickerDate}>
+          Date:
+          <DatePicker
+            selected={selectedDate}
+            onChange={(date) => setSelectedDate(date)}
+            dateFormat="dd.MM.yyyy"
+            placeholderText="Select date"
+          />
+        </label>
       </div>
     </form>
   );

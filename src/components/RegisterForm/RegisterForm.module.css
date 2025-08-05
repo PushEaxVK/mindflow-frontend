@@ -53,7 +53,7 @@ h2 {
   font-weight: 700;
   color: var(--black);
   text-align: center;
-  margin: 48px 0 20px;
+  margin: 10px 0 20px;
 }
 
 .description {
@@ -73,14 +73,14 @@ h2 {
   flex-direction: column;
   width: 100%;
   max-width: 296px;
-  gap: 8px; /* 🟢 збільшено gap між полями */
+  gap: 8px;
 }
 
 .fieldWrapper {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 6px;
+  gap: 4px;
   width: 100%;
 }
 
@@ -175,9 +175,10 @@ input:focus {
   font-size: var(--font-size-base);
   font-weight: 700;
   font-family: var(--font-family);
-  margin-top: 12px; /* 🟢 Зменшено верхній відступ */
-  margin-bottom: 16px; /* 🟢 Зменшено нижній */
-  padding: 10px;
+  margin-top: 12px;
+  margin-bottom: 20px;
+  padding: 8px;
+  height: 38px;
   transition: transform 0.25s var(--transition-curve),
     background-color 0.25s ease, box-shadow 0.25s ease;
 }
@@ -232,7 +233,6 @@ input:focus {
   margin: 0;
   padding-top: 0;
   line-height: 1.5;
-  padding-bottom: 32px;
 }
 
 .login a {
@@ -245,8 +245,6 @@ input:focus {
 .login a:hover {
   opacity: 0.8;
 }
-
-/* ---------- MEDIA ---------- */
 
 @media screen and (min-width: 768px) {
   .formWrapper {
@@ -283,11 +281,6 @@ input:focus {
   .inputWithIcon,
   input {
     max-width: 328px;
-  }
-
-  button[type='submit'] {
-    padding: 8px;
-    margin-top: 16px;
   }
 
   .icon {

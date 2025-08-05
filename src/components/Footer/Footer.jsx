@@ -7,8 +7,6 @@ import { useSelector } from 'react-redux';
 const Footer = () => {
   const user = useSelector(selectUser);
 
-  const userUrl = `/authors/${user.id}`;
-
   return (
     <footer className={css.footer}>
       <Container noVerticalPadding>

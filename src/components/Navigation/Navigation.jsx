@@ -13,13 +13,13 @@ const Navigation = () => {
 
   return (
     <nav className={s.nav}>
-      <NavLink className={setActiveClass} to="/">
+      <NavLink className={setActiveClass} to="/" end>
         Home
       </NavLink>
-      <NavLink className={setActiveClass} to="/articles">
+      <NavLink className={setActiveClass} to="/articles" end>
         Articles
       </NavLink>
-      <NavLink className={setActiveClass} to="/authors">
+      <NavLink className={setActiveClass} to="/authors" end>
         Creators
       </NavLink>
       {isLoggedIn && (

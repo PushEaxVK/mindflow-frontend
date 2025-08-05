@@ -1,6 +1,8 @@
 import axios from 'axios';
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://mindflow-backend-iwk7.onrender.com';
+const API_BASE_URL =
+  import.meta.env.VITE_API_BASE_URL ||
+  'https://mindflow-backend-iwk7.onrender.com';
 
 axios.defaults.baseURL = API_BASE_URL;
 axios.defaults.withCredentials = true;
@@ -10,15 +12,13 @@ export const setAuthHeader = (token) => {
 };
 
 export const removeAuthHeader = () => {
-  axios.defaults.headers.common.Authorization = '';
+  delete axios.defaults.headers.common.Authorization;
 };
 
-const transformAuthResponse = (backendData) => {
-  return {
-    user: backendData.user,
-    accessToken: backendData.accessToken,
-  };
-};
+const transformAuthResponse = (backendData) => ({
+  user: backendData.user,
+  accessToken: backendData.accessToken,
+});
 
 export const signup = async ({ name, email, password }) => {
   const response = await axios.post('/auth/register', {
@@ -26,7 +26,6 @@ export const signup = async ({ name, email, password }) => {
     email,
     password,
   });
-
   const transformedData = transformAuthResponse(response.data.data);
   setAuthHeader(transformedData.accessToken);
   return { data: transformedData };
@@ -47,10 +46,8 @@ export const logout = async () => {
 
 export const refresh = async () => {
   const response = await axios.post('/auth/refresh');
-
-  const responseData = response.data?.data;
-
-  if (responseData && responseData.accessToken) {
+  const responseData = response.data?.data || response.data;
+  if (responseData?.accessToken) {
     const transformedData = transformAuthResponse(responseData);
     setAuthHeader(transformedData.accessToken);
     return { data: transformedData };
@@ -60,12 +57,7 @@ export const refresh = async () => {
 };
 
 const serviceApi = {
-  auth: {
-    signup,
-    login,
-    logout,
-    refresh,
-  },
+  auth: { signup, login, logout, refresh },
 };
 
 export default serviceApi;

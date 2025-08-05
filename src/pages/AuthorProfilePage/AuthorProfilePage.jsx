@@ -2,7 +2,7 @@ import ArticlesList from '../../components/ArticlesList/ArticlesList';
 import css from './AuthorProfilePage.module.css';
 import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 import Container from '../../components/Container/Container';
-import { useLocation, useMatch, useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import clsx from 'clsx';
 import LoadMore from '../../components/LoadMore/LoadMore';
 import { useEffect } from 'react';
@@ -20,15 +20,13 @@ import {
   selectAuthorArticlesPages,
   selectAuthorArticlesTotal,
   selectAuthorArticlesLoading,
-  selectAuthorArticlesError,
 } from '../../redux/user/selectors.js';
 
 import { selectIsLoggedIn, selectUser } from '../../redux/auth/selectors.js';
+import UserAvatar from '../../components/UserAvatar/UserAvatar.jsx';
 
 const AuthorProfilePage = () => {
   const location = useLocation();
-  //const match = useMatch('/authors/:id');
-  //const isBaseProfile = match && location.pathname === match.pathname;
 
   const buildLinkClass = ({ isActive }) => {
     return clsx(css.tabItem, isActive && css.active);
@@ -41,8 +39,6 @@ const AuthorProfilePage = () => {
   const authorError = useSelector(selectAuthorError);
   const authorArticlesLoading = useSelector(selectAuthorArticlesLoading);
 
-  // Статті автора
-
   const authorArticles = useSelector(selectAuthorArticles);
 
   const currentPage = useSelector(selectAuthorArticlesPage);
@@ -50,19 +46,11 @@ const AuthorProfilePage = () => {
 
   const totalArticles = useSelector(selectAuthorArticlesTotal);
 
-  ///////////////////////////////////
-
   const OwnProfile = useSelector(selectUser);
   const isLoggedIn = useSelector(selectIsLoggedIn);
 
-  // console.log('OwnProfile', OwnProfile.id);
-
-  ///////////////////////////////////////////
-
   const author = authorData?.data || {};
   const articles = authorArticles || [];
-
-  //console.log('Інформація про :', articles);
 
   const { id: ownerId } = useParams();
   const navigate = useNavigate();
@@ -73,10 +61,8 @@ const AuthorProfilePage = () => {
     if (!ownerId) return;
 
     dispatch(fetchAuthorById({ ownerId }));
-
-    if (currentPage === 1) return;
-    dispatch(fetchArticlesAuthorById({ ownerId, page: 1 }));
-  }, [ownerId, dispatch]);
+    dispatch(fetchArticlesAuthorById({ ownerId, page: currentPage }));
+  }, [ownerId, currentPage, dispatch]);
 
   useEffect(() => {
     if (isOwnProfile && location.pathname === `/authors/${ownerId}`) {
@@ -90,19 +76,23 @@ const AuthorProfilePage = () => {
     }
   };
 
-  // console.log(articles);
-
   return (
     <section className={css.section_AuthorProfilePage}>
       <Container>
         <h1 className={css.profileTitle}>My Profile</h1>
         <ul className={css.profileList}>
           <li>
-            <img
-              className={css.imgProfile}
-              src={author?.avatarUrl}
-              alt={author?.name || 'Author avatar'}
-            />
+            {author?.avatarUrl && author.avatarUrl.trim() !== '' ? (
+              <img
+                src={author.avatarUrl}
+                alt={author.name || 'Author avatar'}
+                className={css.imgProfile}
+              />
+            ) : (
+              <div className={css.avatarLetter}>
+                {author?.name?.[0]?.toUpperCase() || '?'}
+              </div>
+            )}
           </li>
           <li>
             <p className={css.userName}>{author?.name}</p>
@@ -122,7 +112,6 @@ const AuthorProfilePage = () => {
                 Saved Articles
               </NavLink>
             </nav>
-
             <Outlet />
           </>
         )}

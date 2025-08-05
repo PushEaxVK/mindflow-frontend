@@ -1,5 +1,4 @@
-import serviceApi from '../../services/api';
-import { removeAuthHeader } from '../../services/api';
+import serviceApi, { removeAuthHeader } from '../../services/api';
 import { createThunk } from '../createThunk';
 
 export const register = createThunk('auth/register', async (body) => {
@@ -20,9 +19,8 @@ export const refreshUser = createThunk('auth/refresh', async () => {
   try {
     const response = await serviceApi.auth.refresh();
     return response.data;
-  } catch (error) {
+  } catch (err) {
     removeAuthHeader();
-    localStorage.removeItem('accessToken');
-    throw error;
+    throw err;
   }
 });
