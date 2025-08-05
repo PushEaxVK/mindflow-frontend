@@ -52,6 +52,7 @@ const SavedArticles = () => {
         queryArticles={savedArticles}
         icon="icon-favorite-article"
         btnStyle="FavoriteArticle"
+        lastArticleRef={lastArticleRef}
       />
       {isLoading && (
         <div>
