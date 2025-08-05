@@ -1,6 +1,5 @@
 import serviceApi, { removeAuthHeader } from '../../services/api';
 import { createThunk } from '../createThunk';
-import '../../services/interceptors';
 
 export const register = createThunk('auth/register', async (body) => {
   return serviceApi.auth.signup(body);
