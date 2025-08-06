@@ -1,15 +1,23 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { uploadPhoto } from '../../redux/uploadPhoto/photoSlice';
 import { toast } from 'react-toastify';
 import styles from './uploadPhotoCss.module.css';
 import { ReactComponent as CameraIcon } from '../../SVG/camera.svg';
+import { useNavigate } from 'react-router-dom';
 
 const UploadPhoto = () => {
+   const navigate = useNavigate();
   const [selectedFile, setSelectedFile] = useState(null);
 
   const dispatch = useDispatch();
   const { loading, photoUrl } = useSelector(state => state.photo);
+
+  useEffect(() => {
+    if (photoUrl) {
+      navigate('/'); 
+    }
+  }, [photoUrl, navigate]);
 
   const handleFileChange = (event) => {
     setSelectedFile(event.target.files[0]);
