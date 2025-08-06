@@ -45,8 +45,8 @@ const ArticlesItem = forwardRef(function ArticlesItem(
         <p className={css.authorArticle}>{item.ownerId?.name}</p>
         <p className={css.title}>{item.title}</p>
         <p className={css.desc}>
-          {item.desc?.length > 180
-            ? item.desc.slice(0, 180) + '...'
+          {item.desc?.length > 100
+            ? item.desc.slice(0, 100) + '...'
             : item.desc || 'No description'}
         </p>
       </div>
