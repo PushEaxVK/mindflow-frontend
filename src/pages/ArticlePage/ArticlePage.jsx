@@ -110,7 +110,6 @@ const ArticlePage = () => {
 
   if (isLoading) return <Loader />;
   if (!article) return <NotFound />;
-  console.log('isSaved:', isSaved);
 
   return (
     <section className={css.section}>

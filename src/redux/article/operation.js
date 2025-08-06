@@ -6,7 +6,6 @@ export const fetchArticleById = createThunk(
   'articles/fetchById',
   async (id) => {
     const response = await axios.get(`/articles/${id}`);
-    console.log('ARCTICLE', response.data);
     return response.data;
   }
 );
@@ -24,8 +23,6 @@ export const saveArticle = createAsyncThunk(
       await axios.post(`/users/${userId}/saved-articles/${articleId}`, null, {
         headers: { Authorization: `Bearer ${token}` },
       });
-      console.log('SAVE', articleId);
-
       return { articleId };
     } catch (error) {
       return thunkAPI.rejectWithValue(
@@ -48,7 +45,6 @@ export const unsaveArticle = createAsyncThunk(
       await axios.delete(`/users/${userId}/saved-articles/${articleId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
-      console.log('UNSAVE', articleId);
       return { articleId };
     } catch (error) {
       return thunkAPI.rejectWithValue(
@@ -74,7 +70,6 @@ export const fetchSavedArticles = createAsyncThunk(
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log('SAVED ARTICLES', res.data.data);
       return res.data.data; // { articles, pagination }
     } catch (err) {
       return thunkAPI.rejectWithValue(
