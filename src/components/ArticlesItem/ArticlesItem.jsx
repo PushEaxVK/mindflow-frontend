@@ -24,10 +24,10 @@ const ArticlesItem = forwardRef(function ArticlesItem(
       dispatch(openModal('ErrorSave'));
       return;
     }
-    const action = isSaved ? 'REMOVE (DELETE)' : 'SAVE (POST)';
-    console.log(`Toggle Save Clicked - Aktion: ${action}`);
-    console.log('Artikel-ID:', item._id);
-    console.log('User-ID:', user.id);
+    //const action = isSaved ? 'REMOVE (DELETE)' : 'SAVE (POST)';
+    //console.log(`Toggle Save Clicked - Aktion: ${action}`);
+    //console.log('Artikel-ID:', item._id);
+    //console.log('User-ID:', user.id);
 
     dispatch(
       toggleSaveArticle({
@@ -45,8 +45,8 @@ const ArticlesItem = forwardRef(function ArticlesItem(
         <p className={css.authorArticle}>{item.ownerId?.name}</p>
         <p className={css.title}>{item.title}</p>
         <p className={css.desc}>
-          {item.desc?.length > 180
-            ? item.desc.slice(0, 180) + '...'
+          {item.desc?.length > 100
+            ? item.desc.slice(0, 100) + '...'
             : item.desc || 'No description'}
         </p>
       </div>
@@ -62,6 +62,7 @@ const ArticlesItem = forwardRef(function ArticlesItem(
           className={css[`btn${btnStyle}`]}
           type="button"
           onClick={handleToggleSave}
+          aria-label="press button"
         >
           <svg className={css[`svgIcon${btnStyle}`]}>
             <use href={`/icons-profileArticles.svg#${icon}`}></use>

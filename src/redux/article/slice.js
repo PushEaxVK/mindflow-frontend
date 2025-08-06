@@ -2,14 +2,13 @@ import { createSlice } from '@reduxjs/toolkit';
 import {
   fetchArticleById,
   fetchSavedArticles,
-  fetchThreePopularArticles,
   saveArticle,
   unsaveArticle,
 } from './operation';
 
 const initialState = {
   article: null,
-  popularArticles: [],
+  recommendedArticles: [],
   savedArticles: [],
   isSaved: false,
   isLoading: false,
@@ -34,27 +33,14 @@ const articleSlice = createSlice({
       })
       .addCase(fetchArticleById.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.article = action.payload;
-        state.isSaved = action.payload?.isSaved || false;
+        state.article = action.payload.article;
+        state.recommendedArticles = action.payload.recommended;
+        state.isSaved = action.payload.article?.isSaved || false;
       })
       .addCase(fetchArticleById.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload || 'Error fetching article';
       })
-
-      .addCase(fetchThreePopularArticles.pending, (state) => {
-        state.isLoading = true;
-        state.error = null;
-      })
-      .addCase(fetchThreePopularArticles.fulfilled, (state, { payload }) => {
-        state.isLoading = false;
-        state.popularArticles = payload;
-      })
-      .addCase(fetchThreePopularArticles.rejected, (state, { payload }) => {
-        state.isLoading = false;
-        state.error = payload;
-      })
-
       .addCase(fetchSavedArticles.pending, (state) => {
         state.isLoading = true;
         state.error = null;

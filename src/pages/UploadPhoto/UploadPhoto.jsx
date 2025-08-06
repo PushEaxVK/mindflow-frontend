@@ -1,13 +1,24 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { uploadPhoto } from '../../redux/uploadPhoto/photoSlice';
 import { toast } from 'react-toastify';
+import styles from './uploadPhotoCss.module.css';
+// import { ReactComponent as CameraIcon } from '../../SVG/camera.svg';
+import CameraIcon from '../../SVG/camera.svg?url';
+import { useNavigate } from 'react-router-dom';
 
 const UploadPhoto = () => {
+   const navigate = useNavigate();
   const [selectedFile, setSelectedFile] = useState(null);
 
   const dispatch = useDispatch();
   const { loading, photoUrl } = useSelector(state => state.photo);
+
+  useEffect(() => {
+    if (photoUrl) {
+      navigate('/'); 
+    }
+  }, [photoUrl, navigate]);
 
   const handleFileChange = (event) => {
     setSelectedFile(event.target.files[0]);
@@ -21,20 +32,30 @@ const UploadPhoto = () => {
     dispatch(uploadPhoto(selectedFile));
   };
 
-  return (
-    <div>
-      <h2>Upload your photo</h2>
-      <input type="file" onChange={handleFileChange} />
-      <button onClick={handleUpload} disabled={loading}>
-        {loading ? 'Завантаження...' : 'Save'}
-      </button>
+    return (
+    <div className={styles.boxContainer}>
+      
+      <h2 className={styles.title}>Upload your photo</h2>
 
-      {photoUrl && (
-        <div>
-          <p>Фото успішно завантажено!</p>
+      <input 
+        type="file" 
+        id="file-input" 
+        className={styles.inputFile} 
+        onChange={handleFileChange} 
+      />
+          
+      <label htmlFor="file-input" className={styles.avatarPhotoContainer}>
+        {photoUrl ? (
           <img src={photoUrl} alt="Завантажене фото" />
-        </div>
-      )}
+        ) : (
+          // <CameraIcon className={styles.cameraIcon} />
+          <img src={CameraIcon} className={styles.cameraIcon} />
+        )}
+      </label>
+
+      <button onClick={handleUpload} disabled={loading || !selectedFile} className={styles.buttonSave}>
+        {loading ? 'loading...' : 'Save'}
+      </button>
     </div>
   );
 };

@@ -35,7 +35,7 @@ export const AddArticleForm = () => {
     initialValues: {
       title: '',
       desc: '',
-      article: '',
+      article: '', // plain text
     },
     validationSchema: Yup.object({
       title: Yup.string()
@@ -66,7 +66,7 @@ export const AddArticleForm = () => {
       const formData = new FormData();
       formData.append('title', values.title);
       formData.append('desc', values.desc);
-      formData.append('article', values.article);
+      formData.append('article', values.article); // plain text
       formData.append('date', selectedDate.toISOString());
       formData.append('ownerId', user.id);
       if (image) formData.append('img', image);
@@ -98,7 +98,7 @@ export const AddArticleForm = () => {
         setValues({
           title: data.title,
           desc: data.desc || '',
-          article: data.article,
+          article: data.article, // plain text
         });
         setSelectedDate(new Date(data.createdAt || data.date));
         setImagePreview(data.img ? `/uploads/${data.img}` : null);
@@ -135,16 +135,10 @@ export const AddArticleForm = () => {
 
   const editor = useEditor({
     extensions: [
-      StarterKit.configure({
-        link: false,
-        underline: false,
-      }),
+      StarterKit.configure({ link: false, underline: false }),
       Link.configure({
         openOnClick: false,
-        HTMLAttributes: {
-          rel: 'noopener noreferrer',
-          target: '_blank',
-        },
+        HTMLAttributes: { rel: 'noopener noreferrer', target: '_blank' },
       }),
       Placeholder.configure({
         placeholder: 'Enter the text',
@@ -156,18 +150,14 @@ export const AddArticleForm = () => {
     ],
     content: formik.values.article,
     onUpdate: ({ editor }) => {
-      const html = editor.getHTML();
-      formik.setFieldValue('article', html);
+      const plainText = editor.getText(); // plain text only
+      formik.setFieldValue('article', plainText);
 
-      // Витягуємо чистий текст без HTML, щоб згенерувати desc
-      const tempDiv = document.createElement('div');
-      tempDiv.innerHTML = html;
-      const plainText = tempDiv.textContent || tempDiv.innerText || '';
       const excerpt = plainText.trim().slice(0, 100);
-
       formik.setFieldValue('desc', excerpt);
 
       resizeTextarea();
+
       const proseMirror = textareaRef.current?.querySelector('.ProseMirror');
       if (!proseMirror) return;
       proseMirror.classList.toggle('is-empty', editor.isEmpty);
@@ -199,10 +189,8 @@ export const AddArticleForm = () => {
   const toggleItalic = () => editor?.chain().focus().toggleItalic().run();
   const toggleUnderline = () => editor?.chain().focus().toggleUnderline().run();
   const toggleStrike = () => editor?.chain().focus().toggleStrike().run();
-  const toggleBulletList = () =>
-    editor?.chain().focus().toggleBulletList().run();
-  const toggleOrderedList = () =>
-    editor?.chain().focus().toggleOrderedList().run();
+  const toggleBulletList = () => editor?.chain().focus().toggleBulletList().run();
+  const toggleOrderedList = () => editor?.chain().focus().toggleOrderedList().run();
   const setLink = () => {
     const previousUrl = editor?.getAttributes('link').href;
     const url = window.prompt('Enter URL', previousUrl);
@@ -211,12 +199,7 @@ export const AddArticleForm = () => {
       editor?.chain().focus().extendMarkRange('link').unsetLink().run();
       return;
     }
-    editor
-      ?.chain()
-      .focus()
-      .extendMarkRange('link')
-      .setLink({ href: url })
-      .run();
+    editor?.chain().focus().extendMarkRange('link').setLink({ href: url }).run();
   };
 
   return (
@@ -279,9 +262,7 @@ export const AddArticleForm = () => {
           </div>
 
           <label className={styles.titleLabel}>
-            <span className={styles.labelText}>
-              {isEditing ? 'Article Title:' : 'Title:'}
-            </span>
+            <span className={styles.labelText}>{isEditing ? 'Article Title:' : 'Title:'}</span>
             <input
               name="title"
               className={styles.input}
@@ -297,44 +278,16 @@ export const AddArticleForm = () => {
 
           <input type="hidden" name="desc" value={formik.values.desc} />
         </div>
-        {/* Toolbar */}
-        <div className={styles.toolbar}>
-          <button type="button" onClick={toggleBold} aria-label="Bold">
-            <b>B</b>
-          </button>
-          <button type="button" onClick={toggleItalic} aria-label="Italic">
-            <i>I</i>
-          </button>
-          <button
-            type="button"
-            onClick={toggleUnderline}
-            aria-label="Underline"
-          >
-            <u>U</u>
-          </button>
-          <button type="button" onClick={toggleStrike} aria-label="Strike">
-            <s>S</s>
-          </button>
-          <button
-            type="button"
-            onClick={toggleBulletList}
-            aria-label="Bullet List"
-          >
-            • List
-          </button>
-          <button
-            type="button"
-            onClick={toggleOrderedList}
-            aria-label="Ordered List"
-          >
-            1. List
-          </button>
-          <button type="button" onClick={setLink} aria-label="Insert Link">
-            🔗
-          </button>
-        </div>
 
-        {/* Floating toolbar */}
+        <div className={styles.toolbar}>
+          <button type="button" onClick={toggleBold}><b>B</b></button>
+          <button type="button" onClick={toggleItalic}><i>I</i></button>
+          <button type="button" onClick={toggleUnderline}><u>U</u></button>
+          <button type="button" onClick={toggleStrike}><s>S</s></button>
+          <button type="button" onClick={toggleBulletList}>• List</button>
+          <button type="button" onClick={toggleOrderedList}>1. List</button>
+          <button type="button" onClick={setLink}>🔗</button>
+        </div>
         {floatingVisible && (
           <div
             className={styles.floatingToolbar}
@@ -344,25 +297,14 @@ export const AddArticleForm = () => {
             }}
             ref={floatingToolbarRef}
           >
-            <button type="button" onClick={toggleBold}>
-              <b>B</b>
-            </button>
-            <button type="button" onClick={toggleItalic}>
-              <i>I</i>
-            </button>
-            <button type="button" onClick={toggleUnderline}>
-              <u>U</u>
-            </button>
-            <button type="button" onClick={toggleStrike}>
-              <s>S</s>
-            </button>
-            <button type="button" onClick={setLink} aria-label="Insert Link">
-              🔗
-            </button>
+            <button type="button" onClick={toggleBold}><b>B</b></button>
+            <button type="button" onClick={toggleItalic}><i>I</i></button>
+            <button type="button" onClick={toggleUnderline}><u>U</u></button>
+            <button type="button" onClick={toggleStrike}><s>S</s></button>
+            <button type="button" onClick={setLink}>🔗</button>
           </div>
         )}
 
-        {/* Editor */}
         <div className={styles.articleWrapper} ref={textareaRef}>
           <span id="articleLabel">Article</span>
           <EditorContent

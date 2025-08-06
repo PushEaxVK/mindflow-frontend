@@ -49,6 +49,8 @@ const AuthorProfilePage = () => {
   const OwnProfile = useSelector(selectUser);
   const isLoggedIn = useSelector(selectIsLoggedIn);
 
+  //console.log('isLoggedIn', isLoggedIn);
+
   const author = authorData?.data || {};
   const articles = authorArticles || [];
 
@@ -65,10 +67,17 @@ const AuthorProfilePage = () => {
   }, [ownerId, currentPage, dispatch]);
 
   useEffect(() => {
+    const isTryingToAccessPrivateTab =
+      location.pathname.includes('my-articles') ||
+      location.pathname.includes('saved-articles');
+
+    if (isTryingToAccessPrivateTab && !isOwnProfile) {
+      navigate('/', { replace: true }); // редирект на головну
+    }
     if (isOwnProfile && location.pathname === `/authors/${ownerId}`) {
       navigate('my-articles', { replace: true });
     }
-  }, [isOwnProfile, location.pathname, navigate, ownerId]);
+  }, [isOwnProfile, location.pathname, ownerId, navigate]);
 
   const handleLoadMore = () => {
     if (currentPage < totalPages && !authorArticlesLoading) {
