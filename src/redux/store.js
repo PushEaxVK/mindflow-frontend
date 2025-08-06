@@ -1,6 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 import authReducer from './auth/slice';
 import photoReducer from './uploadPhoto/photoSlice';
+import modalReducer from './modal/slice';
 import {
   persistStore,
   persistReducer,
@@ -12,12 +13,16 @@ import {
   REGISTER,
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
+import { articlesReducer } from './articles/slice';
+import { articleReducer } from './article/slice.js';
+import { authorReducer } from './user/slice.js';
+import { savedArticlesReducer } from './SavedArticles/slice.js';
 
 const persistConfig = {
   key: 'root-auth',
   version: 1,
   storage,
-  whitelist: ['token'],
+  whitelist: ['isLoggedIn', 'user'],
 };
 
 const persistedReducer = persistReducer(persistConfig, authReducer);
@@ -26,6 +31,11 @@ export const store = configureStore({
   reducer: {
     auth: persistedReducer,
     photo: photoReducer,
+    modal: modalReducer,
+    articlesList: articlesReducer,
+    article: articleReducer,
+    author: authorReducer,
+    savedArticles: savedArticlesReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
@@ -37,3 +47,5 @@ export const store = configureStore({
 });
 
 export const persistor = persistStore(store);
+
+import '../services/interceptors';

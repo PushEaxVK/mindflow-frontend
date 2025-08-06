@@ -1,18 +1,79 @@
-import ArticlesList from '../../components/ArticlesList/ArticleList.jsx';
+import ArticlesList from '../../components/ArticlesList/ArticlesList';
 import css from './AuthorProfilePage.module.css';
-import { NavLink, Outlet } from 'react-router-dom';
+import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 import Container from '../../components/Container/Container';
-import { useLocation, useMatch } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import clsx from 'clsx';
-import LoadMore from '../../components/LoadMore/LoadMore.jsx';
+import LoadMore from '../../components/LoadMore/LoadMore';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  fetchAuthorById,
+  fetchArticlesAuthorById,
+} from '../../redux/user/operation.js';
+import {
+  selectAuthorData,
+  selectAuthorLoading,
+  selectAuthorError,
+  selectAuthorArticles,
+  selectAuthorArticlesPage,
+  selectAuthorArticlesPages,
+  selectAuthorArticlesTotal,
+  selectAuthorArticlesLoading,
+} from '../../redux/user/selectors.js';
+
+import { selectIsLoggedIn, selectUser } from '../../redux/auth/selectors.js';
+import UserAvatar from '../../components/UserAvatar/UserAvatar.jsx';
 
 const AuthorProfilePage = () => {
   const location = useLocation();
-  const match = useMatch('/authors/:id');
-  const isBaseProfile = match && location.pathname === match.pathname;
 
   const buildLinkClass = ({ isActive }) => {
     return clsx(css.tabItem, isActive && css.active);
+  };
+
+  const dispatch = useDispatch();
+
+  const authorData = useSelector(selectAuthorData);
+  const authorLoading = useSelector(selectAuthorLoading);
+  const authorError = useSelector(selectAuthorError);
+  const authorArticlesLoading = useSelector(selectAuthorArticlesLoading);
+
+  const authorArticles = useSelector(selectAuthorArticles);
+
+  const currentPage = useSelector(selectAuthorArticlesPage);
+  const totalPages = useSelector(selectAuthorArticlesPages);
+
+  const totalArticles = useSelector(selectAuthorArticlesTotal);
+
+  const OwnProfile = useSelector(selectUser);
+  const isLoggedIn = useSelector(selectIsLoggedIn);
+
+  const author = authorData?.data || {};
+  const articles = authorArticles || [];
+
+  const { id: ownerId } = useParams();
+  const navigate = useNavigate();
+
+  const isOwnProfile = isLoggedIn && OwnProfile?.id === ownerId;
+
+  useEffect(() => {
+    if (!ownerId) return;
+
+    dispatch(fetchAuthorById({ ownerId }));
+    dispatch(fetchArticlesAuthorById({ ownerId, page: currentPage }));
+  }, [ownerId, currentPage, dispatch]);
+
+  useEffect(() => {
+    if (isOwnProfile && location.pathname === `/authors/${ownerId}`) {
+      navigate('my-articles', { replace: true });
+    }
+  }, [isOwnProfile, location.pathname, navigate, ownerId]);
+
+  const handleLoadMore = () => {
+    if (currentPage < totalPages && !authorArticlesLoading) {
+      dispatch(fetchArticlesAuthorById({ ownerId, page: currentPage + 1 }));
+    }
   };
 
   return (
@@ -21,28 +82,58 @@ const AuthorProfilePage = () => {
         <h1 className={css.profileTitle}>My Profile</h1>
         <ul className={css.profileList}>
           <li>
-            <img
-              className={css.imgProfile}
-              src="https://res.cloudinary.com/dfoiy9rn5/image/upload/v1753462124/profile_img_lhcerd.png"
-              alt=""
-            />
+            {author?.avatarUrl && author.avatarUrl.trim() !== '' ? (
+              <img
+                src={author.avatarUrl}
+                alt={author.name || 'Author avatar'}
+                className={css.imgProfile}
+              />
+            ) : (
+              <div className={css.avatarLetter}>
+                {author?.name?.[0]?.toUpperCase() || '?'}
+              </div>
+            )}
           </li>
           <li>
-            <p className={css.userName}>Naomi</p>
-            <p className={css.countArticles}>96 articles</p>
+            <p className={css.userName}>{author?.name}</p>
+            <p className={css.countArticles}>
+              {totalArticles ?? 0}
+              {(totalArticles ?? 0) === 1 ? ' article' : ' articles'}
+            </p>
           </li>
         </ul>
-        <nav className={css.profileTabList}>
-          <NavLink to="my-articles" className={buildLinkClass}>
-            My Articles
-          </NavLink>
-          <NavLink to="saved-articles" className={buildLinkClass}>
-            Saved Articles
-          </NavLink>
-        </nav>
-        <Outlet />
-        {isBaseProfile && <ArticlesList />}
-        <LoadMore />
+        {isOwnProfile && (
+          <>
+            <nav className={css.profileTabList}>
+              <NavLink to="my-articles" className={buildLinkClass}>
+                My Articles
+              </NavLink>
+              <NavLink to="saved-articles" className={buildLinkClass}>
+                Saved Articles
+              </NavLink>
+            </nav>
+            <Outlet />
+          </>
+        )}
+
+        {!isOwnProfile && (
+          <>
+            <ArticlesList
+              icon={'icon-favorite-article'}
+              btnStyle={'FavoriteArticleNotSaved'}
+              queryArticles={articles}
+            />
+            {totalPages > 1 &&
+              currentPage < totalPages &&
+              !authorArticlesLoading && (
+                <LoadMore
+                  page={currentPage}
+                  pages={totalPages}
+                  onLoadMore={handleLoadMore}
+                />
+              )}
+          </>
+        )}
       </Container>
     </section>
   );
