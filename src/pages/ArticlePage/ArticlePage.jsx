@@ -4,14 +4,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   fetchArticleById,
   fetchSavedArticles,
-  fetchThreePopularArticles,
   saveArticle,
   unsaveArticle,
 } from '../../redux/article/operation';
 import {
   selectArticle,
   selectIsArticlesLoading,
-  selectPopularArticles,
+  selectRecommendedArticles,
   selectSavedArticles,
 } from '../../redux/article/selectors';
 import Container from '../../components/Container/Container';
@@ -29,7 +28,7 @@ const ArticlePage = () => {
   const { id } = useParams();
 
   const article = useSelector(selectArticle);
-  const popular = useSelector(selectPopularArticles);
+  const recommendedArticles = useSelector(selectRecommendedArticles);
   const savedArticles = useSelector(selectSavedArticles);
   const isLoading = useSelector(selectIsArticlesLoading);
 
@@ -41,8 +40,6 @@ const ArticlePage = () => {
   useEffect(() => {
     if (!id) return;
     dispatch(fetchArticleById(id));
-    dispatch(fetchThreePopularArticles());
-
     return () => {
       dispatch(clearArticle());
     };
@@ -157,30 +154,31 @@ const ArticlePage = () => {
               <h2 className={css.interestedBlockTitle}>
                 You can also be interested
               </h2>
-
-              <ul className={css.interestedList}>
-                {popular.map((item) => (
-                  <li key={item._id} className={css.interestedItem}>
-                    <div className={css.interestedArticleTitleBtnContainer}>
-                      <h4 className={css.interestedArticleTitle}>
-                        {item.title}
-                      </h4>
-                      <button
-                        onClick={() => handleClickReadMore(item)}
-                        className={css.readMoreBtn}
-                        disabled={isLoading}
-                      >
-                        <svg className={css.iconReadMore}>
-                          <use href="/icons-articlePage.svg#icon-readMoreBtn"></use>
-                        </svg>
-                      </button>
-                    </div>
-                    <p className={css.interestedArticleAuthor}>
-                      {item.ownerId?.name || 'Unknown'}
-                    </p>
-                  </li>
-                ))}
-              </ul>
+              {recommendedArticles?.length > 0 && (
+                <ul className={css.interestedList}>
+                  {recommendedArticles.map((item) => (
+                    <li key={item._id} className={css.interestedItem}>
+                      <div className={css.interestedArticleTitleBtnContainer}>
+                        <h4 className={css.interestedArticleTitle}>
+                          {item.title}
+                        </h4>
+                        <button
+                          onClick={() => handleClickReadMore(item)}
+                          className={css.readMoreBtn}
+                          disabled={isLoading}
+                        >
+                          <svg className={css.iconReadMore}>
+                            <use href="/icons-articlePage.svg#icon-readMoreBtn"></use>
+                          </svg>
+                        </button>
+                      </div>
+                      <p className={css.interestedArticleAuthor}>
+                        {item.ownerId?.name || 'Unknown'}
+                      </p>
+                    </li>
+                  ))}
+                </ul>
+              )}
             </div>
 
             <button onClick={handleToggleSave} className={css.saveBtn}>

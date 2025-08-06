@@ -11,30 +11,6 @@ export const fetchArticleById = createThunk(
   }
 );
 
-export const fetchThreePopularArticles = createAsyncThunk(
-  'articles/fetchThreeRandomPopular',
-  async (_, thunkAPI) => {
-    try {
-      const response = await axios.get('/articles', {
-        params: {
-          limit: 100,
-          sort: 'rate',
-          order: 'desc',
-        },
-      });
-
-      const articles = Array.isArray(response.data)
-        ? response.data
-        : response.data.articles || [];
-
-      const shuffled = articles.sort(() => 0.5 - Math.random());
-      return shuffled.slice(0, 3);
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error.message);
-    }
-  }
-);
-
 export const saveArticle = createAsyncThunk(
   'articles/saveArticle',
   async (articleId, thunkAPI) => {
