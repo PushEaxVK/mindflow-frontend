@@ -6,32 +6,7 @@ export const fetchArticleById = createThunk(
   'articles/fetchById',
   async (id) => {
     const response = await axios.get(`/articles/${id}`);
-    console.log('ARCTICLE', response.data);
     return response.data;
-  }
-);
-
-export const fetchThreePopularArticles = createAsyncThunk(
-  'articles/fetchThreeRandomPopular',
-  async (_, thunkAPI) => {
-    try {
-      const response = await axios.get('/articles', {
-        params: {
-          limit: 100,
-          sort: 'rate',
-          order: 'desc',
-        },
-      });
-
-      const articles = Array.isArray(response.data)
-        ? response.data
-        : response.data.articles || [];
-
-      const shuffled = articles.sort(() => 0.5 - Math.random());
-      return shuffled.slice(0, 3);
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error.message);
-    }
   }
 );
 
@@ -48,8 +23,6 @@ export const saveArticle = createAsyncThunk(
       await axios.post(`/users/${userId}/saved-articles/${articleId}`, null, {
         headers: { Authorization: `Bearer ${token}` },
       });
-      console.log('SAVE', articleId);
-
       return { articleId };
     } catch (error) {
       return thunkAPI.rejectWithValue(
@@ -72,7 +45,6 @@ export const unsaveArticle = createAsyncThunk(
       await axios.delete(`/users/${userId}/saved-articles/${articleId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
-      console.log('UNSAVE', articleId);
       return { articleId };
     } catch (error) {
       return thunkAPI.rejectWithValue(
@@ -98,7 +70,6 @@ export const fetchSavedArticles = createAsyncThunk(
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log('SAVED ARTICLES', res.data.data);
       return res.data.data; // { articles, pagination }
     } catch (err) {
       return thunkAPI.rejectWithValue(

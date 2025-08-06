@@ -1,5 +1,6 @@
 export const selectArticle = (state) => state.article.article;
-export const selectPopularArticles = (state) => state.article.popularArticles;
+export const selectRecommendedArticles = (state) =>
+  state.article.recommendedArticles;
 export const selectSavedArticles = (state) => state.article.savedArticles;
 export const selectIsArticlesLoading = (state) => state.article.isLoading;
 export const selectArticlesError = (state) => state.article.error;
