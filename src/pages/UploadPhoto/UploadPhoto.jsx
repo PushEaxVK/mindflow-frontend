@@ -3,7 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { uploadPhoto } from '../../redux/uploadPhoto/photoSlice';
 import { toast } from 'react-toastify';
 import styles from './uploadPhotoCss.module.css';
-import { ReactComponent as CameraIcon } from '../../SVG/camera.svg';
+// import { ReactComponent as CameraIcon } from '../../SVG/camera.svg';
+import CameraIcon from '../../SVG/camera.svg?url';
 import { useNavigate } from 'react-router-dom';
 
 const UploadPhoto = () => {
@@ -42,12 +43,13 @@ const UploadPhoto = () => {
         className={styles.inputFile} 
         onChange={handleFileChange} 
       />
-      
+          
       <label htmlFor="file-input" className={styles.avatarPhotoContainer}>
         {photoUrl ? (
           <img src={photoUrl} alt="Завантажене фото" />
         ) : (
-          <CameraIcon className={styles.cameraIcon} />
+          // <CameraIcon className={styles.cameraIcon} />
+          <img src={CameraIcon} className={styles.cameraIcon} />
         )}
       </label>
 
@@ -56,7 +58,6 @@ const UploadPhoto = () => {
       </button>
     </div>
   );
-
 };
 
 export default UploadPhoto;

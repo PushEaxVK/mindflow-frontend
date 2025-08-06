@@ -1,0 +1,43 @@
+.item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  list-style: none;
+  cursor: pointer;
+
+  width: 172px;
+  height: 221px;
+
+  padding: 12px;
+}
+
+.name {
+  font-weight: 700;
+  font-size: 24px;
+  text-align: center;
+  color: #070721;
+}
+
+.imgProfile {
+  border-radius: 256px;
+  width: 148px;
+  height: 148px;
+
+  margin-bottom: 16px;
+}
+
+@media only screen and (min-width: 768px) {
+  .item {
+    width: 286px;
+    height: 335px;
+  }
+
+  .imgProfile {
+    width: 262px;
+    height: 262px;
+  }
+}
+
+@media only screen and (min-width: 1440px) {
+}

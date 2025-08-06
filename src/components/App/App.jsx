@@ -1,46 +1,53 @@
-import { useDispatch, useSelector } from 'react-redux';
-import { useEffect, lazy, Suspense } from 'react';
+import { useSelector } from 'react-redux';
+import { lazy, Suspense } from 'react';
 import { selectIsRefreshing } from '../../redux/auth/selectors';
-import { refreshUser } from '../../redux/auth/operations';
+import { useAuthInitializer } from '../../hooks/useAuthInitializer';
+import { useAutoRefresh } from '../../hooks/useAutoRefresh';
 import { Route, Routes } from 'react-router-dom';
 import { RestrictedRoute } from '../RestrictedRoute';
 import { PrivateRoute } from '../PrivateRoute';
 import Layout from '../Layout/Layout';
-import Loader from '../../components/Loader/Loader.jsx';
+import Loader from '../Loader/Loader';
 
 const HomePage = lazy(() => import('../../pages/HomePage/HomePage'));
-const ArticlePage = lazy(() =>
-  import('../../pages/ArticlePage/ArticlePage.jsx')
-);
 const ArticlesPage = lazy(() =>
-  import('../../pages/ArticlesPage/ArticlesPage.jsx')
+  import('../../pages/ArticlesPage/ArticlesPage')
 );
 const AuthorProfilePage = lazy(() =>
-  import('../../pages/AuthorProfilePage/AuthorProfilePage.jsx')
+  import('../../pages/AuthorProfilePage/AuthorProfilePage')
 );
-const AuthorsPage = lazy(() =>
-  import('../../pages/AuthorsPage/AuthorsPage.jsx')
+const AuthorsPage = lazy(() => import('../../pages/AuthorsPage/AuthorsPage'));
+const LoginPage = lazy(() => import('../../pages/LoginPage/LoginPage'));
+const MyProfilePage = lazy(() =>
+  import('../../pages/MyProfilePage/MyProfilePage')
 );
+const ArticlePage = lazy(() => import('../../pages/ArticlePage/ArticlePage'));
 const CreateArticlePage = lazy(() =>
-  import('../../pages/CreateArticlePage/CreateArticlePage.jsx')
+  import('../../pages/CreateArticlePage/CreateArticlePage')
 );
-const LoginPage = lazy(() => import('../../pages/LoginPage/LoginPage.jsx'));
-const RegisterPage = lazy(() =>
-  import('../../pages/RegisterPage/RegisterPage.jsx')
+const UploadPhotoPage = lazy(() =>
+  import('../../pages/UploadPhotoPage/UploadPhotoPage')
 );
 const UploadPhoto = lazy(() =>
   import('../../pages/UploadPhoto/UploadPhoto.jsx')
 );
+const RegisterPage = lazy(() =>
+  import('../../pages/RegisterPage/RegisterPage')
+);
+const MyArticles = lazy(() => import('../nestedRoutes/MyArticles/MyArticles'));
+const SavedArticles = lazy(() =>
+  import('../nestedRoutes/SavedArticles/SavedArticles')
+);
+const NotFound = lazy(() => import('../../pages/NotFound/NotFound'));
 
 const App = () => {
-  const dispatch = useDispatch();
   const isRefreshing = useSelector(selectIsRefreshing);
 
-  useEffect(() => {
-    dispatch(refreshUser());
-  }, [dispatch]);
+  const isInitialized = useAuthInitializer();
 
-  if (isRefreshing) {
+  useAutoRefresh();
+
+  if (!isInitialized || isRefreshing) {
     return <Loader />;
   }
 
@@ -52,7 +59,22 @@ const App = () => {
           <Route path="articles" element={<ArticlesPage />} />
           <Route path="articles/:id" element={<ArticlePage />} />
           <Route path="authors" element={<AuthorsPage />} />
-          <Route path="authors/:id" element={<AuthorProfilePage />} />
+          <Route path="authors/:id" element={<AuthorProfilePage />}>
+            <Route
+              path="my-articles"
+              element={<PrivateRoute component={<MyArticles />} />}
+            />
+            <Route
+              path="saved-articles"
+              element={<PrivateRoute component={<SavedArticles />} />}
+            />
+          </Route>
+          <Route
+            path="register"
+            element={
+              <RestrictedRoute redirectTo="/" component={<RegisterPage />} />
+            }
+          />
 
           <Route
             path="create"
@@ -63,27 +85,22 @@ const App = () => {
               />
             }
           />
+
+         
+
           <Route
             path="photo"
             element={
               <PrivateRoute redirectTo="/login" component={<UploadPhoto />} />
             }
           />
-
           <Route
             path="login"
             element={
               <RestrictedRoute redirectTo="/" component={<LoginPage />} />
             }
           />
-          <Route
-            path="register"
-            element={
-              <RestrictedRoute redirectTo="/" component={<RegisterPage />} />
-            }
-          />
-
-          <Route path="*" element={<HomePage />} />
+          <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
     </Suspense>
@@ -91,3 +108,4 @@ const App = () => {
 };
 
 export default App;
+
