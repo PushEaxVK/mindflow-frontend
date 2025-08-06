@@ -14,9 +14,7 @@ export const useAuthInitializer = () => {
       if (isLoggedIn) {
         try {
           await dispatch(refreshUser()).unwrap();
-          console.log('Token refreshed successfully');
-        } catch (err) {
-          console.log('Token refresh failed:', err);
+        } catch {
           dispatch(clearAuth());
         }
       }
