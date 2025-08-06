@@ -24,10 +24,10 @@ const ArticlesItem = forwardRef(function ArticlesItem(
       dispatch(openModal('ErrorSave'));
       return;
     }
-    const action = isSaved ? 'REMOVE (DELETE)' : 'SAVE (POST)';
-    console.log(`Toggle Save Clicked - Aktion: ${action}`);
-    console.log('Artikel-ID:', item._id);
-    console.log('User-ID:', user.id);
+    //const action = isSaved ? 'REMOVE (DELETE)' : 'SAVE (POST)';
+    //console.log(`Toggle Save Clicked - Aktion: ${action}`);
+    //console.log('Artikel-ID:', item._id);
+    //console.log('User-ID:', user.id);
 
     dispatch(
       toggleSaveArticle({
@@ -62,6 +62,7 @@ const ArticlesItem = forwardRef(function ArticlesItem(
           className={css[`btn${btnStyle}`]}
           type="button"
           onClick={handleToggleSave}
+          aria-label="press button"
         >
           <svg className={css[`svgIcon${btnStyle}`]}>
             <use href={`/icons-profileArticles.svg#${icon}`}></use>
