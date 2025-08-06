@@ -73,6 +73,8 @@ const AuthorProfilePage = () => {
 
     if (isTryingToAccessPrivateTab && !isOwnProfile) {
       navigate('/', { replace: true }); // редирект на головну
+    } else {
+      navigate('my-articles', { replace: true });
     }
   }, [isOwnProfile, location.pathname, navigate]);
 
