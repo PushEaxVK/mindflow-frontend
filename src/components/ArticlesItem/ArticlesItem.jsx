@@ -62,6 +62,7 @@ const ArticlesItem = forwardRef(function ArticlesItem(
           className={css[`btn${btnStyle}`]}
           type="button"
           onClick={handleToggleSave}
+          aria-label="press button"
         >
           <svg className={css[`svgIcon${btnStyle}`]}>
             <use href={`/icons-profileArticles.svg#${icon}`}></use>
