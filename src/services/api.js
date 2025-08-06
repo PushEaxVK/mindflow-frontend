@@ -26,6 +26,7 @@ export const signup = async ({ name, email, password }) => {
     email,
     password,
   });
+
   const transformedData = transformAuthResponse(response.data.data);
   setAuthHeader(transformedData.accessToken);
   return { data: transformedData };
@@ -47,7 +48,7 @@ export const logout = async () => {
 export const refresh = async () => {
   const response = await axios.post('/auth/refresh');
   const responseData = response.data?.data || response.data;
-  if (responseData?.accessToken) {
+  if (responseData && responseData.accessToken) {
     const transformedData = transformAuthResponse(responseData);
     setAuthHeader(transformedData.accessToken);
     return { data: transformedData };
