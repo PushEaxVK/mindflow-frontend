@@ -12,7 +12,7 @@ const ProfileArticlesEmpty = () => {
       <h3 className={css.subTitleAlert}>Nothing found.</h3>
       <p className={css.textAlert}>Write your first article</p>
       <div className={css.btnCreateArticle}>
-        <Link className={css.btnText} to="/">
+        <Link className={css.btnText} to="/create">
           Create an article
         </Link>
       </div>

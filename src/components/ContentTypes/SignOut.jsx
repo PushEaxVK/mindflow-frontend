@@ -11,10 +11,6 @@ const SignOut = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  // const handleSignOut = () => {
-  //   dispatch(logout());
-  //   dispatch(closeModal());
-  // };
   const handleSignOut = async () => {
     try {
       await dispatch(logout()).unwrap();
@@ -33,7 +29,7 @@ const SignOut = () => {
 
   return (
     <div className={s.modal__wrapper}>
-      <h2 className={s.modal__headline}>Are you shure?</h2>
+      <h2 className={s.modal__headline}>Are you sure?</h2>
       <p className={s.modal__text}>We will miss you!</p>
       <div className={s.modal__btns}>
         <button

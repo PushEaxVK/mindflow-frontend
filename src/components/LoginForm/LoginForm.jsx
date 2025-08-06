@@ -3,15 +3,9 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
 import { login } from '../../redux/auth/operations';
 import s from './LoginForm.module.css';
-
-import EyeOpenMobile from './icons/eye-open-mob.svg';
-import EyeClosedMobile from './icons/eye-closed-mob.svg';
-import EyeOpenTablet from './icons/eye-open-tab.svg';
-import EyeClosedTablet from './icons/eye-closed-tab.svg';
-import EyeOpenDesktop from './icons/eye-open-desk.svg';
-import EyeClosedDesktop from './icons/eye-closed-desk.svg';
 
 const validationSchema = Yup.object({
   email: Yup.string()
@@ -34,14 +28,21 @@ const LoginForm = () => {
   };
 
   const handleSubmit = async (values, { setSubmitting }) => {
+    const hasEmptyFields = !values.email.trim() || !values.password.trim();
+    if (hasEmptyFields) {
+      toast.error('Please fill in all required fields');
+      setSubmitting(false);
+      return;
+    }
+
     try {
       const result = await dispatch(login(values));
 
       if (login.fulfilled.match(result)) {
         navigate('/');
       }
-    } catch (err) {
-      console.error('Login error:', err);
+    } catch {
+      // Redux slice handles toast notifications
     } finally {
       setSubmitting(false);
     }
@@ -94,39 +95,27 @@ const LoginForm = () => {
                 >
                   {showPassword ? (
                     <>
-                      <img
-                        src={EyeOpenMobile}
-                        alt=""
-                        className={`${s.icon} ${s.iconMobile}`}
-                      />
-                      <img
-                        src={EyeOpenTablet}
-                        alt=""
-                        className={`${s.icon} ${s.iconTablet}`}
-                      />
-                      <img
-                        src={EyeOpenDesktop}
-                        alt=""
-                        className={`${s.icon} ${s.iconDesktop}`}
-                      />
+                      <svg className={`${s.icon} ${s.iconMobile}`}>
+                        <use href="/icons-login.svg#eye-open-mob" />
+                      </svg>
+                      <svg className={`${s.icon} ${s.iconTablet}`}>
+                        <use href="/icons-login.svg#eye-open-tab" />
+                      </svg>
+                      <svg className={`${s.icon} ${s.iconDesktop}`}>
+                        <use href="/icons-login.svg#eye-open-desk" />
+                      </svg>
                     </>
                   ) : (
                     <>
-                      <img
-                        src={EyeClosedMobile}
-                        alt=""
-                        className={`${s.icon} ${s.iconMobile}`}
-                      />
-                      <img
-                        src={EyeClosedTablet}
-                        alt=""
-                        className={`${s.icon} ${s.iconTablet}`}
-                      />
-                      <img
-                        src={EyeClosedDesktop}
-                        alt=""
-                        className={`${s.icon} ${s.iconDesktop}`}
-                      />
+                      <svg className={`${s.icon} ${s.iconMobile}`}>
+                        <use href="/icons-login.svg#eye-closed-mob" />
+                      </svg>
+                      <svg className={`${s.icon} ${s.iconTablet}`}>
+                        <use href="/icons-login.svg#eye-closed-tab" />
+                      </svg>
+                      <svg className={`${s.icon} ${s.iconDesktop}`}>
+                        <use href="/icons-login.svg#eye-closed-desk" />
+                      </svg>
                     </>
                   )}
                 </button>

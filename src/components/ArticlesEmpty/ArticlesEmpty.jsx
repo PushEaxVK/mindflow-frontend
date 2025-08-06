@@ -12,7 +12,7 @@ const ArticlesEmpty = () => {
       <h3 className={css.subTitleAlert}>Nothing found.</h3>
       <p className={css.textAlert}>Be the first, who create an article</p>
       <div className={css.btnCreateArticle}>
-        <Link className={css.btnText} to="/">
+        <Link className={css.btnText} to="/create">
           Create an article
         </Link>
       </div>

@@ -1,49 +1,43 @@
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import styles from './PopularArticles.module.css';
 import ArticlesList from '../ArticlesList/ArticlesList';
-import React, { useEffect, useState } from 'react';
 import Container from '../../components/Container/Container';
 
+import { fetchAllArticles } from '../../redux/articles/operation';
+import {
+  selectAllArticles,
+  selectLoadingArticles,
+} from '../../redux/articles/selectors';
+
 function PopularArticles() {
-  const [articles, setArticles] = useState([]);
+  const dispatch = useDispatch();
+  const allArticles = useSelector(selectAllArticles);
+  const loading = useSelector(selectLoadingArticles);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const [visibleArticles, setVisibleArticles] = useState([]);
 
   useEffect(() => {
-    function handleResize() {
+    dispatch(fetchAllArticles({ page: 1, filter: 'popular' }));
+  }, [dispatch]);
+
+  useEffect(() => {
+    const handleResize = () => {
       setWindowWidth(window.innerWidth);
-    }
+    };
 
     window.addEventListener('resize', handleResize);
-
-    fetch('https://mindflow-backend-iwk7.onrender.com/articles/popular') // замінити на бекенд-ендпоінт
-      .then((res) => res.json())
-      .then((data) => {
-        const articlesToShow = window.innerWidth < 1440 ? 4 : 3;
-        const sorted = data
-          .sort((a, b) => b.rate - a.rate)
-          .slice(0, articlesToShow);
-        setArticles(sorted);
-      })
-      .catch((err) => console.error('Failed to load articles:', err));
-
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
   useEffect(() => {
-    fetch('https://mindflow-backend-iwk7.onrender.com/articles/popular')
-      .then((res) => res.json())
-      .then((data) => {
-        const articlesToShow = windowWidth < 1440 ? 4 : 3;
-        const sorted = data
-          .sort((a, b) => b.rate - a.rate)
-          .slice(0, articlesToShow);
-        setArticles(sorted);
-      })
-      .catch((err) => console.error('Failed to load articles:', err));
-  }, [windowWidth]);
+    const count = windowWidth >= 1440 ? 3 : 4;
+    setVisibleArticles(allArticles.slice(0, count));
+  }, [windowWidth, allArticles]);
 
   return (
-    <section id="popular-articles" className="PopularArticles">
+    <section id="popular-articles" className={styles.PopularArticles}>
       <Container noVerticalPadding>
         <div className={styles.content}>
           <div className={styles.firstpart}>
@@ -55,13 +49,21 @@ function PopularArticles() {
               </svg>
             </Link>
           </div>
-          <ul className={styles.articlesGrid}>
-            <ArticlesList
-              queryArticles={articles}
-              icon="icon-favorite-article"
-              btnStyle={'FavoriteArticleNotSaved'}
-            />
-          </ul>
+
+          {loading ? (
+            <p>Loading popular articles...</p>
+          ) : visibleArticles.length === 0 ? (
+            <p>No popular articles found.</p>
+          ) : (
+            <ul className={styles.articlesList}>
+              <ArticlesList
+                queryArticles={visibleArticles}
+                icon="icon-favorite-article"
+                btnStyle="FavoriteArticleNotSaved"
+                className={styles.articlesGrid}
+              />
+            </ul>
+          )}
         </div>
       </Container>
     </section>

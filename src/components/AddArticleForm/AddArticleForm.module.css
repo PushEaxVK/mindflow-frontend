@@ -41,7 +41,7 @@
   color: #333;
 }
 
-.titleLabel .articleWrapper {
+.titleLabel {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -54,13 +54,6 @@
 .titleLabel {
   width: 361px;
   height: 81px;
-}
-
-.articleWrapper {
-  width: 361px;
-  min-height: 393px;
-  margin-top: 4px;
-  margin-bottom: 24px;
 }
 
 .labelText {
@@ -88,71 +81,48 @@
   font: 400 18px 'Manrope', sans-serif;
 }
 
-.ProseMirror {
-  width: 100%;
+.articleWrapper {
+  width: 361px;
   min-height: 393px;
+  margin-top: 4px;
+  margin-bottom: 24px;
   background: #f7fffb;
-  border: 1px solid #9f9f9f;
+  border: 1px solid #0b0b0b;
   border-radius: 8px;
-  font: 400 18px 'Manrope', sans-serif;
-  padding: 12px;
+  padding: 12px 16px;
   box-sizing: border-box;
-  white-space: pre-wrap;
-  border-color: #0b0b0b;
-  outline: none;
-  transition: height 0.15s ease-in-out, border-color 0.15s ease-in-out;
-  caret-color: #070721;
-  cursor: text;
   position: relative;
-  overflow-y: auto;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  height: auto;
 }
 
-.ProseMirror:focus {
+.articleWrapper:focus-within {
   border-color: #0b0b0b;
-  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
-}
-
-.ProseMirror > p {
-  margin: 0;
-  padding: 4px 8px;
-}
-
-/* Placeholder для порожнього параграфа */
-.ProseMirror p.is-editor-empty:first-child::before {
-  content: attr(data-placeholder);
-  color: #999999;
-  font: 400 18px 'Manrope', sans-serif;
-  position: absolute;
-  top: 12px;
-  left: 12px;
-  pointer-events: none;
-  user-select: none;
-  z-index: 0;
-  opacity: 1;
-  display: block;
-}
-
-.ProseMirror p.is-editor-empty:first-child > br {
-  display: none;
+  box-shadow: 0 0 6px #0b0b0b66;
 }
 span {
   display: none;
 }
 
 .toolbar {
+  position: sticky;
+  top: 0;
+  background-color: #f7fffb;
+  border-bottom: 1px solid #9f9f9f;
   display: flex;
   gap: 8px;
   margin-top: 8px;
 }
 
-.toolbar button {
+.toolbar button,
+.floatingToolbar button {
   padding: 6px 10px;
   border-radius: 6px;
   border: 1px solid #9f9f9f;
   background-color: #f7fffb;
   cursor: pointer;
-  font: 700 16px 'Manrope', sans-serif;
-  color: #070721;
+  font-weight: 700;
+  font-size: 16px;
   user-select: none;
   transition: background-color 0.2s ease;
 }
@@ -164,6 +134,20 @@ span {
 .toolbar button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
+}
+
+.floatingToolbar {
+  position: absolute;
+  transform: translateX(-50%);
+  border: 1px solid #9f9f9f;
+  background-color: #f7fffb;
+  padding: 4px 8px;
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  display: flex;
+  gap: 8px;
+  align-items: center;
 }
 
 .activeBtn {
@@ -241,7 +225,7 @@ span {
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.3s ease;
-  border: 2px solid yellow; 
+  border: 2px solid yellow;
 }
 
 .imageUploadBox:hover .tooltipOverlay {
@@ -258,6 +242,7 @@ span {
 .pickerDate {
   font: 700 18px 'Manrope', sans-serif;
 }
+
 .datePicker {
   width: 100%;
   padding: 10px 12px;
@@ -290,10 +275,6 @@ span {
   .articleWrapper {
     width: 100%;
     height: auto;
-  }
-
-  .ProseMirror {
-    min-height: 393px;
   }
 }
 
@@ -364,7 +345,7 @@ span {
   }
 
   .toolbar {
-    margin-top: 18px;
+    margin-top: 30px;
   }
 
   .imageUploadBox {
