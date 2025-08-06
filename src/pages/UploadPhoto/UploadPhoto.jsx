@@ -2,12 +2,14 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { uploadPhoto } from '../../redux/uploadPhoto/photoSlice';
 import { toast } from 'react-toastify';
+import styles from './uploadPhotoCss.module.css';
+import CameraIcon from '../../SVG/camera.svg?url';
 
 const UploadPhoto = () => {
   const [selectedFile, setSelectedFile] = useState(null);
 
   const dispatch = useDispatch();
-  const { loading, photoUrl } = useSelector(state => state.photo);
+  const { loading, photoUrl } = useSelector((state) => state.photo);
 
   const handleFileChange = (event) => {
     setSelectedFile(event.target.files[0]);
@@ -22,19 +24,32 @@ const UploadPhoto = () => {
   };
 
   return (
-    <div>
-      <h2>Upload your photo</h2>
-      <input type="file" onChange={handleFileChange} />
-      <button onClick={handleUpload} disabled={loading}>
-        {loading ? 'Завантаження...' : 'Save'}
-      </button>
+    <div className={styles.boxContainer}>
+      <h2 className={styles.title}>Upload your photo</h2>
 
-      {photoUrl && (
-        <div>
-          <p>Фото успішно завантажено!</p>
+      <input
+        type="file"
+        id="file-input"
+        className={styles.inputFile}
+        onChange={handleFileChange}
+      />
+
+      <label htmlFor="file-input" className={styles.avatarPhotoContainer}>
+        {photoUrl ? (
           <img src={photoUrl} alt="Завантажене фото" />
-        </div>
-      )}
+        ) : (
+          // <CameraIcon className={styles.cameraIcon} />
+          <img src={CameraIcon} className={styles.cameraIcon} />
+        )}
+      </label>
+
+      <button
+        onClick={handleUpload}
+        disabled={loading || !selectedFile}
+        className={styles.buttonSave}
+      >
+        {loading ? 'loading...' : 'Save'}
+      </button>
     </div>
   );
 };
