@@ -49,7 +49,7 @@ const AuthorProfilePage = () => {
   const OwnProfile = useSelector(selectUser);
   const isLoggedIn = useSelector(selectIsLoggedIn);
 
-  console.log('isLoggedIn', isLoggedIn);
+  //console.log('isLoggedIn', isLoggedIn);
 
   const author = authorData?.data || {};
   const articles = authorArticles || [];
