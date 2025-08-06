@@ -73,10 +73,11 @@ const AuthorProfilePage = () => {
 
     if (isTryingToAccessPrivateTab && !isOwnProfile) {
       navigate('/', { replace: true }); // редирект на головну
-    } else {
+    }
+    if (isOwnProfile && location.pathname === `/authors/${ownerId}`) {
       navigate('my-articles', { replace: true });
     }
-  }, [isOwnProfile, location.pathname, navigate]);
+  }, [isOwnProfile, location.pathname, ownerId, navigate]);
 
   const handleLoadMore = () => {
     if (currentPage < totalPages && !authorArticlesLoading) {
