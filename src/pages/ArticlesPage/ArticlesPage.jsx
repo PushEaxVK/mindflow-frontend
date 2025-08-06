@@ -15,9 +15,11 @@ import {
   selectTotalArticles,
 } from '../../redux/articles/selectors';
 import Loader from '../../components/Loader/Loader';
+import ArticlesEmpty from '../../components/ArticlesEmpty/ArticlesEmpty';
 
 const ArticlesPage = () => {
   const articles = useSelector(selectAllArticles);
+
   //console.log('ARTICLES:', articles);
   const loading = useSelector(selectLoadingArticles);
   const error = useSelector(selectErrorArticles);
@@ -38,7 +40,7 @@ const ArticlesPage = () => {
   };
 
   const handleLoadMore = () => {
-    console.log('Load more clicked. Current page:', currentPage);
+    //console.log('Load more clicked. Current page:', currentPage);
     if (currentPage < totalPages && !loading) {
       //  scroll-орієнтир
       if (lastArticleRef.current) {
@@ -65,6 +67,8 @@ const ArticlesPage = () => {
         </div>
 
         <>
+          {!loading && articles.length === 0 && <ArticlesEmpty />}
+
           <ArticlesList
             icon={'icon-favorite-article'}
             btnStyle={'FavoriteArticleNotSaved'}

@@ -1,0 +1,75 @@
+.section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 48px 16px;
+}
+.container {
+  border-radius: 32px;
+  padding: 12px;
+  min-width: 361px;
+  height: 299px;
+  background-color: var(--light-green);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.boxSvgIconAlert {
+  width: 64px;
+  height: 64px;
+  padding: 13px;
+  margin-bottom: 16px;
+}
+
+.svgIconAlert {
+  width: 38px;
+  height: 38px;
+  fill: none;
+  stroke: var(--black);
+}
+
+.subTitleAlert {
+  font-family: var(--font-family);
+  font-weight: 700;
+  font-size: 24px;
+  color: var(--black);
+  margin-bottom: 16px;
+}
+
+.btnGoBack {
+  max-width: 337px;
+  min-width: 100%;
+  border: 1px solid var(--green-darker);
+  border-radius: 64px;
+  padding: 8px;
+  text-align: center;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+.btnText {
+  font-family: var(--font-family);
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--green-darker);
+}
+
+@media only screen and (min-width: 768px) {
+  .container {
+    min-width: 497px;
+  }
+  .btnGoBack {
+    max-width: 473px;
+  }
+}
+
+@media only screen and (min-width: 1440px) {
+  .container {
+    min-width: 514px;
+  }
+  .btnGoBack {
+    max-width: 490px;
+  }
+}

@@ -68,7 +68,7 @@ export const AddArticleForm = () => {
       formData.append('desc', values.desc);
       formData.append('article', values.article); // plain text
       formData.append('date', selectedDate.toISOString());
-      formData.append('ownerId', user._id);
+      formData.append('ownerId', user.id);
       if (image) formData.append('img', image);
 
       try {
@@ -77,7 +77,7 @@ export const AddArticleForm = () => {
           : await axios.post('/articles/create', formData);
 
         toast.success('Article published successfully!');
-        const id = res.data._id?.$oid || res.data._id || res.data.id;
+        const id = res.data.data._id;
         navigate(`/articles/${id}`);
       } catch (error) {
         toast.error(
@@ -163,7 +163,6 @@ export const AddArticleForm = () => {
       proseMirror.classList.toggle('is-empty', editor.isEmpty);
     },
   });
-
   const updateFloatingToolbar = useCallback(() => {
     if (!editor) return;
     const selection = window.getSelection();
@@ -289,7 +288,6 @@ export const AddArticleForm = () => {
           <button type="button" onClick={toggleOrderedList}>1. List</button>
           <button type="button" onClick={setLink}>🔗</button>
         </div>
-
         {floatingVisible && (
           <div
             className={styles.floatingToolbar}

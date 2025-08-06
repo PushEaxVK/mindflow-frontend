@@ -3,7 +3,7 @@ import ProfileArticlesEmpty from '../../ProfileArticlesEmpty/ProfileArticlesEmpt
 
 import LoadMore from '../../LoadMore/LoadMore';
 import { useParams } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchArticlesAuthorById } from '../../../redux/user/operation.js';
 import {
@@ -15,6 +15,7 @@ import {
 } from '../../../redux/user/selectors.js';
 
 const MyArticles = () => {
+  const lastArticleRef = useRef(null);
   const dispatch = useDispatch();
   // Статті автора
 
@@ -35,8 +36,20 @@ const MyArticles = () => {
     }
   }, [ownerId, currentPage, dispatch]);
 
+  // const handleLoadMore = () => {
+  //   if (currentPage < totalPages) {
+  //     dispatch(fetchArticlesAuthorById({ ownerId, page: currentPage + 1 }));
+  //   }
+  // };
+
   const handleLoadMore = () => {
-    if (currentPage < totalPages) {
+    //console.log('Load more clicked. Current page:', currentPage);
+    if (currentPage < totalPages && !isLoading) {
+      //  scroll-орієнтир
+      if (lastArticleRef.current) {
+        lastArticleRef.current.scrollIntoView({ behavior: 'auto' });
+      }
+
       dispatch(fetchArticlesAuthorById({ ownerId, page: currentPage + 1 }));
     }
   };
@@ -48,8 +61,14 @@ const MyArticles = () => {
         icon={'icon-edit-article'}
         btnStyle={'EditArticle'}
         queryArticles={articles}
+        lastArticleRef={lastArticleRef}
       />
-      {totalPages > 1 && currentPage < totalPages && (
+      {isLoading && (
+        <div>
+          <p>Чекайте! Статті зараз завантажуються ....</p>
+        </div>
+      )}
+      {totalPages > 1 && currentPage < totalPages && !isLoading && (
         <LoadMore
           page={currentPage}
           pages={totalPages}

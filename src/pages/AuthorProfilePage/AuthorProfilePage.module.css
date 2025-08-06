@@ -16,17 +16,17 @@
   margin-bottom: 24px;
 }
 
-.imgProfile {
+/* .imgProfile {
   border-radius: 256px;
-  width: 137px;
-  height: 137px;
-}
+  width: 124px;
+  height: 124px;
+} */
 
 .userName {
   font-family: var(--font-family);
   font-weight: 700;
   font-size: 32px;
-  text-align: center;
+  /* text-align: center; */
   color: var(--black);
   margin-bottom: 4px;
 }
@@ -57,7 +57,32 @@
   padding: 0 0 4px 0;
 }
 
+.imgProfile {
+  width: 124px;
+  height: 124px;
+  border-radius: 50%;
+  object-fit: cover;
+  background-color: var(--white);
+}
+
+.avatarLetter {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--green);
+  color: var(--white);
+  font-weight: 700;
+  font-size: 24px;
+}
+
 @media only screen and (min-width: 768px) {
+  .imgProfile {
+    width: 137px;
+    height: 137px;
+  }
 }
 
 @media only screen and (min-width: 1440px) {

@@ -1,9 +1,7 @@
-// Автор
 export const selectAuthorData = (state) => state.author.authorData;
 export const selectAuthorLoading = (state) => state.author.loading;
 export const selectAuthorError = (state) => state.author.error;
 
-// Статті автора
 export const selectAuthorArticles = (state) => state.author.authorArticles;
 export const selectAuthorArticlesPage = (state) =>
   state.author.authorArticlesPage;

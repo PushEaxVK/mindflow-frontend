@@ -4,14 +4,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   fetchArticleById,
   fetchSavedArticles,
-  fetchThreePopularArticles,
   saveArticle,
   unsaveArticle,
 } from '../../redux/article/operation';
 import {
   selectArticle,
   selectIsArticlesLoading,
-  selectPopularArticles,
+  selectRecommendedArticles,
   selectSavedArticles,
 } from '../../redux/article/selectors';
 import Container from '../../components/Container/Container';
@@ -20,6 +19,8 @@ import css from '../ArticlePage/ArticlePage.module.css';
 import Loader from '../../components/Loader/Loader';
 import { clearArticle } from '../../redux/article/slice.js';
 import toast from 'react-hot-toast';
+import { selectIsLoggedIn } from '../../redux/auth/selectors.js';
+import { closeModal, toggleModal } from '../../redux/modal/slice.js';
 
 const ArticlePage = () => {
   const dispatch = useDispatch();
@@ -27,20 +28,18 @@ const ArticlePage = () => {
   const { id } = useParams();
 
   const article = useSelector(selectArticle);
-  const popular = useSelector(selectPopularArticles);
+  const recommendedArticles = useSelector(selectRecommendedArticles);
   const savedArticles = useSelector(selectSavedArticles);
   const isLoading = useSelector(selectIsArticlesLoading);
 
   const userId = useSelector((state) => state.auth.user?.id);
-  const token = useSelector((state) => state.auth.accessToken);
+  const isLoggedIn = useSelector(selectIsLoggedIn);
 
   const [isSaved, setIsSaved] = useState(false);
 
   useEffect(() => {
     if (!id) return;
     dispatch(fetchArticleById(id));
-    dispatch(fetchThreePopularArticles());
-
     return () => {
       dispatch(clearArticle());
     };
@@ -59,6 +58,14 @@ const ArticlePage = () => {
     }
   }, [savedArticles, id]);
 
+  const handleErrorSaveModal = () => {
+    dispatch(closeModal());
+
+    setTimeout(() => {
+      dispatch(toggleModal('ErrorSave'));
+    }, 200);
+  };
+
   const handleClickReadMore = (listItem) => {
     dispatch(clearArticle());
     navigate(`/articles/${listItem._id}`);
@@ -71,8 +78,8 @@ const ArticlePage = () => {
       return;
     }
 
-    if (!token) {
-      toast.error('User not authenticated');
+    if (!isLoggedIn) {
+      handleErrorSaveModal();
       return;
     }
 
@@ -103,7 +110,6 @@ const ArticlePage = () => {
 
   if (isLoading) return <Loader />;
   if (!article) return <NotFound />;
-  console.log('isSaved:', isSaved);
 
   return (
     <section className={css.section}>
@@ -117,7 +123,7 @@ const ArticlePage = () => {
 
         <div className={css.secondBlock}>
           <p className={css.article}>
-            {article.article.split('\n').map((line, index) => (
+            {article.article.split('/n').map((line, index) => (
               <React.Fragment key={index}>
                 {line}
                 <br />
@@ -134,7 +140,7 @@ const ArticlePage = () => {
                     {article.ownerId.name}
                   </span>
                 ) : (
-                  <span>Unknown</span>
+                  <span className={css.articleAuthorName}>Unknown</span>
                 )}
               </p>
               <p className={css.articleDate}>
@@ -147,30 +153,31 @@ const ArticlePage = () => {
               <h2 className={css.interestedBlockTitle}>
                 You can also be interested
               </h2>
-
-              <ul className={css.interestedList}>
-                {popular.map((item) => (
-                  <li key={item._id} className={css.interestedItem}>
-                    <div className={css.interestedArticleTitleBtnContainer}>
-                      <h4 className={css.interestedArticleTitle}>
-                        {item.title}
-                      </h4>
-                      <button
-                        onClick={() => handleClickReadMore(item)}
-                        className={css.readMoreBtn}
-                        disabled={isLoading}
-                      >
-                        <svg className={css.iconReadMore}>
-                          <use href="/icons-articlePage.svg#icon-readMoreBtn"></use>
-                        </svg>
-                      </button>
-                    </div>
-                    <p className={css.interestedArticleAuthor}>
-                      {item.ownerId?.name || 'Unknown'}
-                    </p>
-                  </li>
-                ))}
-              </ul>
+              {recommendedArticles?.length > 0 && (
+                <ul className={css.interestedList}>
+                  {recommendedArticles.map((item) => (
+                    <li key={item._id} className={css.interestedItem}>
+                      <div className={css.interestedArticleTitleBtnContainer}>
+                        <h4 className={css.interestedArticleTitle}>
+                          {item.title}
+                        </h4>
+                        <button
+                          onClick={() => handleClickReadMore(item)}
+                          className={css.readMoreBtn}
+                          disabled={isLoading}
+                        >
+                          <svg className={css.iconReadMore}>
+                            <use href="/icons-articlePage.svg#icon-readMoreBtn"></use>
+                          </svg>
+                        </button>
+                      </div>
+                      <p className={css.interestedArticleAuthor}>
+                        {item.ownerId?.name || 'Unknown'}
+                      </p>
+                    </li>
+                  ))}
+                </ul>
+              )}
             </div>
 
             <button onClick={handleToggleSave} className={css.saveBtn}>

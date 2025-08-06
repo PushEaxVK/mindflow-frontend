@@ -6,6 +6,8 @@ import toast from 'react-hot-toast';
 import serviceApi from '../../services/api';
 import PasswordStrengthBar from './PasswordStrengthBar';
 import styles from './RegisterForm.module.css';
+import { refreshUser } from '../../redux/auth/operations';
+import { useDispatch } from 'react-redux';
 
 const validationSchema = Yup.object({
   name: Yup.string()
@@ -31,6 +33,7 @@ const validationSchema = Yup.object({
 
 const RegisterForm = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
 
@@ -44,6 +47,30 @@ const RegisterForm = () => {
   const togglePassword = () => setShowPassword((prev) => !prev);
   const toggleConfirm = () => setShowConfirm((prev) => !prev);
 
+  const handleFormSubmit =
+    (validateForm, handleSubmit, values, setTouched) => async (e) => {
+      e.preventDefault();
+      const errors = await validateForm();
+      if (Object.keys(errors).length > 0) {
+        setTouched({
+          name: true,
+          email: true,
+          password: true,
+          confirmPassword: true,
+        });
+        toast.error(
+          'To register, you need to fill in all the fields of the registration form correctly',
+          {
+            style: {
+              animation: 'slide-in 0.4s ease',
+            },
+          }
+        );
+        return;
+      }
+      handleSubmit(e);
+    };
+
   const handleSubmit = async (values, actions) => {
     try {
       const response = await serviceApi.auth.signup({
@@ -51,6 +78,12 @@ const RegisterForm = () => {
         email: values.email,
         password: values.password,
       });
+
+      const token = response.data.accessToken;
+      if (token) {
+        localStorage.setItem('accessToken', token);
+        await dispatch(refreshUser());
+      }
 
       toast.success(`Welcome, ${response.data.user.name}!`, {
         style: {
@@ -98,9 +131,26 @@ const RegisterForm = () => {
           validateOnChange={true}
           validateOnBlur={true}
         >
-          {({ isSubmitting, values, errors, touched }) => (
-            <Form className={styles.form} autoComplete="off">
-              {/* Name Field */}
+          {({
+            isSubmitting,
+            values,
+            errors,
+            touched,
+            submitCount,
+            validateForm,
+            handleSubmit,
+            setTouched,
+          }) => (
+            <Form
+              className={styles.form}
+              autoComplete="off"
+              onSubmit={handleFormSubmit(
+                validateForm,
+                handleSubmit,
+                values,
+                setTouched
+              )}
+            >
               <div className={styles.fieldWrapper}>
                 <label htmlFor="name-field">Enter your name</label>
                 <Field name="name">
@@ -114,13 +164,13 @@ const RegisterForm = () => {
                         placeholder="Max"
                         autoComplete="given-name"
                         className={`${styles.inputWithIcon} ${
-                          meta.touched && field.value && meta.error
+                          (meta.touched || submitCount > 0) && meta.error
                             ? styles.invalid
                             : ''
                         }`}
                       />
                       <div className={styles.errorContainer}>
-                        {meta.touched && field.value && meta.error && (
+                        {(meta.touched || submitCount > 0) && meta.error && (
                           <span className={styles.error}>{meta.error}</span>
                         )}
                       </div>
@@ -128,8 +178,6 @@ const RegisterForm = () => {
                   )}
                 </Field>
               </div>
-
-              {/* Email Field */}
               <div className={styles.fieldWrapper}>
                 <label htmlFor="email-field">Enter your email address</label>
                 <Field name="email">
@@ -141,15 +189,15 @@ const RegisterForm = () => {
                         ref={refs.email}
                         type="text"
                         placeholder="you@example.com"
-                        autoComplete="off"
+                        autoComplete="email"
                         className={`${styles.inputWithIcon} ${
-                          meta.touched && field.value && meta.error
+                          (meta.touched || submitCount > 0) && meta.error
                             ? styles.invalid
                             : ''
                         }`}
                       />
                       <div className={styles.errorContainer}>
-                        {meta.touched && field.value && meta.error && (
+                        {(meta.touched || submitCount > 0) && meta.error && (
                           <span className={styles.error}>{meta.error}</span>
                         )}
                       </div>
@@ -157,8 +205,6 @@ const RegisterForm = () => {
                   )}
                 </Field>
               </div>
-
-              {/* Password Field */}
               <div className={`${styles.fieldWrapper} ${styles.passwordField}`}>
                 <label htmlFor="password-field">Create a strong password</label>
                 <div className={styles.passwordWrapper}>
@@ -173,7 +219,7 @@ const RegisterForm = () => {
                           placeholder="********"
                           autoComplete="off"
                           className={`${styles.inputWithIcon} ${
-                            meta.touched && field.value && meta.error
+                            (meta.touched || submitCount > 0) && meta.error
                               ? styles.invalid
                               : ''
                           }`}
@@ -200,26 +246,20 @@ const RegisterForm = () => {
                     )}
                   </Field>
                 </div>
-
-                {/* Error */}
                 <Field name="password">
-                  {({ field, meta }) => (
+                  {({ meta, field }) => (
                     <div className={styles.errorContainer}>
-                      {meta.touched && field.value && meta.error && (
+                      {(meta.touched || submitCount > 0) && meta.error && (
                         <span className={styles.error}>{meta.error}</span>
                       )}
                     </div>
                   )}
                 </Field>
-
-                {/* Password Strength */}
                 <PasswordStrengthBar
                   password={values.password}
                   confirmPassword={values.confirmPassword}
                 />
               </div>
-
-              {/* Confirm Password */}
               <div
                 className={`${styles.fieldWrapper} ${styles.repeatPassword}`}
               >
@@ -238,7 +278,7 @@ const RegisterForm = () => {
                           placeholder="********"
                           autoComplete="off"
                           className={`${styles.inputWithIcon} ${
-                            meta.touched && field.value && meta.error
+                            (meta.touched || submitCount > 0) && meta.error
                               ? styles.invalid
                               : ''
                           }`}
@@ -266,17 +306,15 @@ const RegisterForm = () => {
                   </Field>
                 </div>
                 <Field name="confirmPassword">
-                  {({ field, meta }) => (
+                  {({ meta, field }) => (
                     <div className={styles.errorContainer}>
-                      {meta.touched && field.value && meta.error && (
+                      {(meta.touched || submitCount > 0) && meta.error && (
                         <span className={styles.error}>{meta.error}</span>
                       )}
                     </div>
                   )}
                 </Field>
               </div>
-
-              {/* Submit Button */}
               <button
                 type="submit"
                 disabled={isSubmitting}

@@ -90,7 +90,7 @@
     height: 326px;
     overflow: hidden;
   }
-  
+
   .imgButtom {
     width: 100%;
     height: 398px;
@@ -120,8 +120,8 @@
   .topRow {
     display: flex;
     gap: 24px;
-    margin-bottom: 24px;
     align-items: flex-start;
+    max-width: 1220px;
   }
 
   .content {
@@ -156,6 +156,7 @@
   .imgRow {
     display: flex;
     gap: 24px;
+    max-width: 1220px;
   }
 
   .imgButtom {

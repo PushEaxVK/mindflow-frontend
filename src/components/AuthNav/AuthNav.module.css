@@ -27,7 +27,6 @@
   }
 }
 
-/* Join-Now Button */
 .join__link {
   display: flex;
   align-items: center;
@@ -46,7 +45,6 @@
   }
 }
 
-/* Tablet-Style  */
 @media only screen and (min-width: 768px) {
   .wrapper {
     flex-direction: row;

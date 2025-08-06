@@ -1,17 +1,20 @@
-
 export const UPLOAD_PHOTO_REQUEST = 'photo/UPLOAD_PHOTO_REQUEST';
 export const UPLOAD_PHOTO_SUCCESS = 'photo/UPLOAD_PHOTO_SUCCESS';
 export const UPLOAD_PHOTO_FAILURE = 'photo/UPLOAD_PHOTO_FAILURE';
 
+const API_BASE_URL =
+  import.meta.env.VITE_API_BASE_URL ||
+  'https://mindflow-backend-iwk7.onrender.com';
+
 export const uploadPhoto = (file) => {
   return async (dispatch) => {
     dispatch({ type: UPLOAD_PHOTO_REQUEST });
-    
+
     try {
       const formData = new FormData();
-      formData.append('photo', file); 
+      formData.append('photo', file);
 
-      const response = await fetch('http://localhost:8080/photo', {
+      const response = await fetch(`${API_BASE_URL}/photo`, {
         method: 'POST',
         body: formData,
       });
@@ -21,14 +24,14 @@ export const uploadPhoto = (file) => {
       }
 
       const result = await response.json();
-      dispatch({ 
+      dispatch({
         type: UPLOAD_PHOTO_SUCCESS,
-        payload: result.data.photo 
+        payload: result.data.photo,
       });
     } catch (error) {
-      dispatch({ 
+      dispatch({
         type: UPLOAD_PHOTO_FAILURE,
-        payload: error.message 
+        payload: error.message,
       });
     }
   };
