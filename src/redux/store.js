@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 import authReducer from './auth/slice';
-import photoReducer from './uploadPhoto/photoSlice';
+import photoReducer from './uploadPhoto/photoSlice.js';
 import modalReducer from './modal/slice';
 import {
   persistStore,
