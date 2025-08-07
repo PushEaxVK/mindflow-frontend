@@ -6,12 +6,15 @@ import { selectSavedArticles } from '../../redux/SavedArticles/selectors.js';
 import { selectIsLoggedIn, selectUser } from '../../redux/auth/selectors.js';
 import { toggleSaveArticle } from '../../redux/SavedArticles/operations.js';
 import { openModal } from '../../redux/modal/slice.js';
+import { useLocation } from 'react-router-dom';
 
 const ArticlesItem = forwardRef(function ArticlesItem(
   { item, icon, btnStyle },
   ref
 ) {
   const dispatch = useDispatch();
+  const location = useLocation();
+  const isMyArticlesPage = location.pathname.includes('/my-articles');
   const isLoggedIn = useSelector(selectIsLoggedIn);
   const user = useSelector(selectUser);
   const savedArticles = useSelector(selectSavedArticles);
@@ -58,16 +61,29 @@ const ArticlesItem = forwardRef(function ArticlesItem(
         >
           Learn more
         </Link>
-        <button
-          className={css[`btn${btnStyle}`]}
-          type="button"
-          onClick={handleToggleSave}
-          aria-label="press button"
-        >
-          <svg className={css[`svgIcon${btnStyle}`]}>
-            <use href={`/icons-profileArticles.svg#${icon}`}></use>
-          </svg>
-        </button>
+        {isMyArticlesPage ? (
+          <button
+            className={css[`btn${btnStyle}`]}
+            type="button"
+            onClick={() => console.log('Редагувати статтю:', item._id)}
+            aria-label="Edit article"
+          >
+            <svg className={css[`svgIcon${btnStyle}`]}>
+              <use href={`/icons-profileArticles.svg#${icon}`}></use>
+            </svg>
+          </button>
+        ) : (
+          <button
+            className={css[`btn${btnStyle}`]}
+            type="button"
+            onClick={handleToggleSave}
+            aria-label="press button"
+          >
+            <svg className={css[`svgIcon${btnStyle}`]}>
+              <use href={`/icons-profileArticles.svg#${icon}`}></use>
+            </svg>
+          </button>
+        )}
       </div>
     </li>
   );
