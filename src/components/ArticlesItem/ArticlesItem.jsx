@@ -66,7 +66,7 @@ const ArticlesItem = forwardRef(function ArticlesItem(
             className={css[`btn${btnStyle}`]}
             type="button"
             onClick={() => console.log('Редагувати статтю:', item._id)}
-            aria-label="Edit article"
+            aria-label="edit article"
           >
             <svg className={css[`svgIcon${btnStyle}`]}>
               <use href={`/icons-profileArticles.svg#${icon}`}></use>
@@ -77,7 +77,7 @@ const ArticlesItem = forwardRef(function ArticlesItem(
             className={css[`btn${btnStyle}`]}
             type="button"
             onClick={handleToggleSave}
-            aria-label="press button"
+            aria-label="save button"
           >
             <svg className={css[`svgIcon${btnStyle}`]}>
               <use href={`/icons-profileArticles.svg#${icon}`}></use>
