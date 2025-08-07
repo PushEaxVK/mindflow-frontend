@@ -12,6 +12,7 @@
 
 .modal {
   position: relative;
+  width: 100%;
   max-width: 361px;
   height: auto;
   background-color: var(--light-green);
