@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import axios from 'axios';
 import { toast } from 'react-toastify';
 
 const API_BASE_URL =
@@ -12,23 +13,21 @@ export const uploadPhoto = createAsyncThunk(
       const formData = new FormData();
       formData.append('photo', file);
 
-      const response = await fetch(`${API_BASE_URL}/photo`, {
-        method: 'POST',
-        body: formData,
+      const response = await axios.post(`/photo`, formData, {
         withCredentials: true,
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
       });
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || 'Помилка при завантаженні фото.');
-      }
-
-      const result = await response.json();
       toast.success('Фото успішно завантажено!');
-      return result.data.photo;
+      return response.data.data.photo;
     } catch (error) {
-      toast.error(error.message);
-      return thunkAPI.rejectWithValue(error.message);
+      const errorMessage =
+        error.response?.data?.message || 'Помилка при завантаженні фото.';
+
+      toast.error(errorMessage);
+      return thunkAPI.rejectWithValue(errorMessage);
     }
   }
 );
