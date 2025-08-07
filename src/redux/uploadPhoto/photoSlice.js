@@ -15,6 +15,7 @@ export const uploadPhoto = createAsyncThunk(
       const response = await fetch(`${API_BASE_URL}/photo`, {
         method: 'POST',
         body: formData,
+        withCredentials: true,
       });
 
       if (!response.ok) {
