@@ -21,7 +21,7 @@ export const uploadPhoto = createAsyncThunk(
       });
 
       toast.success('Фото успішно завантажено!');
-      return response.data.data.photo;
+      return response.data;
     } catch (error) {
       const errorMessage =
         error.response?.data?.message || 'Помилка при завантаженні фото.';
@@ -50,7 +50,8 @@ const photoSlice = createSlice({
 
       .addCase(uploadPhoto.fulfilled, (state, action) => {
         state.loading = false;
-        state.photoUrl = action.payload;
+        state.photoUrl = action.payload.data.avatarUrl;
+
       })
 
       .addCase(uploadPhoto.rejected, (state, action) => {
