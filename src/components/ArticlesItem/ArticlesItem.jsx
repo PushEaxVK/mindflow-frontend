@@ -65,8 +65,8 @@ const ArticlesItem = forwardRef(function ArticlesItem(
           <button
             className={css[`btn${btnStyle}`]}
             type="button"
-            onClick={() => console.log('Редагувати статтю:', item._id)}
-            aria-label="Edit article"
+            // onClick={() => console.log('Редагувати статтю:', item._id)}
+            aria-label="edit article"
           >
             <svg className={css[`svgIcon${btnStyle}`]}>
               <use href={`/icons-profileArticles.svg#${icon}`}></use>
@@ -74,12 +74,20 @@ const ArticlesItem = forwardRef(function ArticlesItem(
           </button>
         ) : (
           <button
-            className={css[`btn${btnStyle}`]}
+            className={`${
+              isSaved ? css.btnFavoriteArticle : css.btnFavoriteArticleNotSaved
+            }`}
             type="button"
             onClick={handleToggleSave}
-            aria-label="press button"
+            aria-label="save button"
           >
-            <svg className={css[`svgIcon${btnStyle}`]}>
+            <svg
+              className={`${
+                isSaved
+                  ? css.svgIconFavoriteArticle
+                  : css.svgIconFavoriteArticleNotSaved
+              }`}
+            >
               <use href={`/icons-profileArticles.svg#${icon}`}></use>
             </svg>
           </button>
