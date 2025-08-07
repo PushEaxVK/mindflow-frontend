@@ -3,25 +3,32 @@ import { useDispatch, useSelector } from 'react-redux';
 import { uploadPhoto } from '../../redux/uploadPhoto/photoSlice';
 import { toast } from 'react-toastify';
 import styles from './uploadPhotoCss.module.css';
-// import { ReactComponent as CameraIcon } from '../../SVG/camera.svg';
 import CameraIcon from '../../SVG/camera.svg?url';
 import { useNavigate } from 'react-router-dom';
 
 const UploadPhoto = () => {
-   const navigate = useNavigate();
+  const navigate = useNavigate();
   const [selectedFile, setSelectedFile] = useState(null);
+  const [previewUrl, setPreviewUrl] = useState(null);
 
   const dispatch = useDispatch();
-  const { loading, photoUrl } = useSelector(state => state.photo);
+  const { loading, photoUrl } = useSelector((state) => state.photo);
 
   useEffect(() => {
     if (photoUrl) {
-      navigate('/'); 
+      navigate('/');
     }
   }, [photoUrl, navigate]);
 
   const handleFileChange = (event) => {
-    setSelectedFile(event.target.files[0]);
+    const file = event.target.files[0];
+    setSelectedFile(file);
+    if (file && file.type.startsWith('image/')) {
+      const imageUrl = URL.createObjectURL(file);
+      setPreviewUrl(imageUrl);
+    } else {
+      setPreviewUrl(null);
+    }
   };
 
   const handleUpload = () => {
@@ -32,28 +39,36 @@ const UploadPhoto = () => {
     dispatch(uploadPhoto(selectedFile));
   };
 
-    return (
+  return (
     <div className={styles.boxContainer}>
-      
       <h2 className={styles.title}>Upload your photo</h2>
 
-      <input 
-        type="file" 
-        id="file-input" 
-        className={styles.inputFile} 
-        onChange={handleFileChange} 
+      <input
+        type="file"
+        id="file-input"
+        className={styles.inputFile}
+        onChange={handleFileChange}
       />
-          
+
       <label htmlFor="file-input" className={styles.avatarPhotoContainer}>
-        {photoUrl ? (
+        {previewUrl ? (
+          <img src={previewUrl} alt="Превʼю фото" />
+        ) : photoUrl ? (
           <img src={photoUrl} alt="Завантажене фото" />
         ) : (
-          // <CameraIcon className={styles.cameraIcon} />
-          <img src={CameraIcon} className={styles.cameraIcon} />
+          <img
+            src={CameraIcon}
+            className={styles.cameraIcon}
+            alt="Іконка камери"
+          />
         )}
       </label>
 
-      <button onClick={handleUpload} disabled={loading || !selectedFile} className={styles.buttonSave}>
+      <button
+        onClick={handleUpload}
+        disabled={loading || !selectedFile}
+        className={styles.buttonSave}
+      >
         {loading ? 'loading...' : 'Save'}
       </button>
     </div>
