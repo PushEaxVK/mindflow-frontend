@@ -99,7 +99,7 @@
   position: static;
   width: 361px;
   height: 321px;
-  background-image: url('/img/Union-m-1x.png');
+  background-image: url('/img/Hero-m-1x.png');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -110,7 +110,7 @@
   screen and (-webkit-min-device-pixel-ratio: 2),
   screen and (min-resolution: 192dpi) {
   .advertisement-card {
-    background-image: url('/img/Union-m-2x.png');
+    background-image: url('/img/Hero-m-2x.png');
   }
 }
 
@@ -172,7 +172,7 @@
     right: 32px;
     width: 430px;
     height: 383px;
-    background-image: url('/img/Union-t-1x.png');
+    background-image: url('/img/Hero-t-1x.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -183,7 +183,7 @@
     screen and (-webkit-min-device-pixel-ratio: 2),
     screen and (min-resolution: 192dpi) {
     .advertisement-card {
-      background-image: url('/img/Union-t-2x.png');
+      background-image: url('/img/Hero-t-2x.png');
     }
   }
 }
@@ -247,7 +247,7 @@
     width: 805px;
     min-width: 805px;
     height: 562px;
-    background-image: url('/img/Union-d-1x.png');
+    background-image: url('/img/Hero-d-1x.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -259,7 +259,7 @@
     screen and (-webkit-min-device-pixel-ratio: 2),
     screen and (min-resolution: 192dpi) {
     .advertisement-card {
-      background-image: url('/img/Union-d-2x.png');
+      background-image: url('/img/Hero-d-2x.png');
     }
   }
 }

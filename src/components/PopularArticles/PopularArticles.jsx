@@ -15,12 +15,16 @@ function PopularArticles() {
   const dispatch = useDispatch();
   const allArticles = useSelector(selectAllArticles);
   const loading = useSelector(selectLoadingArticles);
+
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [visibleArticles, setVisibleArticles] = useState([]);
 
+  // завантажуємо лише якщо в Redux ще немає статей
   useEffect(() => {
-    dispatch(fetchAllArticles({ page: 1, filter: 'popular' }));
-  }, [dispatch]);
+    if (allArticles.length === 0) {
+      dispatch(fetchAllArticles({ page: 1, filter: 'popular' }));
+    }
+  }, [dispatch, allArticles.length]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -49,8 +53,8 @@ function PopularArticles() {
               </svg>
             </Link>
           </div>
-
-          {loading ? (
+          {/* показуємо лоадер тільки якщо ще немає даних */}
+          {loading && allArticles.length === 0 ? (
             <p>Loading popular articles...</p>
           ) : visibleArticles.length === 0 ? (
             <p>No popular articles found.</p>
